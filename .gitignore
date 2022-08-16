@@ -1,0 +1,9 @@
+# for osx
+.DS_Store
+.AppleDouble
+
+scratch/
+
+# Logs
+logs
+*.log
