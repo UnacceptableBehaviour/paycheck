@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Pay Calulator</title>
+    <link rel="stylesheet" type="text/css" href="static/paycheck.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <script type="application/x-javascript" src='static/paycheck.js'></script>
+</head>
+
+<body style="font-family:'Arial';">
+<div id='pay_day'><span>Pay Day: </span><span id='pay_day_js'>js_calc</span><span> </span><button id='but_4wk_bak'><</button><button id='but_4wk_fwd'>></button></div>
+<div id='cut_off'><span>Cut Off: </span><span id='cut_off_js'>js_calc</span></div>
+<form action="" method="">
+  <label for="tax_code">Select tax code:</label>
+  <input list="tax_codes" name="tax_code" id="tax_code">
+  <datalist id="tax_codes">
+    <option value="1257L">
+    <option value="TC_0S20">
+    <option value="TC_0S09">
+    <option value="Add new code">
+  </datalist>
+  <!--<input type="submit">-->
+</form>
+<div id='wk_range'><span>Week Nos: </span><span id='wk_range_js'>js_calc</span></div>
+<div id='wk_range_dates'><span>4wk Dates: </span><span id='wk_range_dates_js'>js_calc</span></div>
+<br>
+<button id='but_wk_no_bak'><</button><button id='but_wk_no_fwd'>></button>
+<div id='wk_no'><span>Week No: </span><span id='wk_no_js'>js_calc </span>
+</div>
+<br>
+  <table class='hrs-table' id="example">
+    <thead>
+        <tr class='hrs-row'>
+            <th>Day</th>
+            <th>Date</th>
+            <th>IN</th>
+            <th>break?</th>
+            <th>OUT</th>
+            <th>Hrs</th>
+            <th>DHrs</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class='hrs-row'>
+            <td id='sun_day'>Sun</td>
+            <td id='sun_date_js'>js_calc</td>
+            <td><input type="text" pattern="[0-9]{4}" id="sun_in" name="sun_in" value="0728"></td>
+            <td><input type="text" pattern="[0-9]{1,3}" id="sun_break" name="sun_break" value="30"></td>
+            <td><input type="text" pattern="[0-9]{4}" id="sun_out" name="sun_out" value="1553"></td>
+            <td><span id="sun_hrs" name="sun_hrs" value=""></span></td>
+            <td><span id="sun_dhrs" name="sun_dhrs" value=""></span></td>
+        </tr>
+        <tr class='hrs-row'>
+            <td id='mon_day'>Mon</td>
+            <td id='mon_date_js'>js_calc</td>
+            <td><input type="text" pattern="[0-9]{4}" id="mon_in" name="mon_in" value="0559"></td>
+            <td><input type="text" pattern="[0-9]{1,3}" id="mon_break" name="mon_break" value="30"></td>
+            <td><input type="text" pattern="[0-9]{4}" id="mon_out" name="mon_out" value="1428"></td>
+            <td><span id="mon_hrs" name="mon_hrs" value=""></span></td>
+            <td><span id="mon_dhrs" name="mon_dhrs" value=""></span></td>
+        </tr>
+        <tr class='hrs-row'>
+            <td id='tue_day'>Tue</td>
+            <td id='tue_date_js'>js_calc</td>
+            <td><input type="text" pattern="[0-9]{4}" id="tue_in" name="tue_in" value="0558"></td>
+            <td><input type="text" pattern="[0-9]{1,3}" id="tue_break" name="tue_break" value="30"></td>
+            <td><input type="text" pattern="[0-9]{4}" id="tue_out" name="tue_out" value="1439"></td>
+            <td><span id="tue_hrs" name="tue_hrs" value=""></span></td>
+            <td><span id="tue_dhrs" name="tue_dhrs" value=""></span></td>
+        </tr>
+        <tr class='hrs-row'>
+            <td id='wed_day'>Wed</td>
+            <td id='wed_date_js'>js_calc</td>
+            <td><input type="text" pattern="[0-9]{4}" id="wed_in" name="wed_in" value="0000"></td>
+            <td><input type="text" pattern="[0-9]{1,3}" id="wed_break" name="wed_break" value="30"></td>
+            <td><input type="text" pattern="[0-9]{4}" id="wed_out" name="wed_out" value="0000"></td>
+            <td><span id="wed_hrs" name="wed_hrs" value=""></span></td>
+            <td><span id="wed_dhrs" name="wed_dhrs" value=""></span></td>
+        </tr>
+        <tr class='hrs-row'>
+            <td id='thu_day'>Thu</td>
+            <td id='thu_date_js'>js_calc</td>
+            <td><input type="text" pattern="[0-9]{4}" id="thu_in" name="thu_in" value="0000"></td>
+            <td><input type="text" pattern="[0-9]{1,3}" id="thu_break" name="thu_break" value="30"></td>
+            <td><input type="text" pattern="[0-9]{4}" id="thu_out" name="thu_out" value="0000"></td>
+            <td><span id="thu_hrs" name="thu_hrs" value=""></span></td>
+            <td><span id="thu_dhrs" name="thu_dhrs" value=""></span></td>
+        </tr>
+        <tr class='hrs-row'>
+            <td id='fri_day'>Fri</td>
+            <td id='fri_date_js'>js_calc</td>
+            <td><input type="text" pattern="[0-9]{4}" id="fri_in" name="fri_in" value="0000"></td>
+            <td><input type="text" pattern="[0-9]{1,3}" id="fri_break" name="fri_break" value="30"></td>
+            <td><input type="text" pattern="[0-9]{4}" id="fri_out" name="fri_out" value="0000"></td>
+            <td><span id="fri_hrs" name="fri_hrs" value=""></span></td>
+            <td><span id="fri_dhrs" name="fri_dhrs" value=""></span></td>
+        </tr>
+        <tr class='hrs-row'>
+            <td id='sat_day'>Sat</td>
+            <td id='sat_date_js'>js_calc</td>
+            <td><input type="text" pattern="[0-9]{4}" id="sat_in" name="sat_in" value="0000"></td>
+            <td><input type="text" pattern="[0-9]{1,3}" id="sat_break" name="sat_break" value="30"></td>
+            <td><input type="text" pattern="[0-9]{4}" id="sat_out" name="sat_out" value="0000"></td>
+            <td><span id="sat_hrs" name="sat_hrs" value=""></span></td>
+            <td><span id="sat_dhrs" name="sat_dhrs" value=""></span></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr class='hrs-row'>
+            <th>Day</th>
+            <th>Date</th>
+            <th>IN</th>
+            <th>break?</th>
+            <th>OUT</th>
+            <th>Hrs</th>
+            <th>DHrs</th>
+        </tr>          
+    </tfoot>
+  </table>    
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>Week</th>
+            <th>Hrs</th>
+            <th>DHrs</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td id='r1_wk_no'>js_calc</td><td id='r1_tot_hrs'>js_calc</td><td id='r1_tot_dhrs'>js_calc</td></tr>
+        <tr><td id='r2_wk_no'>js_calc</td><td id='r2_tot_hrs'>js_calc</td><td id='r2_tot_dhrs'>js_calc</td></tr>
+        <tr><td id='r3_wk_no'>js_calc</td><td id='r3_tot_hrs'>js_calc</td><td id='r3_tot_dhrs'>js_calc</td></tr>
+        <tr><td id='r4_wk_no'>js_calc</td><td id='r4_tot_hrs'>js_calc</td><td id='r4_tot_dhrs'>js_calc</td></tr>   
+    </tbody>
+    <tfoot>
+        <tr><td>Total</td><td id='r5_tot_hrs'>js_calc</td><td id='r5_tot_dhrs'>js_calc</td></tr>   
+    </tfoot>    
+</table>
+<br>
+<table>
+    <tbody>
+        <tr><td id='r1_anual_in_t'>Predicted pre-tax Anual income</td><td id='r1_anual_in'>js_calc</td>  </tr>        
+        <tr><td id='r2_gross_4wk_t'>4wk Gross</td>                    <td id='r2_gross_4wk'>js_calc</td> </tr>
+        <tr><td id='r3_pension_t'>Pension contribution</td>           <td id='r3_pension'>js_calc</td>   </tr>
+        <tr><td id='r4_ni_t'>NI</td>                                  <td id='r4_ni'>js_calc</td>        </tr>
+        <tr><td id='r5_tax_t'>Tax</td>                                <td id='r5_tax'>js_calc</td>       </tr>        
+        <tr><td id='r6_tot_dedcts_t'>Deductions</td>                  <td id='r6_tot_dedcts'>js_cal</td> </tr>
+        <tr><td id='r7_net_t'>Take home</td>                          <td id='r7_net'>js_calc</td>       </tr>   
+    </tbody>  
+</table>   
+</body>
+</html>
