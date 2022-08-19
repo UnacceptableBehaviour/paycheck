@@ -48,32 +48,87 @@ Use colour: #008100
 Declare assets in ```browserconfig.xml```
 * SML square
 * MED square
+Linked to in HTML: ```<meta name="msapplication-config" content="/static/icons/browserconfig.xml">```
 
 ##### macOS Safari
 Turn image into monochrome (this one already is)
 Theme colour #008100
 
-###### Favicon Generator Options
+##### Favicon Generator Options
 Path: /static/icons
 http://example.com/favicon.ico?V=0.01
 Compression:Default
 AppName: payCheck
 Additional files: README.md html_code.html 
 
+#### Notes on Above 
+Icon set Version: scratch/icon_ideas/realfavicongenerator.net.2-1b
+  
+This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16](https://realfavicongenerator.net/change_log#v0.16)
+  
+Checking the favicon version adds version to a lot of things!
+```
+CHECK: http://example.com/favicon.ico?V=0.01
+<link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png?v=0.01">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png?v=0.01">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png?v=0.01">
+<link rel="manifest" href="/static/icons/site.webmanifest?v=0.01">
+<link rel="mask-icon" href="/static/icons/safari-pinned-tab.svg?v=0.01" color="#008100">
+<link rel="shortcut icon" href="/static/icons/favicon.ico?v=0.01">
+<meta name="msapplication-config" content="/static/icons/browserconfig.xml?v=0.01">
+```
 
-Download zip of items
+##### Download zip of items
 Experiments in ```/paycheck/scratch```
 Prototype 1 in ```/paycheck/scratch/realfavicongenerator.net.2-1```
-Image files in ```paycheck/docs/static/images```
+Image files in ```paycheck/docs/static/icons```
 favicon.ico in root: ```paycheck/docs```
+  
+REF: https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs.  
+  
+### Adding Manifest
+REF to spec: [W3 Web Application Manifest](https://w3c.github.io/manifest/#web-application-manifest).  
+  
+##### Difference manifest.json vs manifest.webmanifest vs site.webmanifest
+Apparently no real difference although most comments & the spec lean towards using ```manifest.webmanifest```.  
+  
+Include is using the following:
+```
+<!-- Startup configuration -->
+<link rel="manifest" href="manifest.webmanifest">
+
+<!-- Fallback application metadata for legacy browsers -->
+<meta name="application-name" content="payCheck">
+<link rel="icon" sizes="16x16 32x32 48x48" href="lo_def.ico">
+<link rel="icon" sizes="512x512" href="hi_def.png">
+```
+The manifest
+```
+{
+    "name": "payCheck",
+    "short_name": "payCheck",
+    "icons": [
+        {
+            "src": "/static/icons/android-chrome-192x192.png?v=0.01",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/icons/android-chrome-512x512.png?v=0.01",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#008100",
+    "background_color": "#008100",
+    "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
+    "display": "standalone"
+}
+```
 
 
 
-### icon_ideas/realfavicongenerator.net.2-1/README.md
 
-#### Your Favicon Package
-
-This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16](https://realfavicongenerator.net/change_log#v0.16)
 
 ##### Install instructions
 
