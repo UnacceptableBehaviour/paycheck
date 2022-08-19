@@ -16,7 +16,22 @@
     <meta name="application-name" content="payCheck">
     <meta name="msapplication-TileColor" content="#008100">
     <meta name="msapplication-config" content="static/icons/browserconfig.xml?v=0.01">
-    <meta name="theme-color" content="#008100">    
+    <meta name="theme-color" content="#008100">
+    <!--Service Worker Github Pages-->
+    <!--https://gist.github.com/kosamari/7c5d1e8449b2fbc97d372675f16b566e-->
+    <script>
+      if ('serviceWorker' in navigator) {            
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/paycheck/service_worker.js', {scope: '/paycheck/'})
+              .then((reg) => {
+                console.log('SW registered - scope:', reg.scope); // reg.scope: http://localhost:50999/                    
+                console.log('Service worker registered.', reg);              
+              });
+        });
+      } else {
+        console.log("serviceWorker NOT in navigator");
+      }          
+    </script>      
 </head>
 
 <body style="font-family:'Arial';">

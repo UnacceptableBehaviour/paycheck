@@ -110,15 +110,16 @@ Include is using the following:
 ```
 {
   "name": "payCheck",
+  "id": "/paycheck/",
   "short_name": "payCheck",
   "icons": [
     {
-      "src": "/static/icons/android-chrome-192x192.png?v=0.01",
+      "src": "./icons/android-chrome-192x192.png?v=0.01",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/static/icons/android-chrome-512x512.png?v=0.01",
+      "src": "./icons/android-chrome-512x512.png?v=0.01",
       "sizes": "512x512",
       "type": "image/png"
     }
@@ -134,6 +135,13 @@ Include is using the following:
 
 ##### ID
 https://developer.chrome.com/blog/pwa-manifest-id/?utm_source=devtools
+
+##### Icon paths
+Icon path are relative to manifest file.
+```
+GOOD!! "src": "./icons/android-chrome-192x192.png?v=0.01",
+NOGOOD "src": "paycheck/static/icons/android-chrome-512x512.png?v=0.01",
+```
 
 ##### Manifest Difference between "scope": "./" vs "scope": "/"
 The scope member is a string that defines the navigation scope of this web application's application context. It restricts what web pages can be viewed while the manifest is applied. If the user **navigates outside** the scope, it **reverts to a normal web page inside a browser tab or window**.

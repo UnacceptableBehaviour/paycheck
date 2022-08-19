@@ -9,7 +9,7 @@
       "type": "image/png"
     },
     {
-      "src": "paycheck/static/icons/android-chrome-512x512.png?v=0.01",
+      "src": "./icons/android-chrome-512x512.png?v=0.01",
       "sizes": "512x512",
       "type": "image/png"
     }
