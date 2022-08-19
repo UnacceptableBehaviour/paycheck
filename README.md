@@ -45,30 +45,30 @@ Start URL:https://unacceptablebehaviour.github.io/paycheck/
 Just hires recommended icons.
   
 **Windows Metro**  
-Use original favicon.
-Use colour: #008100
-Declare assets in ```browserconfig.xml```
-* SML square
-* MED square
-Linked to in HTML: ```<meta name="msapplication-config" content="/static/icons/browserconfig.xml">```
+Use original favicon.  
+Use colour: #008100  
+Declare assets in ```browserconfig.xml```  
+* SML square  
+* MED square  
+Linked to in HTML: ```<meta name="msapplication-config" content="/static/icons/browserconfig.xml">```  
   
 **macOS Safari**  
-Turn image into monochrome (this one already is)
-Theme colour #008100
+Turn image into monochrome (this one already is)  
+Theme colour #008100  
   
 **Favicon Generator Options**  
-Path: /static/icons
-http://example.com/favicon.ico?V=0.01
-Compression:Default
-AppName: payCheck
+Path: /static/icons  
+http://example.com/favicon.ico?V=0.01  
+Compression:Default  
+AppName: payCheck  
 Additional files: README.md html_code.html 
   
 ### Notes on Above 
-Icon set Version: scratch/icon_ideas/realfavicongenerator.net.2-1b
+Icon set Version: scratch/icon_ideas/realfavicongenerator.net.2-1b  
   
-This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16](https://realfavicongenerator.net/change_log#v0.16)
+This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16](https://realfavicongenerator.net/change_log#v0.16)  
   
-Checking the favicon version adds version to a lot of things!
+Checking the favicon version adds version to a lot of things!  
 ```
 CHECK: http://example.com/favicon.ico?V=0.01
 <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png?v=0.01">
@@ -80,11 +80,11 @@ CHECK: http://example.com/favicon.ico?V=0.01
 <meta name="msapplication-config" content="/static/icons/browserconfig.xml?v=0.01">
 ```
 
-##### Download zip of items
-Experiments in ```/paycheck/scratch```
-Prototype 1 in ```/paycheck/scratch/realfavicongenerator.net.2-1```
-Image files in ```paycheck/docs/static/icons```
-favicon.ico in root: ```paycheck/docs```
+#### Download zip of items
+Experiments in ```/paycheck/scratch```  
+Prototype 1 in ```/paycheck/scratch/realfavicongenerator.net.2-1```  
+Image files in ```paycheck/docs/static/icons```  
+favicon.ico in root: ```paycheck/docs```  
   
 REF: https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs.  
   
@@ -92,10 +92,10 @@ REF: https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-f
 REF to spec: [W3 Web Application Manifest](https://w3c.github.io/manifest/#web-application-manifest). 
 [Ref Mozilla Clear Concise](https://developer.mozilla.org/en-US/docs/Web/Manifest).  
   
-##### Difference manifest.json vs manifest.webmanifest vs site.webmanifest
+#### Difference manifest.json vs manifest.webmanifest vs site.webmanifest
 Apparently no real difference although most comments & the spec lean towards using ```manifest.webmanifest```.  
   
-Include is using the following:
+Include is using the following:  
 ```
 <!-- Startup configuration -->
 <link rel="manifest" href="manifest.webmanifest">
@@ -138,7 +138,7 @@ The scope member is a string that defines the navigation scope of this web appli
   
 The paths in the Q are relative paths, relative to the manifest file, one up from index.html.  
   
-Index.html is here:
+index.html is here:
 ```
 "scope": "https://unacceptablebehaviour.github.io/paycheck/",
 ```
@@ -161,8 +161,8 @@ Insert the following code in the `head` section of html pages:
 <meta name="theme-color" content="#008100">    
 ```
 
-
+  
 
 ## QUESTIONS / TODO
-In manifest file try "display": "fullscreen"
-Check favicon with the [favicon checker](https://realfavicongenerator.net/favicon_checker)
+In manifest file try "display": "fullscreen"  
+Check favicon with the [favicon checker](https://realfavicongenerator.net/favicon_checker)  
