@@ -87,7 +87,8 @@ favicon.ico in root: ```paycheck/docs```
 REF: https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs.  
   
 ### Adding Manifest
-REF to spec: [W3 Web Application Manifest](https://w3c.github.io/manifest/#web-application-manifest).  
+REF to spec: [W3 Web Application Manifest](https://w3c.github.io/manifest/#web-application-manifest). 
+[Ref Mozilla Clear Concise](https://developer.mozilla.org/en-US/docs/Web/Manifest).  
   
 ##### Difference manifest.json vs manifest.webmanifest vs site.webmanifest
 Apparently no real difference although most comments & the spec lean towards using ```manifest.webmanifest```.  
@@ -102,57 +103,64 @@ Include is using the following:
 <link rel="icon" sizes="16x16 32x32 48x48" href="lo_def.ico">
 <link rel="icon" sizes="512x512" href="hi_def.png">
 ```
-The manifest
+  
+#### The manifest
 ```
 {
-    "name": "payCheck",
-    "short_name": "payCheck",
-    "icons": [
-        {
-            "src": "/static/icons/android-chrome-192x192.png?v=0.01",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "/static/icons/android-chrome-512x512.png?v=0.01",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
-    "theme_color": "#008100",
-    "background_color": "#008100",
-    "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
-    "display": "standalone"
+  "name": "payCheck",
+  "short_name": "payCheck",
+  "icons": [
+    {
+      "src": "/static/icons/android-chrome-192x192.png?v=0.01",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icons/android-chrome-512x512.png?v=0.01",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#008100",
+  "background_color": "#008100",
+  "scope": "https://unacceptablebehaviour.github.io/paycheck/",
+  "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
+  "display": "standalone",
+  "orientation": "any"
 }
 ```
 
-
-
-
-
-##### Install instructions
-
-To install this package:
-
-Extract this package in the root of your web site. If your site is <code>http://www.example.com</code>, you should be able to access a file named <code>http://www.example.com/favicon.ico</code>.
-
-Insert the following code in the `head` section of your pages:
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#008100">
-    <meta name="apple-mobile-web-app-title" content="payCheck">
-    <meta name="application-name" content="payCheck">
-    <meta name="msapplication-TileColor" content="#00a300">
-    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
-    <meta name="theme-color" content="#008100">
+##### Manifest Difference between "scope": "./" vs "scope": "/"
+The scope member is a string that defines the navigation scope of this web application's application context. It restricts what web pages can be viewed while the manifest is applied. If the user **navigates outside** the scope, it **reverts to a normal web page inside a browser tab or window**.
+**If the scope is a relative URL, the base URL will be the URL of the manifest.**
   
-*Optional* - Check your favicon with the [favicon checker](https://realfavicongenerator.net/favicon_checker)
+The paths in the Q are relative paths, relative to the manifest file, one up from index.html.  
   
+Index.html is here:
+```
+"scope": "https://unacceptablebehaviour.github.io/paycheck/",
+```
+
+
+#### HTML - Icon/Manifest support
+  
+Insert the following code in the `head` section of html pages:  
+```
+<link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png?v=0.01">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png?v=0.01">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png?v=0.01">
+<link rel="manifest" href="/static/icons/site.webmanifest?v=0.01">
+<link rel="mask-icon" href="/static/icons/safari-pinned-tab.svg?v=0.01" color="#008100">
+<link rel="shortcut icon" href="/static/icons/favicon.ico?v=0.01">
+<meta name="apple-mobile-web-app-title" content="payCheck">
+<meta name="application-name" content="payCheck">
+<meta name="msapplication-TileColor" content="#008100">
+<meta name="msapplication-config" content="/static/icons/browserconfig.xml?v=0.01">
+<meta name="theme-color" content="#008100">    
+```
+
 
 
 ## QUESTIONS / TODO
-Where should the browserconfig.xml go on the site? Looks like windows config item.
-
+In manifest file try "display": "fullscreen"
+Check favicon with the [favicon checker](https://realfavicongenerator.net/favicon_checker)
