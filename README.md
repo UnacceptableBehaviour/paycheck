@@ -132,6 +132,9 @@ Include is using the following:
 }
 ```
 
+##### ID
+https://developer.chrome.com/blog/pwa-manifest-id/?utm_source=devtools
+
 ##### Manifest Difference between "scope": "./" vs "scope": "/"
 The scope member is a string that defines the navigation scope of this web application's application context. It restricts what web pages can be viewed while the manifest is applied. If the user **navigates outside** the scope, it **reverts to a normal web page inside a browser tab or window**.
 **If the scope is a relative URL, the base URL will be the URL of the manifest.**
