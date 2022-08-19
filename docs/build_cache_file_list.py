@@ -4,7 +4,7 @@ from pprint import pprint
 
 # source = ''       # when using root - check
 source = 'docs'     # when using /docs as source - removes docs from the path
-repo_name = 'js_canvas_IO_docs'
+repo_name = 'paycheck'
 project_root = Path('/Users/simon/a_syllabus/lang/html_css_js/paycheck/docs/static')
 
 # const FILES_TO_CACHE = [
