@@ -1,6 +1,7 @@
 # paycheck
 Single page PWA to add up hours, and work out tax and NI contributions to compare to payroll.
 
+
 ## Create Icon
 This will be the main icon from which all other client facing touch icons are derived.  
 Tool: [Inkscape](https://inkscape.org/release/inkscape-1.2.1/) Desktop, Open Source   
@@ -22,46 +23,47 @@ Understand relationship between DPI and PX in SVG
 What aren't these independent resolution settings?   
 Inkscape setting image to 512 x 512 pixels 72 dpi for web  
   
+
 ## Process ICON file into platform images & manifest file:
 There are quite a few site that will do this I used https://realfavicongenerator.net/ [here](https://realfavicongenerator.net/)  
   
 ### Upload SVG (create png assets)  
 Walk various settings using GUI  
   
-##### Favicon for Desktop Browsers and Google Result Pages
+**Favicon for Desktop Browsers and Google Result Pages**  
 Default
   
-##### Favicon for iOS - Web Clip
+**Favicon for iOS - Web Clip**  
 Add background colour: #008100
 Margin: 0px
 Assets: ios7 & later, Check: declare only hires icon
   
-##### Favicon for Android
+**Favicon for Android**  
 Background colour #008100
 Apply Drop shadow
 Start URL:https://unacceptablebehaviour.github.io/paycheck/
 Just hires recommended icons.
   
-##### Windows Metro
+**Windows Metro**  
 Use original favicon.
 Use colour: #008100
 Declare assets in ```browserconfig.xml```
 * SML square
 * MED square
 Linked to in HTML: ```<meta name="msapplication-config" content="/static/icons/browserconfig.xml">```
-
-##### macOS Safari
+  
+**macOS Safari**  
 Turn image into monochrome (this one already is)
 Theme colour #008100
-
-##### Favicon Generator Options
+  
+**Favicon Generator Options**  
 Path: /static/icons
 http://example.com/favicon.ico?V=0.01
 Compression:Default
 AppName: payCheck
 Additional files: README.md html_code.html 
-
-#### Notes on Above 
+  
+### Notes on Above 
 Icon set Version: scratch/icon_ideas/realfavicongenerator.net.2-1b
   
 This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16](https://realfavicongenerator.net/change_log#v0.16)
