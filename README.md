@@ -34,15 +34,15 @@ Walk various settings using GUI
 Default
   
 **Favicon for iOS - Web Clip**  
-Add background colour: #008100
-Margin: 0px
-Assets: ios7 & later, Check: declare only hires icon
+Add background colour: #008100  
+Margin: 0px  
+Assets: ios7 & later, Check: declare only hires icon  
   
 **Favicon for Android**  
-Background colour #008100
-Apply Drop shadow
-Start URL:https://unacceptablebehaviour.github.io/paycheck/
-Just hires recommended icons.
+Background colour #008100  
+Apply Drop shadow  
+Start URL:https://unacceptablebehaviour.github.io/paycheck/  
+Just hires recommended icons.  
   
 **Windows Metro**  
 Use original favicon.  
@@ -95,7 +95,7 @@ REF to spec: [W3 Web Application Manifest](https://w3c.github.io/manifest/#web-a
 #### Difference manifest.json vs manifest.webmanifest vs site.webmanifest
 Apparently no real difference although most comments & the spec lean towards using ```manifest.webmanifest```.  
   
-Include is using the following:  
+**Include is using the following:**  
 ```
 <!-- Startup configuration -->
 <link rel="manifest" href="manifest.webmanifest">
@@ -106,7 +106,7 @@ Include is using the following:
 <link rel="icon" sizes="512x512" href="hi_def.png">
 ```
   
-#### The manifest
+#### THE MANIFEST
 ```
 {
   "name": "payCheck",
@@ -133,17 +133,24 @@ Include is using the following:
 }
 ```
 
-##### ID
-https://developer.chrome.com/blog/pwa-manifest-id/?utm_source=devtools
+#### FIELDS
+**ID**  
 
-##### Icon paths
-Icon path are relative to manifest file.
+https://developer.chrome.com/blog/pwa-manifest-id/?utm_source=devtools
+  
+
+#### Icon paths
+Icon path are **relative to manifest file**.
+GOOD
 ```
-GOOD!! "src": "./icons/android-chrome-192x192.png?v=0.01",
+  "src": "./icons/android-chrome-192x192.png?v=0.01",
+```
+BAD
+```
 NOGOOD "src": "paycheck/static/icons/android-chrome-512x512.png?v=0.01",
 ```
-
-##### Manifest Difference between "scope": "./" vs "scope": "/"
+  
+#### Manifest Difference between "scope": "./" vs "scope": "/"
 The scope member is a string that defines the navigation scope of this web application's application context. It restricts what web pages can be viewed while the manifest is applied. If the user **navigates outside** the scope, it **reverts to a normal web page inside a browser tab or window**.
 **If the scope is a relative URL, the base URL will be the URL of the manifest.**
   

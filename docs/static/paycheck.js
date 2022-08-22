@@ -4,7 +4,7 @@ function cl(args) {
 };
 
 // where to look in local storage for current state
-const STATE_KEY = 'state_key';
+const LAST_KNOWN_STATE_KEY = 'state_key';
 
 // +/- Days create a new Date object
 Date.prototype.copyAddDays = function(days) {
@@ -17,34 +17,6 @@ Date.prototype.addDays = function(days) {
     this.setDate(this.getDate() + parseInt(days));
     return this;
 };
-
-class PayDayStartWeekDict{
-  static refDate = new Date('2022-08-12T04:00:00');
-  static refWeekStart = 28;
-
-  nextPayDay(date){ 
-    
-  } 
-}
-
-//function loadPayDayStartWeekDict(startDate) {
-//  var dict;
-//  let weekNo = 28;
-//  for (let i=0; i<20: i+=1) {
-//    //code
-//  }
-//  cl(``);
-//}
-
-let refDate = new Date('2022-08-12T04:00:00');
-let weekNo = 28;
-cl(`${weekNo} - ${refDate.toISOString()}`);
-for (let i=0; i<20; i+=1) {
-  refDate.addDays(28);
-  weekNo += 4;
-  if (weekNo > 52) weekNo = weekNo - 52;
-  cl(`${weekNo} - ${refDate.toISOString()}`);
-}
 
 
 //const date = payday;
@@ -129,13 +101,32 @@ class PayCycle4wk{
   static DAYS_IN_CYCLE = 28;
   static prefixes = ['sun','mon','tue','wed','thu','fri','sat'];
   static postfixes = ['_date_js','_in','_break','_out','_hrs','_dhrs','',''];
+  static nextPayDayAfterToday(thisDate = new Date()) {
+    //cl(`now in ms: ${thisDate.getTime()}`);   // 729 - ms passed since entering function? Seems a lot!
+    let refDate = new Date('2022-08-12T04:00:00');
+    //let refMsSinceEpoch = refDate.getTime();
+    let refWeekNo = 28;
+    let thisDayMsSinceEpoch = thisDate.getTime();
+    
+    for (let i=0; i<200; i+=1) {  // 13 steps = 1 year
+      if (thisDayMsSinceEpoch < refDate.getTime()) return [refDate, refWeekNo];
+      refDate.addDays(28);
+      refWeekNo += 4;
+      if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
+      //cl(`nextPD: ${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
+    }
+    
+    // catch
+    refDate = new Date('2022-08-12T04:00:00'); refWeekNo = 28;
+    return [refDate, refWeekNo];
+  }
   
   constructor(payDay, startWkNo){ // let pc = new PayCycle4wk(new Date(2022, 07, 12)); // the month is 0-indexed
     this.payDay   = payDay;
     this.cutOff   = payday.copyAddDays(PayCycle4wk.OFFSET_CUTOFF);
     this.payStart = payday.copyAddDays(PayCycle4wk.OFFSET_START);
     this.weekNo   = 0;  // 0-3
-    this.weekNos  = [startWkNo, startWkNo+1, startWkNo+2, startWkNo+3];
+    this.weekNos  = [startWkNo, (startWkNo+1) % 52, (startWkNo+2) % 52, (startWkNo+3) % 52];
     this.weekTotalMins = [0,0,0,0];
     this.cycleTotalMins = 0;
     // localstorage key format: 2022_HRS_28-31_12AUG      
@@ -192,6 +183,8 @@ class PayCycle4wk{
     return `${this.weekNo+1}:${this.weekNos[this.weekNo]} ~  ${start.HRdate} - ${end.HRdate}`;
   }
 
+  
+  
   getNextPayDay(){
     var returnDate = this.payDay.copyAddDays(PayCycle4wk.DAYS_IN_CYCLE);
     var weekNo = this.weekNos[0] += 4;
@@ -341,6 +334,7 @@ cl(payStart2);
 const date = payday;
 const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
 const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
+var milliSeconds = date.getMilliseconds();
 
 let start = '0730';
 let finish = '1553';
@@ -379,6 +373,41 @@ cl(`minsToHDecimalReadable:${Day.minsToHDecimalReadable(75)} = 1.25`);
 
 
 
+//let refDate = new Date('2022-08-12T04:00:00');
+//let refMsSinceEpoch = refDate.getTime();
+//let refWeekNo = 28;
+//cl(`${refWeekNo} - ${refDate.toISOString()}`);
+//for (let i=0; i<20; i+=1) {
+//  refDate.addDays(28);
+//  refWeekNo += 4;
+//  if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
+//  cl(`${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
+//}
+//
+//function nextPayDayAfterToday(thisDate = new Date()) {
+//  //cl(`now in ms: ${thisDate.getTime()}`);   // 729 - ms passed since entering function? Seems a lot!
+//  let refDate = new Date('2022-08-12T04:00:00');
+//  //let refMsSinceEpoch = refDate.getTime();
+//  let refWeekNo = 28;
+//  let thisDayMsSinceEpoch = thisDate.getTime();
+//  
+//  for (let i=0; i<200; i+=1) {  // 13 steps = 1 year
+//    if (thisDayMsSinceEpoch < refDate.getTime()) return [refDate, refWeekNo];
+//    refDate.addDays(28);
+//    refWeekNo += 4;
+//    if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
+//    cl(`nextPD: ${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
+//  }
+//  
+//  // catch
+//  refDate = new Date('2022-08-12T04:00:00'); refWeekNo = 28;
+//  return [refDate, refWeekNo];
+//}
+
+cl(PayCycle4wk.nextPayDayAfterToday());
+cl(PayCycle4wk.nextPayDayAfterToday(new Date('2022-09-10T04:00:00')));
+cl(PayCycle4wk.nextPayDayAfterToday(new Date('2022-10-15T04:00:00')));
+
 // localstorage key format: 2022_HRS_28-31_12AUG
 // setItem(key)
 // getItem(key)
@@ -391,21 +420,27 @@ cl(`minsToHDecimalReadable:${Day.minsToHDecimalReadable(75)} = 1.25`);
 
 // TODO
 cl('>> = = = > CREATING new 4 Wk Cycle object')
-var pc = new PayCycle4wk(new Date('2022-08-12T04:00:00'), 28);
+var pc = new PayCycle4wk(...PayCycle4wk.nextPayDayAfterToday());
 var stateKey = '';
 cl(pc);
 cl('- - E');
-if (STATE_KEY in localStorage) {  // retrieve current statekey, and 4wk cycle object
-  stateKey = localStorage.getItem(STATE_KEY);
-  let jsonObj = JSON.parse(localStorage.getItem(stateKey));
-  cl('JSON.parse - S');
-  cl(pc.initFromJSON(jsonObj));
-  cl('JSON.parse - E');
-  cl(`LOADED ${stateKey} PayCycle4wk object from localStrorage - KEYS Match: ${stateKey === pc.localStorageKey}`);  
+if (LAST_KNOWN_STATE_KEY in localStorage) {  // retrieve current statekey, and 4wk cycle object
+  stateKey = localStorage.getItem(LAST_KNOWN_STATE_KEY);
+  if (stateKey in localStorage) {
+    let jsonObj = JSON.parse(localStorage.getItem(stateKey));
+    cl('JSON.parse - S');
+    cl(pc.initFromJSON(jsonObj));
+    cl('JSON.parse - E');
+    cl(`LOADED ${stateKey} PayCycle4wk object from localStrorage - KEYS Match: ${stateKey === pc.localStorageKey}`);  
+  }
 }
 else {                            // save a new state key
-  localStorage.setItem(STATE_KEY, pc.localStorageKey);
+  localStorage.setItem(LAST_KNOWN_STATE_KEY, pc.localStorageKey);
 }
+
+
+
+
 
 
 window.addEventListener('load',function(){
@@ -453,7 +488,7 @@ window.addEventListener('load',function(){
       let jsonObj = JSON.parse(localStorage.getItem(pc.localStorageKey));
       cl(pc.initFromJSON(jsonObj));          
     }    
-    localStorage.setItem(STATE_KEY, pc.localStorageKey);
+    localStorage.setItem(LAST_KNOWN_STATE_KEY, pc.localStorageKey);
         
     pc.updateHTML();                              // update view
   });
@@ -470,7 +505,7 @@ window.addEventListener('load',function(){
       let jsonObj = JSON.parse(localStorage.getItem(pc.localStorageKey));
       cl(pc.initFromJSON(jsonObj));                
     }
-    localStorage.setItem(STATE_KEY, pc.localStorageKey);
+    localStorage.setItem(LAST_KNOWN_STATE_KEY, pc.localStorageKey);
         
     pc.updateHTML();                              // update view
 
