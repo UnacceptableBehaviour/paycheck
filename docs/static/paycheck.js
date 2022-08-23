@@ -511,9 +511,22 @@ window.addEventListener('load',function(){
 
   });
 
+  // DEBUG
+  var win = window,
+      doc = document,
+      docElem = doc.documentElement,
+      body = doc.getElementsByTagName('body')[0],
+      x = win.innerWidth || docElem.clientWidth || body.clientWidth,
+      y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
   
+  document.querySelector('#dgb_01').textContent = `WIN X:${win.innerWidth} Y:${win.innerHeight}`;
+  document.querySelector('#dgb_02').textContent = `docE X:${docElem.clientWidth} Y:${docElem.clientHeight}`;
+  document.querySelector('#dgb_03').textContent = `BODY X:${body.clientWidth} Y:${body.clientHeight}`;
+  
+  //cl(`DOC X:${x} Y:${y}`);
 
 });
+
 
 
 // TODO - minimum viable product
