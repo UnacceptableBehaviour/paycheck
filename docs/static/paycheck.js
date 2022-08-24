@@ -37,7 +37,7 @@ class Day{
   constructor(date){
     //this.date = date;
     this.day = Day.numToDay[date.getDay()];     // Mon
-    this.HRdate = `${date.getDate()} ${Day.numToMonth[date.getMonth()]}`;       // 25 Aug
+    this.HRdate = `${date.getDate()}\u00A0${Day.numToMonth[date.getMonth()]}`;  // 25&nbspAug - 25 Aug
     this.inTime = '0000';     // 0728
     this.breakTime = '30';    // 30     break time in mins
     this.outTime = '0000';    // 1553
@@ -308,118 +308,118 @@ class PayCycle4wk{
 
 
 
-// - - - - - - - - - - - - - - - - - - - - - - - - TESTS - - - - - - - - - - - - - - - = = = <
-// reset to fill in standard hours
-// reset to clear all hours to 0 and breaks to 30
-// pension contrib LUT based on anual income
-//let payday = Date(2022-08-12);  // returns string: Thu Aug 11 2022 07:28:12 GMT+0100 (British Summer Time)
-//let payday = new Date(2022-08-12);  // returns new date object: Thu Jan 01 1970 01:00:02 GMT+0100 (Greenwich Mean Time)
-//let payday = new Date(Date.parse(2022-08-12));  // returns new date object: using parse DISCOURAGED
-//use
-//const birthday2 = new Date('1995-12-17T03:24:00')   // This is ISO8601-compliant and will work reliably
-//or
-//const birthday3 = new Date(1995, 11, 17)            // the month is 0-indexed
-const payday = new Date('2022-08-12T04:00:00')
-cl(payday);
-let nextPayday = payday.copyAddDays(28);
-cl(nextPayday);
-let payCutOff = payday.copyAddDays(-6);
-cl(payCutOff);
-let payStart = payCutOff.copyAddDays(-27);
-cl(payStart);
-let payStart2 = payday.copyAddDays(-33);
-cl(payStart2);
-
-
-const date = payday;
-const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
-const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
-var milliSeconds = date.getMilliseconds();
-
-let start = '0730';
-let finish = '1553';
-
-// finish time to mins
-let hrsF = parseInt(finish.substr(0,2));
-let minF = parseInt(finish.substr(2,4));
-let to = hrsF*60 + parseInt(minF);
-cl(`finish: ${finish} - from SB 953: ${to} - hrs: ${hrsF} - mins:${minF} - hrs ${finish.slice(0,2)}`);
-
-// start time to mins inc 15m roundup
-let hrsS = parseInt(start.substr(0,2));
-let minS = parseInt(start.substr(2,4));
-
-let roundupMins = minS + (15 - (minS % 15));  // round up to the next nearest 15min 0701 = 0715 walmart sneakiness
-//for (let loopminS = 0; loopminS < 61; loopminS +=1 ) {
-//  roundupMins = loopminS? (loopminS-1) + (15 - ((loopminS-1) % 15)) : 0;    // round to nearest 15m  0=0, 1-15=15, 16-30=30, 31-45=45, 46-59=60
-//  cl(`${loopminS} near 15= ${roundupMins}`);
-//}
-let from = hrsS*60 + roundupMins;
-
-cl(`start: ${start} - from SB 450: ${from} - hrs: ${hrsS} - mins:${minS} - rnd:${roundupMins} - hrs ${start.slice(0,2)}`);
-//console.assert(from === 450);
-
-// mins to hhHmm 7H53
-// mins to decimal HRS 7.88Hrs
-let breakStr = '30';
-let breakMins = parseInt(breakStr);
-let totalMins = to - from - breakMins;
-let redableHM = `${Math.floor(totalMins / 60)}H${totalMins % 60}`;
-let decimalHM = `${(Math.floor(totalMins / 60) + ((totalMins % 60) / 60)).toFixed(2)}`;
-cl(`total Mins: ${totalMins} = ${redableHM} = ${decimalHM}`);
-
-cl(`minsToHMReadable:${Day.minsToHMReadable(75)} = 1H15`);
-cl(`minsToHDecimalReadable:${Day.minsToHDecimalReadable(75)} = 1.25`);
-
-
-
-//let refDate = new Date('2022-08-12T04:00:00');
-//let refMsSinceEpoch = refDate.getTime();
-//let refWeekNo = 28;
-//cl(`${refWeekNo} - ${refDate.toISOString()}`);
-//for (let i=0; i<20; i+=1) {
-//  refDate.addDays(28);
-//  refWeekNo += 4;
-//  if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
-//  cl(`${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
-//}
+//// - - - - - - - - - - - - - - - - - - - - - - - - TESTS - - - - - - - - - - - - - - - = = = <
+//// reset to fill in standard hours
+//// reset to clear all hours to 0 and breaks to 30
+//// pension contrib LUT based on anual income
+////let payday = Date(2022-08-12);  // returns string: Thu Aug 11 2022 07:28:12 GMT+0100 (British Summer Time)
+////let payday = new Date(2022-08-12);  // returns new date object: Thu Jan 01 1970 01:00:02 GMT+0100 (Greenwich Mean Time)
+////let payday = new Date(Date.parse(2022-08-12));  // returns new date object: using parse DISCOURAGED
+////use
+////const birthday2 = new Date('1995-12-17T03:24:00')   // This is ISO8601-compliant and will work reliably
+////or
+////const birthday3 = new Date(1995, 11, 17)            // the month is 0-indexed
+//const payday = new Date('2022-08-12T04:00:00')
+//cl(payday);
+//let nextPayday = payday.copyAddDays(28);
+//cl(nextPayday);
+//let payCutOff = payday.copyAddDays(-6);
+//cl(payCutOff);
+//let payStart = payCutOff.copyAddDays(-27);
+//cl(payStart);
+//let payStart2 = payday.copyAddDays(-33);
+//cl(payStart2);
 //
-//function nextPayDayAfterToday(thisDate = new Date()) {
-//  //cl(`now in ms: ${thisDate.getTime()}`);   // 729 - ms passed since entering function? Seems a lot!
-//  let refDate = new Date('2022-08-12T04:00:00');
-//  //let refMsSinceEpoch = refDate.getTime();
-//  let refWeekNo = 28;
-//  let thisDayMsSinceEpoch = thisDate.getTime();
-//  
-//  for (let i=0; i<200; i+=1) {  // 13 steps = 1 year
-//    if (thisDayMsSinceEpoch < refDate.getTime()) return [refDate, refWeekNo];
-//    refDate.addDays(28);
-//    refWeekNo += 4;
-//    if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
-//    cl(`nextPD: ${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
-//  }
-//  
-//  // catch
-//  refDate = new Date('2022-08-12T04:00:00'); refWeekNo = 28;
-//  return [refDate, refWeekNo];
-//}
-
-cl(PayCycle4wk.nextPayDayAfterToday());
-cl(PayCycle4wk.nextPayDayAfterToday(new Date('2022-09-10T04:00:00')));
-cl(PayCycle4wk.nextPayDayAfterToday(new Date('2022-10-15T04:00:00')));
-
-// localstorage key format: 2022_HRS_28-31_12AUG
-// setItem(key)
-// getItem(key)
-// removeItem(key)
-// clear()
-// key(idx)  // to iterate though keys
+//
+//const date = payday;
+//const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
+//const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
+//var milliSeconds = date.getMilliseconds();
+//
+//let start = '0730';
+//let finish = '1553';
+//
+//// finish time to mins
+//let hrsF = parseInt(finish.substr(0,2));
+//let minF = parseInt(finish.substr(2,4));
+//let to = hrsF*60 + parseInt(minF);
+//cl(`finish: ${finish} - from SB 953: ${to} - hrs: ${hrsF} - mins:${minF} - hrs ${finish.slice(0,2)}`);
+//
+//// start time to mins inc 15m roundup
+//let hrsS = parseInt(start.substr(0,2));
+//let minS = parseInt(start.substr(2,4));
+//
+//let roundupMins = minS + (15 - (minS % 15));  // round up to the next nearest 15min 0701 = 0715 walmart sneakiness
+////for (let loopminS = 0; loopminS < 61; loopminS +=1 ) {
+////  roundupMins = loopminS? (loopminS-1) + (15 - ((loopminS-1) % 15)) : 0;    // round to nearest 15m  0=0, 1-15=15, 16-30=30, 31-45=45, 46-59=60
+////  cl(`${loopminS} near 15= ${roundupMins}`);
+////}
+//let from = hrsS*60 + roundupMins;
+//
+//cl(`start: ${start} - from SB 450: ${from} - hrs: ${hrsS} - mins:${minS} - rnd:${roundupMins} - hrs ${start.slice(0,2)}`);
+////console.assert(from === 450);
+//
+//// mins to hhHmm 7H53
+//// mins to decimal HRS 7.88Hrs
+//let breakStr = '30';
+//let breakMins = parseInt(breakStr);
+//let totalMins = to - from - breakMins;
+//let redableHM = `${Math.floor(totalMins / 60)}H${totalMins % 60}`;
+//let decimalHM = `${(Math.floor(totalMins / 60) + ((totalMins % 60) / 60)).toFixed(2)}`;
+//cl(`total Mins: ${totalMins} = ${redableHM} = ${decimalHM}`);
+//
+//cl(`minsToHMReadable:${Day.minsToHMReadable(75)} = 1H15`);
+//cl(`minsToHDecimalReadable:${Day.minsToHDecimalReadable(75)} = 1.25`);
+//
+//
+//
+////let refDate = new Date('2022-08-12T04:00:00');
+////let refMsSinceEpoch = refDate.getTime();
+////let refWeekNo = 28;
+////cl(`${refWeekNo} - ${refDate.toISOString()}`);
+////for (let i=0; i<20; i+=1) {
+////  refDate.addDays(28);
+////  refWeekNo += 4;
+////  if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
+////  cl(`${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
+////}
+////
+////function nextPayDayAfterToday(thisDate = new Date()) {
+////  //cl(`now in ms: ${thisDate.getTime()}`);   // 729 - ms passed since entering function? Seems a lot!
+////  let refDate = new Date('2022-08-12T04:00:00');
+////  //let refMsSinceEpoch = refDate.getTime();
+////  let refWeekNo = 28;
+////  let thisDayMsSinceEpoch = thisDate.getTime();
+////  
+////  for (let i=0; i<200; i+=1) {  // 13 steps = 1 year
+////    if (thisDayMsSinceEpoch < refDate.getTime()) return [refDate, refWeekNo];
+////    refDate.addDays(28);
+////    refWeekNo += 4;
+////    if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
+////    cl(`nextPD: ${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
+////  }
+////  
+////  // catch
+////  refDate = new Date('2022-08-12T04:00:00'); refWeekNo = 28;
+////  return [refDate, refWeekNo];
+////}
+//
+//cl(PayCycle4wk.nextPayDayAfterToday());
+//cl(PayCycle4wk.nextPayDayAfterToday(new Date('2022-09-10T04:00:00')));
+//cl(PayCycle4wk.nextPayDayAfterToday(new Date('2022-10-15T04:00:00')));
+//
+//// localstorage key format: 2022_HRS_28-31_12AUG
+//// setItem(key)
+//// getItem(key)
+//// removeItem(key)
+//// clear()
+//// key(idx)  // to iterate though keys
 
 // - - - - - - - - - - - - - - - - - - - - - - - - APP START- - - - - - - - - - - - - - - = = = <
 
 
-// TODO
-cl('>> = = = > CREATING new 4 Wk Cycle object')
+
+cl('>> = = = > CREATING new 4 Wk Cycle object');
 var pc = new PayCycle4wk(...PayCycle4wk.nextPayDayAfterToday());
 var stateKey = '';
 cl(pc);
@@ -530,9 +530,32 @@ window.addEventListener('load',function(){
 
 
 // TODO - minimum viable product
-// add local storage for persistence
+// add resposive display
+//    detecting device type mobile / desktop physical screen size in cm or inches
+//    dimension show as approx:
+//    desktop: 1120 x 600
+//    mobile:  980 x 1964
+//
+// FCC video tutorial - see
+// see repos/lang/html_css_js/css_tests : 
+//
+// Android Dev info
+// https://developer.android.com/guide/practices/screens_support
+
+// Media Query for different Devices
+// https://css-tricks.com/snippets/css/media-queries-for-standard-devices/
+
+// CRITICAL
+
+// sharable summary: print / email 
 // add photo button to image clockin system
 // add QR code to spread app
+
+// HIGH
+// synch data desktop /mobile
+// need login (w/ gmail?)
+
+// MEDIUM
 // add rollover calc for (night shift workers) IE start: 2200 end 0800
 // add feedback form
 // add email feedback
