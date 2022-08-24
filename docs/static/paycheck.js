@@ -123,8 +123,8 @@ class PayCycle4wk{
   
   constructor(payDay, startWkNo){ // let pc = new PayCycle4wk(new Date(2022, 07, 12)); // the month is 0-indexed
     this.payDay   = payDay;
-    this.cutOff   = payday.copyAddDays(PayCycle4wk.OFFSET_CUTOFF);
-    this.payStart = payday.copyAddDays(PayCycle4wk.OFFSET_START);
+    this.cutOff   = payDay.copyAddDays(PayCycle4wk.OFFSET_CUTOFF);
+    this.payStart = payDay.copyAddDays(PayCycle4wk.OFFSET_START);
     this.weekNo   = 0;  // 0-3
     this.weekNos  = [startWkNo, (startWkNo+1) % 52, (startWkNo+2) % 52, (startWkNo+3) % 52];
     this.weekTotalMins = [0,0,0,0];
