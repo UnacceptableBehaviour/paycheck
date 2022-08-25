@@ -190,3 +190,4 @@ Insert the following code in the `head` section of html pages:
 ## QUESTIONS / TODO
 In manifest file try "display": "fullscreen"  
 Check favicon with the [favicon checker](https://realfavicongenerator.net/favicon_checker)  
+Run light

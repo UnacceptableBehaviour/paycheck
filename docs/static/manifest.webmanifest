@@ -14,7 +14,7 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
-    }
+    },
     {
       "src": "/android-chrome-36x36.png",
       "sizes": "36x36",
