@@ -87,7 +87,8 @@ Prototype 1 in ```/paycheck/scratch/realfavicongenerator.net.2-1```
 Image files in ```paycheck/docs/static/icons```  
 favicon.ico in root: ```paycheck/docs```  
   
-REF: https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs.  
+**REF:** Maskable Icons https://web.dev/maskable-icon/#what  
+**REF:** https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs  
   
 ### Adding Manifest
 REF to spec: [W3 Web Application Manifest](https://w3c.github.io/manifest/#web-application-manifest). 
@@ -161,8 +162,9 @@ index.html is here:
 ```
 "scope": "https://unacceptablebehaviour.github.io/paycheck/",
 ```
-
-
+  
+**REF:** Shortcuts & screen shots https://web.dev/add-manifest/  
+  
 #### HTML - Icon/Manifest support
   
 Insert the following code in the `head` section of html pages:  
