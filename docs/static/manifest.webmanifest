@@ -56,7 +56,7 @@
       "sizes": "384x384",
       "type": "image/png",
       "purpose": "maskable"
-    },
+    }
   ],
   "theme_color": "#008100",
   "background_color": "#008100",
