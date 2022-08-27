@@ -10,13 +10,61 @@ body {
 }
 
 button {
-  height: 2.8vh;
-  width: 3.8vw;
+  height: 5vh; 
+  width: 16vw;
+  padding: 1vw;
 }
 
 .font-portrait {
-  font-size: 2.25vh;
+  font-size: 2.5vh;
+  /*padding-top: 5vh;*/
+  /*padding-bottom: 1vh;*/  
 }
+
+.title-text {
+  font-size: 3.5vh;
+  text-align: center;
+}
+
+
+/* flex  items left just - spacebox - item right just */
+/* DDD EEE - - - - - - - AAA BBB CCC*/
+.flexrow-title {
+    /*background-color: #F4FF23;*/
+    display: flex;                  /* select FLEX BOX display functionality */
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.flexrow-title-button {
+    text-align: center;
+}
+
+.flexrow-title-text {
+    flex-grow: 1;
+}
+
+
+/* flex  items left just - spacebox - item right just */
+/* DDD EEE - - - - - - - AAA BBB CCC*/
+.flexrow-container {
+    /*background-color: #F4FF23;*/
+    display: flex;                  /* select FLEX BOX display functionality */
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.flexrow-item {
+    text-align: center;
+}
+
+.flexrow-middle-space {
+    /*height: 34px;*/
+    flex-grow: 1;
+}
+
 
 input {
   font-size: 2.45vh;
@@ -25,8 +73,11 @@ input {
 .paycheck-container td {
   width: 18vw;
 }
-.td-date {
-  width: 20vw;
+
+/*.td-date { width: 20vw; }*/
+
+#tax_code {
+  width: 25vw;
 }
 
 .paycheck-container {
@@ -56,6 +107,7 @@ input {
   grid-row: 30 / span 4;
 }
 
+
 .item {
   padding: 8px;
   background-color: #ECFFE0;  
@@ -63,3 +115,27 @@ input {
   border-radius: 6px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 }
+
+/* tbc - table column */
+.hrs-row {
+  text-align: left;
+  padding-top: 1vh;
+  padding-bottom: 1vh;  
+}
+.wk-row {
+  text-align: left;
+}
+
+.tbc.name {
+  width: 70vw;  
+}
+
+.tbc.fin_data {
+  width: 15vw;
+  text-align: right;
+}
+
+.space-box {
+  background: #FDFFF5;
+}
+

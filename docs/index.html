@@ -36,8 +36,22 @@
 <body style="font-family:'Arial';">
   <div class="paycheck-container font-portrait">
     <div id='ct_paycycle_summary' class='item summary'>
-      <div id='pay_day'><button id='but_4wk_bak' class="font-portrait"><</button><button id='but_4wk_fwd' class="font-portrait">></button> <span>Pay Day: </span><span id='pay_day_js'>js_calc</span><span></span></div>
-      <div id='cut_off'><span>Cut Off: </span><span id='cut_off_js'>js_calc</span></div>
+      <div class='flexrow-title' id='pay_day'>
+        <button class='flexrow-title-button title-text' id='but_4wk_bak'><</button>
+        <button class='flexrow-title-button title-text' id='but_4wk_fwd'>></button>
+        <span class='flexrow-title-text title-text' id='pay_day_js'>js_calc</span>              
+      </div>
+      
+      <div class='wk-info flexrow-container'>
+        <span class='flexrow-item' id='wk_range'>Week Nos: </span>
+        <span class='flexrow-item' id='wk_range_js'>js_calc</span>
+        <span class='flexrow-middle-space space-box'></span>
+        <span class='flexrow-item' id='wk_range_dates_js'>js_calc</span>
+      </div>
+      
+      <div style='display: none;'>
+        <div id='cut_off'><span>Cut Off: </span><span id='cut_off_js'>js_calc</span></div>        
+      </div>
       <form action="" method="">
         <label for="tax_code">Select tax code:</label>
         <input list="tax_codes" name="tax_code" id="tax_code">
@@ -48,15 +62,14 @@
           <option value="Add new code">
         </datalist>
         <!--<input type="submit">-->
-      </form>
-      <div id='wk_range'><span>Week Nos: </span><span id='wk_range_js'>js_calc</span></div>
-      <div id='wk_range_dates'><span>4wk Dates: </span><span id='wk_range_dates_js'>js_calc</span></div>
+      </form>      
     </div>
       <br>
     <div id='ct_daily_hours' class='item daily-hours'>
       <div id='wk_no'>
-        <button id='but_wk_no_bak' class="font-portrait"><</button><button id='but_wk_no_fwd' class="font-portrait">></button>
-        <span>Week No: </span><span id='wk_no_js'>js_calc </span>
+        <button id='but_wk_no_bak' class="font-portrait title-text"><</button>
+        <button id='but_wk_no_fwd' class="font-portrait title-text">></button>
+        <span>WK#:</span><span id='wk_no_js'>js_calc </span>
       </div>
       <br>  
       <table class='hrs-table' id="example">
@@ -142,20 +155,20 @@
     <div id='ct_week_totals' class='item week-totals'>
       <table>
           <thead>
-              <tr>
+              <tr class='wk-row'>
                   <th>Week</th>
                   <th>Hrs</th>
                   <th>DHrs</th>
               </tr>
           </thead>
           <tbody>
-              <tr><td id='r1_wk_no'>js_calc</td><td id='r1_tot_hrs'>js_calc</td><td id='r1_tot_dhrs'>js_calc</td></tr>
-              <tr><td id='r2_wk_no'>js_calc</td><td id='r2_tot_hrs'>js_calc</td><td id='r2_tot_dhrs'>js_calc</td></tr>
-              <tr><td id='r3_wk_no'>js_calc</td><td id='r3_tot_hrs'>js_calc</td><td id='r3_tot_dhrs'>js_calc</td></tr>
-              <tr><td id='r4_wk_no'>js_calc</td><td id='r4_tot_hrs'>js_calc</td><td id='r4_tot_dhrs'>js_calc</td></tr>   
+              <tr class='wk-row'><td id='r1_wk_no'>js_calc</td><td id='r1_tot_hrs'>js_calc</td><td id='r1_tot_dhrs'>js_calc</td></tr>
+              <tr class='wk-row'><td id='r2_wk_no'>js_calc</td><td id='r2_tot_hrs'>js_calc</td><td id='r2_tot_dhrs'>js_calc</td></tr>
+              <tr class='wk-row'><td id='r3_wk_no'>js_calc</td><td id='r3_tot_hrs'>js_calc</td><td id='r3_tot_dhrs'>js_calc</td></tr>
+              <tr class='wk-row'><td id='r4_wk_no'>js_calc</td><td id='r4_tot_hrs'>js_calc</td><td id='r4_tot_dhrs'>js_calc</td></tr>   
           </tbody>
           <tfoot>
-              <tr><td>Total</td><td id='r5_tot_hrs'>js_calc</td><td id='r5_tot_dhrs'>js_calc</td></tr>   
+              <tr class='wk-row'><td>Total</td><td id='r5_tot_hrs'>js_calc</td><td id='r5_tot_dhrs'>js_calc</td></tr>   
           </tfoot>    
       </table>
     </div>
@@ -164,17 +177,17 @@
       <div><b>Estimates & Deductions</b></div>
       <table>
           <tbody>
-              <tr><td id='r1_anual_in_t'>Predicted pre-tax Anual income</td><td id='r1_anual_in'>js_calc</td>  </tr>        
-              <tr><td id='r2_gross_4wk_t'>4wk Gross</td>                    <td id='r2_gross_4wk'>js_calc</td> </tr>
-              <tr><td id='r3_pension_t'>Pension contribution</td>           <td id='r3_pension'>js_calc</td>   </tr>
-              <tr><td id='r4_ni_t'>NI</td>                                  <td id='r4_ni'>js_calc</td>        </tr>
-              <tr><td id='r5_tax_t'>Tax</td>                                <td id='r5_tax'>js_calc</td>       </tr>        
-              <tr><td id='r6_tot_dedcts_t'>Deductions</td>                  <td id='r6_tot_dedcts'>js_cal</td> </tr>
-              <tr><td id='r7_net_t'>Take home</td>                          <td id='r7_net'>js_calc</td>       </tr>   
+              <tr><td class='tbc name' id='r1_anual_in_t'>Predicted pre-tax Anual income</td><td class='tbc fin_data' id='r1_anual_in'>js_calc</td>  </tr>        
+              <tr><td class='tbc name' id='r2_gross_4wk_t'>4wk Gross</td>                    <td class='tbc fin_data' id='r2_gross_4wk'>js_calc</td> </tr>
+              <tr><td class='tbc name' id='r3_pension_t'>Pension contribution</td>           <td class='tbc fin_data' id='r3_pension'>js_calc</td>   </tr>
+              <tr><td class='tbc name' id='r4_ni_t'>NI</td>                                  <td class='tbc fin_data' id='r4_ni'>js_calc</td>        </tr>
+              <tr><td class='tbc name' id='r5_tax_t'>Tax</td>                                <td class='tbc fin_data' id='r5_tax'>js_calc</td>       </tr>        
+              <tr><td class='tbc name' id='r6_tot_dedcts_t'>Deductions</td>                  <td class='tbc fin_data' id='r6_tot_dedcts'>js_cal</td> </tr>
+              <tr><td class='tbc name' id='r7_net_t'>Take home</td>                          <td class='tbc fin_data' id='r7_net'>js_calc</td>       </tr>   
           </tbody>  
       </table>
     </div>
-    <br>
+    <br>    
     <div id='ct_debug' class='item debug'>
       <div>DEBUG</div>
       <div id='dgb_01'></div>

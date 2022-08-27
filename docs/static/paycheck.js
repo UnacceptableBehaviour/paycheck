@@ -262,9 +262,9 @@ class PayCycle4wk{
   
   updateHTML(){
     // HEADER - update pay_day, cut_off, wk_range = week no's, wk_range_dates 4week date range
-    document.querySelector('#pay_day_js').textContent = `${this.payDay.getDate()} ${Day.numToMonth[this.payDay.getMonth()]}`;
+    document.querySelector('#pay_day_js').textContent = `Pay Day: ${this.payDay.getDate()} ${Day.numToMonth[this.payDay.getMonth()]}`;
     document.querySelector('#cut_off_js').textContent = `${this.cutOff.getDate()} ${Day.numToMonth[this.cutOff.getMonth()]}`;
-    document.querySelector('#wk_range_js').textContent = `${this.getWeekNo(0)} - ${this.getWeekNo(3)}`;
+    document.querySelector('#wk_range_js').textContent = ` ${this.getWeekNo(0)} - ${this.getWeekNo(3)}`;
     document.querySelector('#wk_range_dates_js').textContent = `${this.payStart.getDate()} ${Day.numToMonth[this.payStart.getMonth()]} - ${this.cutOff.getDate()} ${Day.numToMonth[this.cutOff.getMonth()]}`;
     document.querySelector('#wk_no_js').textContent = this.getWeekNoDateRange();
     
