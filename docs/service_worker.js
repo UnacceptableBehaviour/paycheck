@@ -14,7 +14,7 @@ console.log('service_worker.js LOADING');
 // depends if you are using /docs/  or /master/
 // /paycheck/
 
-let verion_numner_passed_in = '00.01';
+let verion_numner_passed_in = '00.02';
 
 const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;  // TODO add version number for ServWrkr updates
 
