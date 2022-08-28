@@ -234,10 +234,19 @@ class PayCycle4wk{
     this.pensionContrib = this.annualIncomeEstimate * PENSION_PC / 52 * 4;
     
     // NI @ 12% Allowance 9564
-    this.contribNI = (( this.annualIncomeEstimate - NI_2022_ALLOWANCE ) * NI_RATE_2022 ) / 52 * 4;
+    if (this.annualIncomeEstimate > NI_2022_ALLOWANCE) {
+      this.contribNI = (( this.annualIncomeEstimate - NI_2022_ALLOWANCE ) * NI_RATE_2022 ) / 52 * 4;
+    } else {
+      this.contribNI = 0;
+    }    
     
     // Tax @ 20% Allowance 12570
-    this.incomeTax = (( this.annualIncomeEstimate - TAX_2022_ALLOWANCE ) * TAX_RATE_2022 ) / 52 * 4;
+    if (this.annualIncomeEstimate > TAX_2022_ALLOWANCE) {
+      this.incomeTax = (( this.annualIncomeEstimate - TAX_2022_ALLOWANCE ) * TAX_RATE_2022 ) / 52 * 4;
+    } else {
+      this.incomeTax = 0;
+    }
+    
     
     this.deductions = this.incomeTax + this.contribNI + this.pensionContrib;
     
