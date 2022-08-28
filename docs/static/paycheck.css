@@ -11,7 +11,7 @@ body {
 
 button {
   height: 5vh; 
-  width: 16vw;
+  width: 15vw;
   padding: 1vw;
 }
 
@@ -26,6 +26,15 @@ button {
   text-align: center;
 }
 
+.time-font {
+  font-size: 3.5vh;
+  padding: 2vw;
+  padding-right: 6vw;
+  text-align: center;
+}
+.time-font > div {
+  padding: 1vw;
+}
 
 /* flex  items left just - spacebox - item right just */
 /* DDD EEE - - - - - - - AAA BBB CCC*/

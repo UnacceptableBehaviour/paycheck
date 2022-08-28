@@ -69,7 +69,7 @@
       <div id='wk_no'>
         <button id='but_wk_no_bak' class="font-portrait title-text"><</button>
         <button id='but_wk_no_fwd' class="font-portrait title-text">></button>
-        <span>WK#:</span><span id='wk_no_js'>js_calc </span>
+        <span>WK:</span><span id='wk_no_js'>js_calc </span>
       </div>
       <br>  
       <table class='hrs-table' id="example">
@@ -152,26 +152,36 @@
       </table>
     </div>    
     <br>
-    <div id='ct_week_totals' class='item week-totals'>
-      <table>
-          <thead>
-              <tr class='wk-row'>
-                  <th>Week</th>
-                  <th>Hrs</th>
-                  <th>DHrs</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr class='wk-row'><td id='r1_wk_no'>js_calc</td><td id='r1_tot_hrs'>js_calc</td><td id='r1_tot_dhrs'>js_calc</td></tr>
-              <tr class='wk-row'><td id='r2_wk_no'>js_calc</td><td id='r2_tot_hrs'>js_calc</td><td id='r2_tot_dhrs'>js_calc</td></tr>
-              <tr class='wk-row'><td id='r3_wk_no'>js_calc</td><td id='r3_tot_hrs'>js_calc</td><td id='r3_tot_dhrs'>js_calc</td></tr>
-              <tr class='wk-row'><td id='r4_wk_no'>js_calc</td><td id='r4_tot_hrs'>js_calc</td><td id='r4_tot_dhrs'>js_calc</td></tr>   
-          </tbody>
-          <tfoot>
-              <tr class='wk-row'><td>Total</td><td id='r5_tot_hrs'>js_calc</td><td id='r5_tot_dhrs'>js_calc</td></tr>   
-          </tfoot>    
-      </table>
+    
+    <div id='ct_week_totals' class='item week-totals flexrow-container'>
+      <div>
+        <table>
+            <thead>
+                <tr class='wk-row'>
+                    <th>Week</th>
+                    <th>Hrs</th>
+                    <th>DHrs</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class='wk-row'><td id='r1_wk_no'>js_calc</td><td id='r1_tot_hrs'>js_calc</td><td id='r1_tot_dhrs'>js_calc</td></tr>
+                <tr class='wk-row'><td id='r2_wk_no'>js_calc</td><td id='r2_tot_hrs'>js_calc</td><td id='r2_tot_dhrs'>js_calc</td></tr>
+                <tr class='wk-row'><td id='r3_wk_no'>js_calc</td><td id='r3_tot_hrs'>js_calc</td><td id='r3_tot_dhrs'>js_calc</td></tr>
+                <tr class='wk-row'><td id='r4_wk_no'>js_calc</td><td id='r4_tot_hrs'>js_calc</td><td id='r4_tot_dhrs'>js_calc</td></tr>   
+            </tbody>
+            <tfoot>
+                <tr class='wk-row'><td>Total</td><td id='r5_tot_hrs'>js_calc</td><td id='r5_tot_dhrs'>js_calc</td></tr>   
+            </tfoot>    
+        </table>
+      </div>
+      <span class='flexrow-middle-space space-box'></span>
+      <div id='date-today' class='time-font'>
+        <div id='date-today-day'>Mon</div>
+        <div id='date-today-date'>29 Aug</div>
+        <div id='date-today-year'>2050</div>
+      </div>        
     </div>
+    
     <br>
     <div id='ct_final_calc' class='item totals'>
       <div><b>Estimates & Deductions</b></div>

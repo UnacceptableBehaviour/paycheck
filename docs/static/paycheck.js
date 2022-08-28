@@ -45,7 +45,7 @@ class Day{
     this.breakTime = '30';    // 30     break time in mins
     this.outTime = '0000';    // 1553
     this.totalMins = 0;       // integer
-    
+    this.year = date.getFullYear();
   }
   
   initFromJSON(jsonObj){
@@ -183,10 +183,8 @@ class PayCycle4wk{
   getWeekNoDateRange(){
     let start = this.daysInCycle[this.weekNo * 7];    // cl(start);
     let end = this.daysInCycle[(this.weekNo * 7)+6];  // cl(end);
-    return `${this.weekNo+1}:${this.weekNos[this.weekNo]} ~  ${start.HRdate} - ${end.HRdate}`;
+    return `${this.weekNo+1}-${this.weekNos[this.weekNo]} ~  ${start.HRdate} - ${end.HRdate}`;
   }
-
-  
   
   getNextPayDay(){
     var returnDate = this.payDay.copyAddDays(PayCycle4wk.DAYS_IN_CYCLE);
@@ -293,6 +291,13 @@ class PayCycle4wk{
       document.querySelector(`#r${weekNo+1}_tot_hrs`).textContent = Day.minsToHMReadable(this.weekTotalMins[weekNo]);
       document.querySelector(`#r${weekNo+1}_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]);
     }
+    
+    // TODAYS DATE
+    let today = new Day(new Date());
+    document.querySelector('#date-today-day').textContent = today.day;
+    document.querySelector('#date-today-date').textContent = today.HRdate;
+    document.querySelector('#date-today-year').textContent = today.year;
+    
     // MONTHLY TOTAL
     document.querySelector(`#r5_tot_hrs`).textContent = Day.minsToHMReadable(this.cycleTotalMins);
     document.querySelector(`#r5_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.cycleTotalMins);
