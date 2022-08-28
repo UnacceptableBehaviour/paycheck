@@ -14,7 +14,7 @@ console.log('service_worker.js LOADING');
 // depends if you are using /docs/  or /master/
 // /paycheck/
 
-let verion_numner_passed_in = '00.02';
+let verion_numner_passed_in = '00.03';
 
 const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;  // TODO add version number for ServWrkr updates
 
@@ -28,6 +28,7 @@ const FILES_TO_CACHE = [
   '/paycheck/static/paycheck.css',
   '/paycheck/static/paycheck.js',
   '/paycheck/static/manifest.webmanifest',
+  '/paycheck/static/focus.js',
   '/paycheck/static/icons/favicon-16x16.png',
   '/paycheck/static/icons/mstile-310x310.png',
   '/paycheck/static/icons/android-chrome-384x384.png',

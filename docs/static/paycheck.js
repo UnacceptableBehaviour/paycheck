@@ -1,3 +1,6 @@
+
+import {registerGainedFocusCallback, registerLostFocusCallback} from './focus.js';
+
 function cl(args) {
   console.log(args);
   //console.log(`run mathTile.js resetRAFcallback: ${typeof(flockMod.startPageAnimation)} - E`);
@@ -511,6 +514,18 @@ window.addEventListener('load',function(){
 
   });
 
+  // store data on lost focus
+  registerLostFocusCallback(function(){
+    cl(`LostFocus, storing:${pc.localStorageKey} - - - - - - S`);
+    pc.updateModelFromForms();
+    localStorage.setItem(pc.localStorageKey, JSON.stringify(pc));
+    cl(`LostFocus, stored:${pc.localStorageKey} - - - - - - E`);
+  });
+  registerGainedFocusCallback(function(){
+    pc.updateHTML();
+    cl('GainedFocus.');
+  });
+  
   // DEBUG
   var win = window,
       doc = document,
