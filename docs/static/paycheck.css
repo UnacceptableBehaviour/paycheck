@@ -9,7 +9,7 @@ body {
   margin-bottom: 0px;
 }
 
-button {
+button.title-text {
   height: 5vh; 
   width: 15vw;
   padding: 1vw;
@@ -147,4 +147,3 @@ input {
 .space-box {
   background: #FDFFF5;
 }
-

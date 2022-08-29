@@ -58,7 +58,7 @@ class Day{
     this.totalMins = jsonObj.totalMins;
     this.totalMinsReadableHM  = jsonObj.totalMinsReadableHM;
     this.totalMinsDecimalHM = jsonObj.totalMinsDecimalHM;
-    cl(`initJSON-DAY(): ${this.day}-${this.HRdate}:${this.inTime}-${this.breakTime}-${this.outTime}`);
+    //cl(`initJSON-DAY(): ${this.day}-${this.HRdate}:${this.inTime}-${this.breakTime}-${this.outTime}`);
     //cl('initFromJSON-DAY() - - - - - - - - E');
   }
   
@@ -150,7 +150,7 @@ class PayCycle4wk{
   }
   
   initFromJSON(jsonObj){ // let dt = new Date("2022-08-06T03:00:00.000Z")
-    cl('initFromJSON() - - - - - - - - S');
+    //cl('initFromJSON() - - - - - - - - S');
     this.payDay           = new Date(jsonObj.payDay);   //cl(jsonObj.payDay']);  
     this.cutOff           = new Date(jsonObj.cutOff);   //cl(jsonObj.cutOff']);
     this.payStart         = new Date(jsonObj.payStart); //cl(jsonObj.payStart']);
@@ -160,8 +160,8 @@ class PayCycle4wk{
     for (let dayNo = 0; dayNo < PayCycle4wk.DAYS_IN_CYCLE; dayNo +=1) {
       this.daysInCycle[dayNo].initFromJSON(jsonObj.daysInCycle[dayNo]);
     }
-    cl(`initFromJSON-4WK(): ${this.payDay}-${this.localStorageKey}:${this.weekNos}`);
-    cl('initFromJSON() - - - - - - - - E');
+    //cl(`initFromJSON-4WK(): ${this.payDay}-${this.localStorageKey}:${this.weekNos}`);
+    //cl('initFromJSON() - - - - - - - - E');
   }
 
   weekBak(){
@@ -467,9 +467,9 @@ window.addEventListener('load',function(){
   pc.finalCalulations();  
   pc.updateHTML();
   cl(pc);
-  cl('> - - - - - - JSON.stringify(pc) - - - S');
-  cl(JSON.stringify(pc));
-  cl('> - - - - - - JSON.stringify(pc) - - - E');
+  //cl('> - - - - - - JSON.stringify(pc) - - - S');
+  //cl(JSON.stringify(pc));
+  //cl('> - - - - - - JSON.stringify(pc) - - - E');
   
   // FORWARD & BACK BUTTONS WEEK & MONTH
   // << WEEK
@@ -556,37 +556,86 @@ window.addEventListener('load',function(){
 
 });
 
+function hasGetUserMedia() {
+  return !!(navigator.mediaDevices &&
+    navigator.mediaDevices.getUserMedia);
+}
+
+if (hasGetUserMedia()) {
+  // Good to go!
+  cl('hasGetUserMedia() - SUCCEEDED');
+} else {
+  cl('hasGetUserMedia() - FAILED');
+  // alert('getUserMedia() is not supported by your browser');
+}
 
 
-// TODO - minimum viable product
-// add resposive display
-//    detecting device type mobile / desktop physical screen size in cm or inches
-//    dimension show as approx:
-//    desktop: 1120 x 600
-//    mobile:  980 x 1964
-//
-// FCC video tutorial - see
-// see repos/lang/html_css_js/css_tests : 
-//
-// Android Dev info
-// https://developer.android.com/guide/practices/screens_support
 
-// Media Query for different Devices
-// https://css-tricks.com/snippets/css/media-queries-for-standard-devices/
 
-// CRITICAL
+// = = = TODO - minimum 'viable product' = = = 
+// Mobile display with all data summarised
 
-// sharable summary: print / email 
+
+// CRITICAL - single user
+
 // add photo button to image clockin system
+// https://stackoverflow.com/questions/23916566/html5-input-type-file-accept-image-capture-camera-display-as-image-rat
+
+
+
+// sharable summary: print / email
+
 // add QR code to spread app
 
-// HIGH
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// HIGH - multi user
 // synch data desktop /mobile
 // need login (w/ gmail?)
 
 // MEDIUM
 // add rollover calc for (night shift workers) IE start: 2200 end 0800
+//    - check epoch timestamp take care of this
 // add feedback form
-// add email feedback
-// add chat board
+// add email feedback - mailto: ?
+// add chat board - requires server?
 
+// LOW
+// add resposive display to include desktop
+//    detecting device type mobile / desktop physical screen size in cm or inches
+//    dimension show as approx:
+//    desktop: 1120 x 600
+//    mobile:  980 x 1964
+//
+//    FCC video tutorial - see
+//    see repos/lang/html_css_js/css_tests : 
+//
+// Android Dev info
+// https://developer.android.com/guide/practices/screens_support
+// Media Query for different Devices
+// https://css-tricks.com/snippets/css/media-queries-for-standard-devices/
