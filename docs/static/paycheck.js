@@ -549,6 +549,12 @@ window.addEventListener('load',function(){
   //  cl('#sun_in EvntList click - - - - - E');
   //});
 
+  // <td><input id="sun_in" type="file" name="video" accept="image/*" value="0728"></td>
+  // select image from gallery - CORRECT TIME from filename & lastModified
+  // document.querySelector('#sun_in').addEventListener('change', function(event){
+  //
+  // <td><input id="mon_in" type="file" name="video" accept="image/*" capture="capture" value="0728"></td>
+  // take image using camera - CORRECT TIME from lastModified ONLY image name is '32ish decimal digits'.jpg 
   document.querySelector('#sun_in').addEventListener('change', function(event){
     cl('#sun_in EvntList change - - - - - S');
     cl(event);
@@ -673,7 +679,10 @@ document.getElementById("image_input").addEventListener('change', (event) => {
   result.textContent = `You like ${event.target.value}`;
 });
 
+// More on camera access
+// https://web.dev/media-capturing-images/
 
+// Storing result to 
 
 
 
