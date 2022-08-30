@@ -54,7 +54,7 @@
       </div>
       <form action="" method="">
         <label for="tax_code">Select tax code:</label>
-        <input list="tax_codes" name="tax_code" id="tax_code">
+        <input list="tax_codes" name="tax_code" id="tax_code" placeholder="1257L">
         <datalist id="tax_codes">
           <option value="1257L">
           <option value="TC_0S20">
@@ -86,71 +86,201 @@
         </thead>
         <tbody>
             <tr class='hrs-row'>
-                <td id='sun_day'>Sun</td>
-                <td id='sun_date_js' class='td-date'>js_calc</td>
-                <!--<td><input type="text" pattern="[0-9]{4}" id="sun_in" name="sun_in" value="0728"></td>-->
-                <!--<td><input id="sun_in" type="file" name="video" accept="image/*" capture="capture" value="0728"></td>-->
-                <td><input id="sun_in" type="file" name="video" accept="image/*" value="0728"></td>
-                
-                <td><input type="text" pattern="[0-9]{1,3}" id="sun_break" name="sun_break" value="30"></td>
-                <td><input type="text" pattern="[0-9]{4}" id="sun_out" name="sun_out" value="1553"></td>
-                <td><span id="sun_hrs" name="sun_hrs" value=""></span></td>
-                <td><span id="sun_dhrs" name="sun_dhrs" value=""></span></td>
+              <td id='sun_day'>Sun</td>
+              <td id='sun_date_js' class='td-date'>js_calc</td>
+              <td>                
+                <label id="sun_in" class="imgSelect">0600
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <!--<td><input type="text" pattern="[0-9]{1,3}" id="tue_break" name="tue_break" value="30"></td>-->
+              <td>
+                <input id="sun_break" class="break" list="break-times" name="break-len" placeholder="30">
+                  <datalist id="break-times">
+                    <option value="00">
+                    <option value="15">
+                    <option value="30">
+                    <option value="45">
+                    <option value="60">
+                    <option value="75">
+                    <option value="90">
+                </datalist>
+              </td>  
+              <td>                
+                <label id="sun_out" class="imgSelect">1430
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td><span id="sun_hrs" name="sun_hrs" value=""></span></td>
+              <td><span id="sun_dhrs" name="sun_dhrs" value=""></span></td>
             </tr>
             <tr class='hrs-row'>
-                <td id='mon_day'>Mon</td>
-                <td id='mon_date_js' class='td-date'>js_calc</td>
-                <!--<td><input type="text" pattern="[0-9]{4}" id="mon_in" name="mon_in" value="0559"></td>-->
-                <td><input id="mon_in" type="file" name="video" accept="image/*" capture="capture" value="0728"></td>
-                <td><input type="text" pattern="[0-9]{1,3}" id="mon_break" name="mon_break" value="30"></td>
-                <td><input type="text" pattern="[0-9]{4}" id="mon_out" name="mon_out" value="1428"></td>
-                <td><span id="mon_hrs" name="mon_hrs" value=""></span></td>
-                <td><span id="mon_dhrs" name="mon_dhrs" value=""></span></td>
+              <td id='mon_day'>Mon</td>
+              <td id='mon_date_js' class='td-date'>js_calc</td>
+              <td>                
+                <label id="mon_in" class="imgSelect">0730
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td>
+                <input id="mon_break" class="break" list="break-times" name="break-len" placeholder="30">
+                  <datalist id="break-times">
+                    <option value="00">
+                    <option value="15">
+                    <option value="30">
+                    <option value="45">
+                    <option value="60">
+                    <option value="75">
+                    <option value="90">
+                </datalist>
+              </td>  
+              <td>                
+                <label id="mon_out" class="imgSelect">1500
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td><span id="mon_hrs" name="mon_hrs" value=""></span></td>
+              <td><span id="mon_dhrs" name="mon_dhrs" value=""></span></td>
             </tr>
             <tr class='hrs-row'>
-                <td id='tue_day'>Tue</td>
-                <td id='tue_date_js' class='td-date'>js_calc</td>
-                <td><input type="text" pattern="[0-9]{4}" id="tue_in" name="tue_in" value="0558"></td>
-                <td><input type="text" pattern="[0-9]{1,3}" id="tue_break" name="tue_break" value="30"></td>
-                <td><input type="text" pattern="[0-9]{4}" id="tue_out" name="tue_out" value="1439"></td>
-                <td><span id="tue_hrs" name="tue_hrs" value=""></span></td>
-                <td><span id="tue_dhrs" name="tue_dhrs" value=""></span></td>
+              <td id='tue_day'>Tue</td>
+              <td id='tue_date_js' class='td-date'>js_calc</td>
+              <td>                
+                <label id="tue_in" class="imgSelect">1630
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td>
+                <input id="tue_break" class="break" list="break-times" name="break-len" placeholder="30">
+                  <datalist id="break-times">
+                    <option value="00">
+                    <option value="15">
+                    <option value="30">
+                    <option value="45">
+                    <option value="60">
+                    <option value="75">
+                    <option value="90">
+                </datalist>
+              </td>  
+              <td>                
+                <label id="tue_out" class="imgSelect">2200
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td><span id="tue_hrs" name="tue_hrs" value=""></span></td>
+              <td><span id="tue_dhrs" name="tue_dhrs" value=""></span></td>
             </tr>
             <tr class='hrs-row'>
-                <td id='wed_day'>Wed</td>
-                <td id='wed_date_js' class='td-date'>js_calc</td>
-                <td><input type="text" pattern="[0-9]{4}" id="wed_in" name="wed_in" value="0000"></td>
-                <td><input type="text" pattern="[0-9]{1,3}" id="wed_break" name="wed_break" value="30"></td>
-                <td><input type="text" pattern="[0-9]{4}" id="wed_out" name="wed_out" value="0000"></td>
-                <td><span id="wed_hrs" name="wed_hrs" value=""></span></td>
-                <td><span id="wed_dhrs" name="wed_dhrs" value=""></span></td>
+              <td id='wed_day'>Wed</td>
+              <td id='wed_date_js' class='td-date'>js_calc</td>
+              <td>                
+                <label id="wed_in" class="imgSelect">0000
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td>
+                <input id="wed_break" class="break" list="break-times" name="break-len" placeholder="30">
+                  <datalist id="break-times">
+                    <option value="00">
+                    <option value="15">
+                    <option value="30">
+                    <option value="45">
+                    <option value="60">
+                    <option value="75">
+                    <option value="90">
+                </datalist>
+              </td>  
+              <td>                
+                <label id="wed_out" class="imgSelect">0000
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td><span id="wed_hrs" name="wed_hrs" value=""></span></td>
+              <td><span id="wed_dhrs" name="wed_dhrs" value=""></span></td>
             </tr>
             <tr class='hrs-row'>
-                <td id='thu_day'>Thu</td>
-                <td id='thu_date_js' class='td-date'>js_calc</td>
-                <td><input type="text" pattern="[0-9]{4}" id="thu_in" name="thu_in" value="0000"></td>
-                <td><input type="text" pattern="[0-9]{1,3}" id="thu_break" name="thu_break" value="30"></td>
-                <td><input type="text" pattern="[0-9]{4}" id="thu_out" name="thu_out" value="0000"></td>
-                <td><span id="thu_hrs" name="thu_hrs" value=""></span></td>
-                <td><span id="thu_dhrs" name="thu_dhrs" value=""></span></td>
+              <td id='thu_day'>Thu</td>
+              <td id='thu_date_js' class='td-date'>js_calc</td>
+              <td>                
+                <label id="thu_in" class="imgSelect">0000
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td>
+                <input id="thu_break" class="break" list="break-times" name="break-len" placeholder="30">
+                  <datalist id="break-times">
+                    <option value="00">
+                    <option value="15">
+                    <option value="30">
+                    <option value="45">
+                    <option value="60">
+                    <option value="75">
+                    <option value="90">
+                </datalist>
+              </td>  
+              <td>                
+                <label id="thu_out" class="imgSelect">0000
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td><span id="thu_hrs" name="thu_hrs" value=""></span></td>
+              <td><span id="thu_dhrs" name="thu_dhrs" value=""></span></td>
             </tr>
             <tr class='hrs-row'>
-                <td id='fri_day'>Fri</td>
-                <td id='fri_date_js' class='td-date'>js_calc</td>
-                <td><input type="text" pattern="[0-9]{4}" id="fri_in" name="fri_in" value="0000"></td>
-                <td><input type="text" pattern="[0-9]{1,3}" id="fri_break" name="fri_break" value="30"></td>
-                <td><input type="text" pattern="[0-9]{4}" id="fri_out" name="fri_out" value="0000"></td>
-                <td><span id="fri_hrs" name="fri_hrs" value=""></span></td>
-                <td><span id="fri_dhrs" name="fri_dhrs" value=""></span></td>
+              <td id='fri_day'>Fri</td>
+              <td id='fri_date_js' class='td-date'>js_calc</td>
+              <td>                
+                <label id="fri_in" class="imgSelect">0000
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td>
+                <input id="fri_break" class="break" list="break-times" name="break-len" placeholder="30">
+                  <datalist id="break-times">
+                    <option value="00">
+                    <option value="15">
+                    <option value="30">
+                    <option value="45">
+                    <option value="60">
+                    <option value="75">
+                    <option value="90">
+                </datalist>
+              </td>  
+              <td>                
+                <label id="fri_out" class="imgSelect">0000
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td><span id="fri_hrs" name="fri_hrs" value=""></span></td>
+              <td><span id="fri_dhrs" name="fri_dhrs" value=""></span></td>
             </tr>
             <tr class='hrs-row'>
-                <td id='sat_day'>Sat</td>
-                <td id='sat_date_js' class='td-date'>js_calc</td>
-                <td><input type="text" pattern="[0-9]{4}" id="sat_in" name="sat_in" value="0000"></td>
-                <td><input type="text" pattern="[0-9]{1,3}" id="sat_break" name="sat_break" value="30"></td>
-                <td><input type="text" pattern="[0-9]{4}" id="sat_out" name="sat_out" value="0000"></td>
-                <td><span id="sat_hrs" name="sat_hrs" value=""></span></td>
-                <td><span id="sat_dhrs" name="sat_dhrs" value=""></span></td>
+              <td id='sat_day'>Sat</td>
+              <td id='sat_date_js' class='td-date'>js_calc</td>
+              <td>                
+                <label id="sat_in" class="imgSelect">0000
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td>
+                <input id="sat_break" class="break" list="break-times" name="break-len" placeholder="30">
+                  <datalist id="break-times">
+                    <option value="00">
+                    <option value="15">
+                    <option value="30">
+                    <option value="45">
+                    <option value="60">
+                    <option value="75">
+                    <option value="90">
+                </datalist>
+              </td>  
+              <td>                
+                <label id="sat_out" class="imgSelect">0000
+                  <input type="file" name="video" accept="image/*">
+                </label>
+              </td>
+              <td><span id="sat_hrs" name="sat_hrs" value=""></span></td>
+              <td><span id="sat_dhrs" name="sat_dhrs" value=""></span></td>
             </tr>
         </tbody>
       </table>

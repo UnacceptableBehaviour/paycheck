@@ -147,3 +147,35 @@ input {
 .space-box {
   background: #FDFFF5;
 }
+
+td {
+  padding: 2px;
+  margin: 2px;
+}
+
+label.imgSelect {
+  display: inline-block;
+  width: 94%;
+  height: 94%;
+  /* Styles to make it look like a button */
+  border: 2px solid #111;
+  border-radius: 6px;
+  /*border-color: #000;*/
+  background-color: #FFF;
+  text-align:center;
+}
+
+.break {
+  width: 94%;
+  height: 94%;
+  border: 2px solid #111;
+  border-radius: 6px;
+  background-color: #FFF;
+  text-align:center;  
+}
+
+/* hides the 'Choose file' text box for camera inputs */
+label.imgSelect input[accept*="image"] {
+  display: none;
+}
+

@@ -259,9 +259,10 @@ class PayCycle4wk{
     cl('> - - - processing form data');
     let startDay = this.weekNo * 7;
     for (let dayNo = startDay; dayNo < startDay+7; dayNo +=1) {
-      let start = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).value;
-      let breakStr = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).value;
-      let finish = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`).value;
+      let start = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).textContent.trim();
+      let breakStr = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).textContent.trim();
+      if (breakStr === '') breakStr ='30';
+      let finish = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`).textContent.trim();
       cl(`==: ${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].HRdate} :== S`);
       this.daysInCycle[dayNo].setHours(start, breakStr, finish);
       cl(`==: ${this.daysInCycle[dayNo].HRdate} :== E`);
@@ -644,6 +645,9 @@ if (hasGetUserMedia()) {
   // alert('getUserMedia() is not supported by your browser');
 }
 
+// - - - Getting image info - - -
+// <input style='width:100%;' id="image_input" type="file" name="video" accept="image/*" capture="capture"> CAMERA
+// <input style='width:100%;' id="image_input" type="file" name="video" accept="image/*" > GALLERY
 //> console
 //document.getElementById("image_input").files[0];
 //File {  name: 'payCheckIconMain512x512.png', 
@@ -670,17 +674,61 @@ if (hasGetUserMedia()) {
 //document.getElementById("image_input").click();
 //this is pointless because it triggers before file  / image selected / capured!
 
-document.getElementById("sun_in").files[0];
+//document.getElementById("sun_in").files[0];
+//
+////https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
+//// attaching 
+//document.getElementById("image_input").addEventListener('change', (event) => {
+//  const result = document.querySelector('.result');
+//  result.textContent = `You like ${event.target.value}`;
+//});
 
-//https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
-// attaching 
-document.getElementById("image_input").addEventListener('change', (event) => {
-  const result = document.querySelector('.result');
-  result.textContent = `You like ${event.target.value}`;
-});
+// 
 
+//// HTML & JS - to take image with CAM or pick from GALLERY
+////
+//// <td><input id="sun_in" type="file" name="video" accept="image/*" value="0728"></td>
+//// select image from gallery - CORRECT TIME from FILENAME & LASTMODIFIED
+//// document.querySelector('#sun_in').addEventListener('change', function(event){
+////
+//// <td><input id="mon_in" type="file" name="video" accept="image/*" capture="capture" value="0728"></td>
+//// take image using camera - CORRECT TIME from LASTMODIFIED ONLY image name is '32ish decimal digits'.jpg 
+//document.querySelector('#sun_in').addEventListener('change', function(event){
+//  cl('#sun_in EvntList change - - - - - S');
+//  cl(event);
+//  cl(event.srcElement.files[0]);
+//  let filename = event.srcElement.files[0].name;
+//  cl(filename);
+//  cl(event.srcElement.files[0].lastModified);
+//  let d = new Date(event.srcElement.files[0].lastModified);
+//  let timeFromLastModified = `timeFromLastModified: ${d.getHours()} ${d.getMinutes()}`;
+//  cl(timeFromLastModified);
+//  let hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
+//  let timeMatch;
+//  if (hrsMins) {
+//    cl(hrsMins);      
+//    timeMatch = `${hrsMins[1]}${hrsMins[2]}`;
+//    cl(timeMatch);
+//  } else {
+//    timeMatch = `No match in: ${filename} <`
+//    cl(timeMatch);
+//  }
+//  filename = '202216181_142855.jpg';
+//  hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
+//  cl(hrsMins);
+//  document.querySelector('#dgb_03').textContent = timeFromLastModified;
+//  document.querySelector('#dgb_04').textContent = timeMatch;
+//  cl('#sun_in EvntList change - - - - - E');
+//});
+
+// turning the Choose file look of the input into a box with the time in it
+
+  
 // More on camera access
 // https://web.dev/media-capturing-images/
+// more indepth
+// https://developer.mozilla.org/en-US/docs/Web/API/Media_Capture_and_Streams_API/Taking_still_photos
+
 
 // Storing result to 
 
