@@ -148,15 +148,22 @@ input {
   background: #FDFFF5;
 }
 
-td {
+/*imgSelect {
   padding: 2px;
   margin: 2px;
-}
+  width: 2em;
+  height: 1em;  
+}*/
 
 label.imgSelect {
   display: inline-block;
+  padding: 2px;
+  margin: 2px;  
   width: 94%;
-  height: 94%;
+  /*width: 2em;*/
+  /*height: 94%;*/
+  height: 2vh;
+  /*height: 1em;*/
   /* Styles to make it look like a button */
   border: 2px solid #111;
   border-radius: 6px;
