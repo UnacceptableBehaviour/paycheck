@@ -41,9 +41,9 @@ class Day{
     //this.date = date;
     this.day = Day.numToDay[date.getDay()];     // Mon
     this.HRdate = `${date.getDate()}\u00A0${Day.numToMonth[date.getMonth()]}`;  // 25&nbspAug - 25 Aug
-    this.inTime = '0000';     // 0728
+    this.inTime = '';         // 0728
     this.breakTime = '30';    // 30     break time in mins
-    this.outTime = '0000';    // 1553
+    this.outTime = '';        // 1553
     this.totalMins = 0;       // integer
     this.year = date.getFullYear();
   }
@@ -284,7 +284,8 @@ class PayCycle4wk{
       cl(`${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].day} - ${this.daysInCycle[dayNo].HRdate}`);
 
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_date_js`).textContent = this.daysInCycle[dayNo].HRdate;
-      document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).value = this.daysInCycle[dayNo].inTime;
+      //document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).value = this.daysInCycle[dayNo].inTime;
+      //document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).value = '';
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).value = this.daysInCycle[dayNo].breakTime;
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`).value = this.daysInCycle[dayNo].outTime;
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_hrs`).textContent = this.daysInCycle[dayNo].totalMinsReadableHM;
@@ -539,6 +540,40 @@ window.addEventListener('load',function(){
     pc.updateHTML();
     cl('GainedFocus.');
   });
+
+  ////   
+  //document.querySelector('#sun_in').addEventListener('click', function(event){
+  //  cl('#sun_in EvntList click - - - - - S');
+  //  cl(event);
+  //  cl(event.srcElement.name);
+  //  cl('#sun_in EvntList click - - - - - E');
+  //});
+
+  document.querySelector('#sun_in').addEventListener('change', function(event){
+    cl('#sun_in EvntList change - - - - - S');
+    cl(event);
+    cl(event.srcElement.files[0]);
+    let filename = event.srcElement.files[0].name;
+    cl(filename);
+    cl(event.srcElement.files[0].lastModified);
+    let d = new Date(event.srcElement.files[0].lastModified);
+    cl(`${d.getHours()} ${d.getMinutes()}`);
+    let hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
+    let timeMatch;
+    if (hrsMins) {
+      cl(hrsMins);      
+      timeMatch = `${hrsMins[1]}${hrsMins[2]}`;
+      cl(timeMatch);
+    } else {
+      timeMatch = `No match in: ${filename} <`
+      cl(timeMatch);
+    }
+    filename = '202216181_142855.jpg';
+    hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
+    cl(hrsMins);
+    document.querySelector('#dgb_04').textContent = timeMatch
+    cl('#sun_in EvntList change - - - - - E');
+  });  
   
   // DEBUG
   var win = window,
@@ -553,6 +588,10 @@ window.addEventListener('load',function(){
   document.querySelector('#dgb_03').textContent = `BODY X:${body.clientWidth} Y:${body.clientHeight}`;
   
   //cl(`DOC X:${x} Y:${y}`);
+  
+  //cl('#sun_in CLICK - - - - - S');
+  //document.getElementById("sun_in").click(); // this isnt allowed ibn this type of element
+  //cl('#sun_in CLICK - - - - - E');
 
 });
 
@@ -568,6 +607,43 @@ if (hasGetUserMedia()) {
   cl('hasGetUserMedia() - FAILED');
   // alert('getUserMedia() is not supported by your browser');
 }
+
+//> console
+//document.getElementById("image_input").files[0];
+//File {  name: 'payCheckIconMain512x512.png', 
+//        lastModified: 1660913175719,
+//        lastModifiedDate: Fri Aug 19 2022 13:46:15 GMT+0100 (British Summer Time),
+//        webkitRelativePath: '',
+//        size: 20964, …}
+//        
+//document.getElementById("image_input").files[0].name;
+//'payCheckIconMain512x512.png'
+//
+//document.getElementById("image_input").files[0].lastModified;
+//1660913175719
+//d = new Date(1660913175719)
+//Fri Aug 19 2022 13:46:15 GMT+0100 (British Summer Time)
+//d.getHours()
+//13
+//d.getMinutes()
+//46
+//timeIn = `${d.getHours()}${d.getMinutes()}`
+//'1346'
+
+// https://stackoverflow.com/questions/2705583/how-to-simulate-a-click-with-javascript
+//document.getElementById("image_input").click();
+//this is pointless because it triggers before file  / image selected / capured!
+
+document.getElementById("sun_in").files[0];
+
+//https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
+// attaching 
+document.getElementById("image_input").addEventListener('change', (event) => {
+  const result = document.querySelector('.result');
+  result.textContent = `You like ${event.target.value}`;
+});
+
+
 
 
 
