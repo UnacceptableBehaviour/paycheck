@@ -557,7 +557,8 @@ window.addEventListener('load',function(){
     cl(filename);
     cl(event.srcElement.files[0].lastModified);
     let d = new Date(event.srcElement.files[0].lastModified);
-    cl(`${d.getHours()} ${d.getMinutes()}`);
+    let timeFromLastModified = `timeFromLastModified: ${d.getHours()} ${d.getMinutes()}`;
+    cl(timeFromLastModified);
     let hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
     let timeMatch;
     if (hrsMins) {
@@ -571,7 +572,36 @@ window.addEventListener('load',function(){
     filename = '202216181_142855.jpg';
     hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
     cl(hrsMins);
-    document.querySelector('#dgb_04').textContent = timeMatch
+    document.querySelector('#dgb_03').textContent = timeFromLastModified;
+    document.querySelector('#dgb_04').textContent = timeMatch;
+    cl('#sun_in EvntList change - - - - - E');
+  });
+
+  document.querySelector('#mon_in').addEventListener('change', function(event){
+    cl('#sun_in EvntList change - - - - - S');
+    cl(event);
+    cl(event.srcElement.files[0]);
+    let filename = event.srcElement.files[0].name;
+    cl(filename);
+    cl(event.srcElement.files[0].lastModified);
+    let d = new Date(event.srcElement.files[0].lastModified);
+    let timeFromLastModified = `timeFromLastModified: ${d.getHours()} ${d.getMinutes()}`;
+    cl(timeFromLastModified);
+    let hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
+    let timeMatch;
+    if (hrsMins) {
+      cl(hrsMins);      
+      timeMatch = `${hrsMins[1]}${hrsMins[2]}`;
+      cl(timeMatch);
+    } else {
+      timeMatch = `No match in: ${filename} <`
+      cl(timeMatch);
+    }
+    filename = '202216181_142855.jpg';
+    hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
+    cl(hrsMins);
+    document.querySelector('#dgb_03').textContent = timeFromLastModified;
+    document.querySelector('#dgb_04').textContent = timeMatch;
     cl('#sun_in EvntList change - - - - - E');
   });  
   
