@@ -148,13 +148,6 @@ input {
   background: #FDFFF5;
 }
 
-/*imgSelect {
-  padding: 2px;
-  margin: 2px;
-  width: 2em;
-  height: 1em;  
-}*/
-
 label.imgSelect {
   display: inline-block;
   padding: 2px;

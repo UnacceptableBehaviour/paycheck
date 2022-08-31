@@ -41,6 +41,7 @@ class Day{
     //this.date = date;
     this.day = Day.numToDay[date.getDay()];     // Mon
     this.HRdate = `${date.getDate()}\u00A0${Day.numToMonth[date.getMonth()]}`;  // 25&nbspAug - 25 Aug
+    //this.HRdate = `${date.getDate()}${Day.numToMonth[date.getMonth()]}`;  // 25Aug
     this.inTime = '';         // 0728
     this.breakTime = '30';    // 30     break time in mins
     this.outTime = '';        // 1553
@@ -96,6 +97,16 @@ class Day{
     this.totalMinsDecimalHM = `${(Math.floor(totalMins / 60) + ((totalMins % 60) / 60)).toFixed(2)}`;
     cl(`total Mins: ${totalMins} = ${this.totalMinsReadableHM} = ${this.totalMinsDecimalHM}`);    
   }
+  
+  clearHours(){
+    this.inTime = '';
+    this.breakTime = '30';
+    this.outTime = '';
+    this.totalMins = 0;
+    this.totalMinsReadableHM = '';
+    this.totalMinsDecimalHM = '';
+  }
+  
 }
 
 class PayCycle4wk{
@@ -164,6 +175,15 @@ class PayCycle4wk{
     //cl('initFromJSON() - - - - - - - - E');
   }
 
+  clearHours(dayNo){
+    if ((dayNo >= 0) && (dayNo < PayCycle4wk.DAYS_IN_CYCLE)) {
+      this.daysInCycle[dayNo].clearHours();
+    } else {
+      // TODO raise
+      cl(`clearHours FAILED - dayNo:${dayNo} - OUT OF RANGE Should be 0-${PayCycle4wk.DAYS_IN_CYCLE}`);
+    }
+  }
+  
   weekBak(){
     if (this.weekNo > 0) this.weekNo -= 1;
   }
@@ -260,8 +280,12 @@ class PayCycle4wk{
     let startDay = this.weekNo * 7;
     for (let dayNo = startDay; dayNo < startDay+7; dayNo +=1) {
       let start = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).textContent.trim();
-      let breakStr = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).textContent.trim();
-      if (breakStr === '') breakStr ='30';
+      
+      // drop down input: value/placeholder
+      let value = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).value.trim();
+      let placeholder = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).placeholder.trim();      
+      let breakStr = (value) ? value : placeholder;
+      
       let finish = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`).textContent.trim();
       cl(`==: ${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].HRdate} :== S`);
       this.daysInCycle[dayNo].setHours(start, breakStr, finish);
@@ -281,14 +305,15 @@ class PayCycle4wk{
     
     // HOURS TABLE
     let startDay = this.weekNo * 7;
+    let tableRowElements = document.querySelectorAll('.hrs-row');
     for (let dayNo = startDay; dayNo < startDay+7; dayNo +=1) {
       cl(`${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].day} - ${this.daysInCycle[dayNo].HRdate}`);
-
+      tableRowElements[dayNo % 7].id = `${dayNo}`; // make date easy to fine when roww dblClicked
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_date_js`).textContent = this.daysInCycle[dayNo].HRdate;
-      //document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).value = this.daysInCycle[dayNo].inTime;
-      //document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).value = '';
-      document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).value = this.daysInCycle[dayNo].breakTime;
-      document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`).value = this.daysInCycle[dayNo].outTime;
+      document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).textContent = this.daysInCycle[dayNo].inTime;
+      document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).placeholder = this.daysInCycle[dayNo].breakTime;
+      document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).value = null;
+      document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`).textContent = this.daysInCycle[dayNo].outTime;
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_hrs`).textContent = this.daysInCycle[dayNo].totalMinsReadableHM;
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_dhrs`).textContent = this.daysInCycle[dayNo].totalMinsDecimalHM;
 
@@ -542,23 +567,23 @@ window.addEventListener('load',function(){
     cl('GainedFocus.');
   });
 
-  cl('QS - - - - - - - - - - - - - - - - - - - - - - - - S');
-  cl(document.querySelector('label.imgSelect input[accept*="image"]'));
-  cl('QS - - - - - - - - - - - - - - - - - - - - - - - - E');
-
   document.querySelectorAll('label.imgSelect input[accept*="image"]').forEach(item => {
     item.addEventListener('change', event => {
       cl('EvntList change - - - - - S');
       cl(event);
       cl(event.target.parentElement);
-      let changeElement = event.target.parentElement;
+      cl(event.target.parentElement.childNodes[0]);
+      //let changeElement = event.target.parentElement;
       cl(event.srcElement.files[0]);
+      
       let filename = event.srcElement.files[0].name;
       cl(filename);
       cl(event.srcElement.files[0].lastModified);
+      
       let d = new Date(event.srcElement.files[0].lastModified);
       let timeFromLastModified = `timeFromLastModified: ${d.getHours()} ${d.getMinutes()}`;
       cl(timeFromLastModified);
+      
       let hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
       let timeMatch;
       if (hrsMins) {
@@ -566,18 +591,35 @@ window.addEventListener('load',function(){
         timeMatch = `${hrsMins[1]}${hrsMins[2]}`;
         cl(timeMatch);
       } else {
-        timeMatch = `No match in: ${filename} <`
+        timeMatch = `No match in: ${filename} <`;
         cl(timeMatch);
       }
       filename = '202216181_142855.jpg';
       hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
       cl(hrsMins);
+      
       document.querySelector('#dgb_03').textContent = timeFromLastModified;
       document.querySelector('#dgb_04').textContent = timeMatch;
-      event.target.parentElement.textContent = timeMatch.trim();
+      event.target.parentElement.childNodes[0].textContent = timeMatch.trim();
       cl('EvntList change - - - - - E');
-    })
+    });
   });
+
+  document.querySelectorAll('.hrs-row').forEach(item => {
+    cl(item);
+    item.addEventListener('dblclick', event => {
+      cl('DB-CLICK')
+      cl(event);
+      cl(event.target);
+      cl(event.target.parentElement);
+      cl(event.target.parentElement.id);
+      
+      let dayNo = parseInt(event.target.parentElement.id);      
+      pc.clearHours(dayNo);
+      pc.updateHTML();      
+    });
+  });
+
   
   //document.querySelector('label.imgSelect input[accept*="image"]').addEventListener('change', function(event){
   //  cl('EvntList change - - - - - S');
