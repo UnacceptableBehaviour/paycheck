@@ -180,3 +180,17 @@ label.imgSelect input[accept*="image"] {
   display: none;
 }
 
+#mailto_b {
+  border: 1px solid #BF00FF;
+  /*border-radius: 6px;*/
+}
+
+#mailto_f {
+  border: 1px solid #BF00FF;
+  /*border-radius: 6px;*/
+}
+
+#mailto_d {
+  border: 1px solid #BF00FF;
+  /*border-radius: 6px;*/
+}

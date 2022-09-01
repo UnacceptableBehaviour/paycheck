@@ -355,7 +355,28 @@ class PayCycle4wk{
     document.querySelector('#r6_tot_dedcts').textContent = this.deductions.toFixed(2);
     document.querySelector('#r7_net').textContent = this.netIncomeForCycle.toFixed(2);
     
-  }  
+  }
+  
+  emailVersionSummary(){
+    //return document.querySelector('body').textContent;
+    //return document.querySelector('body').innerHTML;
+    //ct_week_totals
+    // tabs
+    const
+    
+return `
+<html lang="en">
+<head>
+  <title>Pay Calulator</title>    
+</head>
+
+<body style="font-family:'Arial';">
+${document.querySelector('#ct_week_totals').innerHTML}
+</body>
+</html>
+`
+  }
+  
 }
 
 
@@ -699,6 +720,24 @@ window.addEventListener('load',function(){
   //cl('#sun_in CLICK - - - - - E');
 
 });
+
+// Mailing summary
+document.querySelector('#mailto_d').addEventListener('click', function(event){
+  cl('> = = = MAIL SUMMARY= = = <');
+  //window.location = "mailto:a.b@g.com?subject=Me&body=Hello!"; // works
+  //?subject=Me&body=Hello!
+  let address = 'a.b@g.com';
+  let subject = 'payCheck Summary';
+  
+  window.location = `mailto:${address}?subject=${subject}&body=${pc.emailVersionSummary()}`;
+});
+
+
+
+
+
+
+// saving images . . . 
 
 function hasGetUserMedia() {
   return !!(navigator.mediaDevices &&

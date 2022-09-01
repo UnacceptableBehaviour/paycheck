@@ -348,7 +348,17 @@
     </div>
     <br>    
     <div id='ct_debug' class='item debug'>
-      <div>DEBUG</div>
+      <div>
+        <span >DEBUG</span>
+        <button id='mailto_b' onclick="location.href='mailto:a.b@g.com';">MAIL-B</button>
+        <form id='mailto_f' action="mailto:a.b@g.com" enctype="text/plain" method="GET">
+          MAIL-F
+          <input name="subject" type="text">SUBJECT</input>
+          <textarea name="body"></textarea>
+          <input type="submit" value="Send">
+        </form>
+        <div id='mailto_d' onclick="mailSummary();">Send e-mail DIV</div>
+      </div>
       <div id='dgb_01'></div>
       <div id='dgb_02'></div>
       <div id='dgb_03'></div>
@@ -361,3 +371,4 @@
   <script type="module" src='static/paycheck.js'></script>  
 </body>
 </html>
+
