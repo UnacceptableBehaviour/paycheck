@@ -68,10 +68,11 @@ class Day{
     this.breakTime = breakStr;  // 30     break time in mins
     this.outTime = finish;      // 1553
     cl(`in: ${start} break: ${breakStr} out: ${finish}`);
-    if (start === finish) {
+    if ((start === '') || (finish === '')) {
       this.totalMins = 0;
       return;
     }
+
     // finish time to mins
     let hrsF = parseInt(finish.substr(0,2));
     let minF = parseInt(finish.substr(2,4));
