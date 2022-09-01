@@ -465,6 +465,11 @@ class PayCycle4wk{
 
 cl('>> = = = > CREATING new 4 Wk Cycle object');
 var pc = new PayCycle4wk(...PayCycle4wk.nextPayDayAfterToday());
+const CAMERA_MODE_GALLERY = 0;
+const CAMERA_MODE_CAPTURE = 1;
+var settings = {
+  cameraMode: CAMERA_MODE_GALLERY,
+};
 var stateKey = '';
 cl(pc);
 cl('- - E');
@@ -569,39 +574,35 @@ window.addEventListener('load',function(){
 
   document.querySelectorAll('label.imgSelect input[accept*="image"]').forEach(item => {
     item.addEventListener('change', event => {
-      cl('EvntList change - - - - - S');
-      cl(event);
-      cl(event.target.parentElement);
-      cl(event.target.parentElement.childNodes[0]);
-      //let changeElement = event.target.parentElement;
-      cl(event.srcElement.files[0]);
+      cl('TimeBox change - - - - - S');
+      let fourDigitTime;
       
-      let filename = event.srcElement.files[0].name;
-      cl(filename);
-      cl(event.srcElement.files[0].lastModified);
-      
-      let d = new Date(event.srcElement.files[0].lastModified);
-      let timeFromLastModified = `timeFromLastModified: ${d.getHours()} ${d.getMinutes()}`;
-      cl(timeFromLastModified);
-      
-      let hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
-      let timeMatch;
-      if (hrsMins) {
-        cl(hrsMins);      
-        timeMatch = `${hrsMins[1]}${hrsMins[2]}`;
-        cl(timeMatch);
+      //CAMERA_MODE_CAPTURE = 1; - requires HTML edit - not implemented
+      if (settings.cameraMode) {
+        cl('cameraMode: CAMERA_MODE_CAPTURE');
+        //cl(event.srcElement.files[0].lastModified);
+        let d = new Date(event.srcElement.files[0].lastModified);
+        fourDigitTime = `${d.getHours()}${d.getMinutes()}`;
+        //let timeFromLastModified = `timeFromLastModified: <${fourDigitTime}>`;
+        //cl(timeFromLastModified);
+        
       } else {
-        timeMatch = `No match in: ${filename} <`;
-        cl(timeMatch);
+        cl('cameraMode: CAMERA_MODE_GALLERY');
+        let filename = event.srcElement.files[0].name;
+        cl(filename);
+  
+        let hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/); // 202216181_142855.jpg
+        if (hrsMins) {
+          //cl(hrsMins);      
+          fourDigitTime = `${hrsMins[1]}${hrsMins[2]}`;
+          cl(`Time match: <${fourDigitTime}>`);
+        } else {
+          cl(`No match in: ${filename} <`);
+        }        
       }
-      filename = '202216181_142855.jpg';
-      hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
-      cl(hrsMins);
       
-      document.querySelector('#dgb_03').textContent = timeFromLastModified;
-      document.querySelector('#dgb_04').textContent = timeMatch;
-      event.target.parentElement.childNodes[0].textContent = timeMatch.trim();
-      cl('EvntList change - - - - - E');
+      event.target.parentElement.childNodes[0].textContent = fourDigitTime;
+      cl('TimeBox change - - - - - E');
     });
   });
 
