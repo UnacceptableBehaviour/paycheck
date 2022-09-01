@@ -76,8 +76,8 @@ class Day{
     // finish time to mins
     let hrsF = parseInt(finish.substr(0,2));
     let minF = parseInt(finish.substr(2,4));
-    let to = hrsF*60 + parseInt(minF);
-    cl(`finish: ${finish} -: ${to} - hrs: ${hrsF} - mins:${minF} - hrs ${finish.slice(0,2)}`);
+    let toEnd = hrsF*60 + parseInt(minF);
+    cl(`finish: ${finish} -: ${toEnd} - hrs: ${hrsF} - mins:${minF} - hrs ${finish.slice(0,2)}`);
     
     // start time to mins inc 15m roundup
     let hrsS = parseInt(start.substr(0,2));
@@ -85,14 +85,21 @@ class Day{
     
     //let roundupMins = minS + (15 - (minS % 15));                  // round up to the next nearest 15min 0701 = 0715 walmart sneakiness
     let roundupMins = minS? (minS-1) + (15 - ((minS-1) % 15)) : 0;  // round to nearest 15m  0=0, 1-15=15, 16-30=30, 31-45=45, 46-59=60
-    let from = hrsS*60 + roundupMins;
+    let fromStart = hrsS*60 + roundupMins;
     
-    cl(`start: ${start} -: ${from} - hrs: ${hrsS} - mins:${minS} - rnd:${roundupMins} - hrs ${start.slice(0,2)}`);
+    cl(`start: ${start} -: ${fromStart} - hrs: ${hrsS} - mins:${minS} - rnd:${roundupMins} - hrs ${start.slice(0,2)}`);
     
     // mins to hhHmm 7H53
     // mins to decimal HRS 7.88Hrs
     let breakMins = parseInt(breakStr);
-    let totalMins = to - from - breakMins;
+    let totalMins
+    if (toEnd <= (fromStart + breakMins)) {
+      const ONE_DAY = 24*60;
+      totalMins = (ONE_DAY - fromStart) + toEnd - breakMins;      
+    } else {
+      totalMins = toEnd - fromStart - breakMins;
+    }
+    
     this.totalMins = totalMins;
     this.totalMinsReadableHM = `${Math.floor(totalMins / 60)}H${(totalMins % 60).toString().padStart(2, '0')}`;
     this.totalMinsDecimalHM = `${(Math.floor(totalMins / 60) + ((totalMins % 60) / 60)).toFixed(2)}`;
