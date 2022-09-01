@@ -601,7 +601,7 @@ window.addEventListener('load',function(){
         }        
       }
       
-      event.target.parentElement.childNodes[0].textContent = fourDigitTime;
+      event.target.parentElement.childNodes[1].textContent = fourDigitTime; // TODO choose span element instead of hardcode 1
       cl('TimeBox change - - - - - E');
     });
   });
