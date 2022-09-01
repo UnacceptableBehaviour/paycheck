@@ -527,7 +527,7 @@ window.addEventListener('load',function(){
   document.querySelector('#but_wk_no_fwd').addEventListener('click', function(event){
     pc.updateModelFromForms();
     //cl(JSON.stringify(pc));
-    pc.weekFwd();
+    pc.weekFwd();    
     pc.updateHTML();
     localStorage.setItem(pc.localStorageKey, JSON.stringify(pc));    
     console.log(`Week FORWARD - WkNo: ${pc.getWeekNo()}`);
@@ -543,10 +543,13 @@ window.addEventListener('load',function(){
       
     if (pc.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
       let jsonObj = JSON.parse(localStorage.getItem(pc.localStorageKey));
-      cl(pc.initFromJSON(jsonObj));          
+      pc.initFromJSON(jsonObj);
+      cl(pc);          
     }    
     localStorage.setItem(LAST_KNOWN_STATE_KEY, pc.localStorageKey);
-        
+
+    pc.updateWeekTotalMins();
+    pc.finalCalulations();         
     pc.updateHTML();                              // update view
   });
   // 4WK >>
@@ -560,10 +563,14 @@ window.addEventListener('load',function(){
       
     if (pc.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
       let jsonObj = JSON.parse(localStorage.getItem(pc.localStorageKey));
-      cl(pc.initFromJSON(jsonObj));                
+      pc.initFromJSON(jsonObj);
+      cl(pc);          
+
     }
     localStorage.setItem(LAST_KNOWN_STATE_KEY, pc.localStorageKey);
-        
+
+    pc.updateWeekTotalMins();
+    pc.finalCalulations();          
     pc.updateHTML();                              // update view
 
   });
@@ -610,10 +617,20 @@ window.addEventListener('load',function(){
       }
       
       event.target.parentElement.childNodes[1].textContent = fourDigitTime; // TODO choose span element instead of hardcode 1
+      pc.updateModelFromForms();
+      pc.updateHTML();
       cl('TimeBox change - - - - - E');
     });
   });
 
+  document.querySelectorAll('.break').forEach(item => {
+    cl(item);
+    item.addEventListener('change', event => {
+      pc.updateModelFromForms();
+      pc.updateHTML();          
+    });
+  });  
+  
   document.querySelectorAll('.hrs-row').forEach(item => {
     cl(item);
     item.addEventListener('dblclick', event => {
@@ -625,7 +642,8 @@ window.addEventListener('load',function(){
       
       let dayNo = parseInt(event.target.parentElement.id);      
       pc.clearHours(dayNo);
-      pc.updateHTML();      
+      pc.updateModelFromForms();
+      pc.updateHTML();            
     });
   });
 
