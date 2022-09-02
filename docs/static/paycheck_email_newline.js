@@ -124,7 +124,7 @@ const PAD_IN   = 6;
 const PAD_BRK  = 5;
 const PAD_OUT  = 8;
 const PAD_HRS  = 6;
-const PAD_DHRS = 5;
+const PAD_DHRS = 10;
 const PAD_TITLE_PAYDAY = PAD_DAY + PAD_DATE;
 const PAD_TITLE_WK_RANGE = PAD_IN + PAD_BRK;
 const PAD_TITLE_DATE_RANGE = PAD_OUT + PAD_HRS +PAD_DHRS;
@@ -388,7 +388,7 @@ class PayCycle4wk{
     return t0.padEnd(p0) + t1.padEnd(p1) +
            t2.padEnd(p2) + t3.padEnd(p3) +
            t4.padEnd(p4) + t5.padEnd(p5) +
-           t6.padEnd(p6) + t7.padEnd(p7) + '\n';
+           t6.padEnd(p6) + t7.padEnd(p7) + '%0D%0A';
   }
   
   reportDayLine(day, date, start, brk, finish, hrs, dhrs){
@@ -434,18 +434,18 @@ class PayCycle4wk{
                                 this.daysInCycle[dayNo].totalMinsDecimalHM);
     }
     
-    return `${title}\n${weekDays}`;
+    return `${title}%0D%0A${weekDays}`;
   }
   
   emailVersionSummary(){ // feels like a rehash of updateHTML - maybe a smarter way to do both?
     // mailto scheme: https://www.rfc-editor.org/rfc/rfc2368#page-3
     // more:          https://www.rfc-editor.org/rfc/rfc1738#page-12
-    // use '%0D%0A' in place of '\n'
+    // use '%0D%0A' in place of '%0D%0A'
     
     // 4 week in cycle of 28 days
     // cycle summary details
     let textSummary = this.reportTitleLine(`PayDay: ${this.payDay.getDate()}${Day.numToMonth[this.payDay.getMonth()]}  `, `WKS ${this.weekNos[0]}-${this.weekNos[3]}`, `${this.daysInCycle[0].HRdate}-${this.daysInCycle[27].HRdate}`);
-    textSummary += '\n';
+    textSummary += '%0D%0A';
     
     // column titles
     //cl(textSummary);
@@ -465,7 +465,7 @@ class PayCycle4wk{
       //                          Day.minsToHMReadable(this.weekTotalMins[weekNo]), PAD_TOT_HRS,
       //                          Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]), PAD_TOT_DHRS));
       //cl('---*---');
-      textSummary += '\n';
+      textSummary += '%0D%0A';//'%0D%0A';
     }
     // Add week summaries
     textSummary += PayCycle4wk.createLine('WK',PAD_WK_TOTS,
@@ -482,29 +482,26 @@ class PayCycle4wk{
     textSummary += PayCycle4wk.createLine('TOTAL:',PAD_WK_TOTS,
                                           Day.minsToHMReadable(this.cycleTotalMins),PAD_WK_TOTS,
                                           Day.minsToHDecimalReadable(this.cycleTotalMins),PAD_WK_TOTS);
-    textSummary += '\n';
+    textSummary += '%0D%0A';
 
     // Add totals
-    textSummary += document.querySelector('#r0_final_tots_title').textContent+'\n';
-    textSummary += document.querySelector('#r1_anual_in_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)    +this.annualIncomeEstimate.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
-    textSummary += document.querySelector('#r2_gross_4wk_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)   +this.gross4wk.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
-    textSummary += document.querySelector('#r3_pension_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)     +this.pensionContrib.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
-    textSummary += document.querySelector('#r4_ni_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)          +this.contribNI.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
-    textSummary += document.querySelector('#r5_tax_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)         +this.incomeTax.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
-    textSummary += document.querySelector('#r6_tot_dedcts_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)  +this.deductions.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
-    textSummary += document.querySelector('#r7_net_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)         +this.netIncomeForCycle.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
+    textSummary += document.querySelector('#r0_final_tots_title').textContent+'%0D%0A';
+    textSummary += document.querySelector('#r1_anual_in_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)    +this.annualIncomeEstimate.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'%0D%0A';
+    textSummary += document.querySelector('#r2_gross_4wk_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)   +this.gross4wk.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'%0D%0A';
+    textSummary += document.querySelector('#r3_pension_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)     +this.pensionContrib.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'%0D%0A';
+    textSummary += document.querySelector('#r4_ni_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)          +this.contribNI.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'%0D%0A';
+    textSummary += document.querySelector('#r5_tax_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)         +this.incomeTax.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'%0D%0A';
+    textSummary += document.querySelector('#r6_tot_dedcts_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)  +this.deductions.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'%0D%0A';
+    textSummary += document.querySelector('#r7_net_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)         +this.netIncomeForCycle.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'%0D%0A';
     
-    textSummary += '\n\n';
-    textSummary += `Sent on ${new Date()} by payCheck - MIT Lisence \nhttps://unacceptablebehaviour.github.io/paycheck/ \n\n`
-    // use '%0D%0A' in place of '\n' for correct display - CREATES NEW STRING!
+    // use '%0D%0A' in place of '%0D%0A' for correct display
     //textSummary.replace('\n', '%0D%0A');    // NO WORK?
     //textSummary.replaceAll("\n", '%0D%0A');
     //textSummary.replace(/\n/g, '%0D%0A');
-    //cl(textSummary.replaceAll('%0D%0A','\n'))
     
     cl(textSummary);
     
-    return textSummary.replaceAll("\n", '%0D%0A');
+    return textSummary;
   }
 
 }
