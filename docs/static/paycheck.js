@@ -424,14 +424,18 @@ class PayCycle4wk{
   reportWeek(title, startDay){
     let weekDays = this.reportColumnHeaders();
     
-    for (let dayNo = startDay; dayNo < startDay+7; dayNo +=1) {
-      weekDays += this.reportDayLine(Day.numToDay[dayNo %7],
+    for (let dayNo = startDay; dayNo < startDay+7; dayNo +=1) {      
+      let line = this.reportDayLine(Day.numToDay[dayNo %7],
                                 this.daysInCycle[dayNo].HRdate,
                                 this.daysInCycle[dayNo].inTime,
                                 this.daysInCycle[dayNo].breakTime,
                                 this.daysInCycle[dayNo].outTime,
                                 this.daysInCycle[dayNo].totalMinsReadableHM,
                                 this.daysInCycle[dayNo].totalMinsDecimalHM);
+      if ( settings.showExceptions && (parseInt(this.daysInCycle[dayNo].breakTime) === 0)) {
+        line = line.replace('\n'," EXCEPTION\n");
+      }
+      weekDays += line;
     }
     
     return `${title}\n${weekDays}`;
@@ -630,6 +634,7 @@ const CAMERA_MODE_GALLERY = 0;
 const CAMERA_MODE_CAPTURE = 1;
 var settings = {
   cameraMode: CAMERA_MODE_GALLERY,
+  showExceptions: true,
 };
 var stateKey = '';
 cl(pc);
