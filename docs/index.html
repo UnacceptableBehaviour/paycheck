@@ -37,10 +37,10 @@
 <body style="font-family:'Arial';">
   <div class="paycheck-container font-portrait">
     <div id='ct_paycycle_summary' class='item summary'>
-      <div class='flexrow-title' id='pay_day'>
-        <button class='flexrow-title-button title-text' id='but_4wk_bak'><</button>
-        <button class='flexrow-title-button title-text' id='but_4wk_fwd'>></button>
-        <span class='flexrow-title-text title-text' id='pay_day_js'>js_calc</span>              
+      <div class='flexrow-button-header' id='pay_day'>
+        <button id='but_4wk_bak' class='lr-button lrbl flexrow-button-header-button'><img src='static/icons/hol-left.svg'></button>
+        <button id='but_4wk_fwd' class='lr-button lrbr flexrow-button-header-button'><img src='static/icons/hol-right.svg'></button>
+        <span class='flexrow-button-header-text title-text' id='pay_day_js'>js_calc</span>              
       </div>
       
       <div class='wk-info flexrow-container'>
@@ -65,14 +65,16 @@
         <!--<input type="submit">-->
       </form>      
     </div>
-      <br>
+
     <div id='ct_daily_hours' class='item daily-hours'>
-      <div id='wk_no'>
-        <button id='but_wk_no_bak' class="font-portrait title-text"><</button>
-        <button id='but_wk_no_fwd' class="font-portrait title-text">></button>
-        <span>WK:</span><span id='wk_no_js'>js_calc </span>
+      <div id='wk_no' class='flexrow-button-header'>
+        <button id='but_wk_no_bak' class="lr-button lrbl flexrow-button-header-button"><img src='static/icons/hol-left.svg'></button>
+        <button id='but_wk_no_fwd' class="lr-button lrbr flexrow-button-header-button"><img src='static/icons/hol-right.svg'></button>
+        <div class='flexrow-button-header-text'>
+          <span>WK:</span><span id='wk_no_js'>js_calc </span>
+        </div>
       </div>
-      <br>  
+
       <table class='hrs-table' id="example">
         <thead>
             <tr class='hrs-head'>
@@ -300,38 +302,41 @@
         </tbody>
       </table>
     </div>    
-    <br>
     
-    <div id='ct_week_totals' class='item week-totals flexrow-container'>
-      <div>
-        <table>
-            <thead>
-                <tr class='wk-row'>
-                    <th>Week</th>
-                    <th>Hrs</th>
-                    <th>DHrs</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class='wk-row'><td id='r1_wk_no'>js_calc</td><td id='r1_tot_hrs'>js_calc</td><td id='r1_tot_dhrs'>js_calc</td></tr>
-                <tr class='wk-row'><td id='r2_wk_no'>js_calc</td><td id='r2_tot_hrs'>js_calc</td><td id='r2_tot_dhrs'>js_calc</td></tr>
-                <tr class='wk-row'><td id='r3_wk_no'>js_calc</td><td id='r3_tot_hrs'>js_calc</td><td id='r3_tot_dhrs'>js_calc</td></tr>
-                <tr class='wk-row'><td id='r4_wk_no'>js_calc</td><td id='r4_tot_hrs'>js_calc</td><td id='r4_tot_dhrs'>js_calc</td></tr>   
-            </tbody>
-            <tfoot>
-                <tr class='wk-row'><td>Total</td><td id='r5_tot_hrs'>js_calc</td><td id='r5_tot_dhrs'>js_calc</td></tr>   
-            </tfoot>    
-        </table>
+    <div id='ct_week_totals' class='item week-totals'>
+      <div class='flexrow-container'>
+        <div>      
+          <table>
+              <thead>
+                  <tr class='wk-row'>
+                      <th>Week</th>
+                      <th>Hrs</th>
+                      <th>DHrs</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr class='wk-row'><td id='r1_wk_no'>js_calc</td><td id='r1_tot_hrs'>js_calc</td><td id='r1_tot_dhrs'>js_calc</td></tr>
+                  <tr class='wk-row'><td id='r2_wk_no'>js_calc</td><td id='r2_tot_hrs'>js_calc</td><td id='r2_tot_dhrs'>js_calc</td></tr>
+                  <tr class='wk-row'><td id='r3_wk_no'>js_calc</td><td id='r3_tot_hrs'>js_calc</td><td id='r3_tot_dhrs'>js_calc</td></tr>
+                  <tr class='wk-row'><td id='r4_wk_no'>js_calc</td><td id='r4_tot_hrs'>js_calc</td><td id='r4_tot_dhrs'>js_calc</td></tr>   
+              </tbody>
+              <tfoot>
+                  <tr class='wk-row'><td>Total</td><td id='r5_tot_hrs'>js_calc</td><td id='r5_tot_dhrs'>js_calc</td></tr>   
+              </tfoot>    
+          </table>
+        </div>
+        <span class='flexrow-middle-space space-box'></span>
+        <div>
+          <div id='date-today' class='time-font'>
+            <div id='date-today-day'>Mon</div>
+            <div id='date-today-date'>29 Aug</div>
+            <div id='date-today-year'>2050</div>        
+          </div>
+          <div id='mailto_d'><img id='mail_img' src='static/icons/email-svgrepo-com.svg'></div>
+        </div>
       </div>
-      <span class='flexrow-middle-space space-box'></span>
-      <div id='date-today' class='time-font'>
-        <div id='date-today-day'>Mon</div>
-        <div id='date-today-date'>29 Aug</div>
-        <div id='date-today-year'>2050</div>
-      </div>        
     </div>
     
-    <br>
     <div id='ct_final_calc' class='item totals'>
       <div id='r0_final_tots_title'><b>Estimates and Deductions</b></div>
       <table>
@@ -346,25 +351,14 @@
           </tbody>  
       </table>
     </div>
-    <br>    
+
     <div id='ct_debug' class='item debug'>
-      <div>
-        <span >DEBUG</span>
-        <button id='mailto_b' onclick="location.href='mailto:a.b@g.com';">MAIL-B</button>
-        <form id='mailto_f' action="mailto:a.b@g.com" enctype="text/plain" method="GET">
-          MAIL-F
-          <input name="subject" type="text">SUBJECT</input>
-          <textarea name="body"></textarea>
-          <input type="submit" value="Send">
-        </form>
-        <div id='mailto_d'>Send e-mail DIV</div>
-      </div>
       <div id='dgb_01'></div>
       <div id='dgb_02'></div>
       <div id='dgb_03'></div>
       <div id='dgb_04'></div>
     </div>
-    <br>
+
   </div>
 
   <script type="module" src='static/focus.js'></script>

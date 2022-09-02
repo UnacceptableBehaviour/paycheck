@@ -10,86 +10,6 @@ body {
   /*margin-bottom: 0px;*/
 }
 
-button.title-text {
-  height: 5vh; 
-  width: 15vw;
-  padding: 1vw;
-}
-
-.font-portrait {
-  font-size: 2.5vh;
-  /*padding-top: 5vh;*/
-  /*padding-bottom: 1vh;*/  
-}
-
-.title-text {
-  font-size: 3.5vh;
-  text-align: center;
-}
-
-.time-font {
-  font-size: 3.5vh;
-  padding: 2vw;
-  padding-right: 6vw;
-  text-align: center;
-}
-.time-font > div {
-  padding: 1vw;
-}
-
-/* flex  items left just - spacebox - item right just */
-/* DDD EEE - - - - - - - AAA BBB CCC*/
-.flexrow-title {
-    /*background-color: #F4FF23;*/
-    display: flex;                  /* select FLEX BOX display functionality */
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.flexrow-title-button {
-    text-align: center;
-}
-
-.flexrow-title-text {
-    flex-grow: 1;
-}
-
-
-/* flex  items left just - spacebox - item right just */
-/* DDD EEE - - - - - - - AAA BBB CCC*/
-.flexrow-container {
-    /*background-color: #F4FF23;*/
-    display: flex;                  /* select FLEX BOX display functionality */
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.flexrow-item {
-    text-align: center;
-}
-
-.flexrow-middle-space {
-    /*height: 34px;*/
-    flex-grow: 1;
-}
-
-
-input {
-  font-size: 2.45vh;
-  width: 12vw;
-}
-.paycheck-container td {
-  width: 18vw;
-}
-
-/*.td-date { width: 20vw; }*/
-
-#tax_code {
-  width: 25vw;
-}
-
 .paycheck-container {
   display: grid;
   height: 100vh;
@@ -126,6 +46,111 @@ input {
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 }
 
+
+/* BUTTON header areas */
+.lr-button {
+  padding: 0.5vh 2vw;  
+}
+
+.lrbl {
+  border-radius: 5vw 0 0 5vw;
+}
+
+.lrbr {
+  border-radius: 0 5vw 5vw 0;
+}
+
+.font-portrait {
+  font-size: 2.2vh;
+  /*padding-top: 5vh;*/
+  /*padding-bottom: 1vh;*/  
+}
+
+.title-text {
+  font-size: 3.5vh;
+  text-align: center;
+}
+
+/* BUTTON flex boxes */
+/* flex  items left just - spacebox - item right just */
+/* DDD EEE - - - - - - - AAA BBB CCC*/
+.flexrow-button-header {
+  /*background-color: #F4FF23;*/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flexrow-button-header-button {
+    /*text-align: center;*/
+}
+
+.flexrow-button-header-text {
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* WEEK summary section flex */
+/* flex  items left just - spacebox - item right just */
+/* DDD EEE - - - - - - - AAA BBB CCC*/
+.flexrow-container {
+    background-color: #F4FF23;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.flexrow-middle-space {
+    /*height: 34px;*/
+    flex-grow: 1;
+}
+.flexrow-item {
+    text-align: center;
+}
+
+.time-font {
+  font-size: 3vh;
+  padding: 0.5vh 1vw;
+  padding-right: 6vw;
+  text-align: center;
+}
+.time-font > div {
+  padding: 0.5vw;
+}
+
+#mail_img {
+  width: 10vw;
+}
+
+#mailto_d {
+  /*border: 1px solid #BF00FF;*/
+  padding: 0.1vh 4vw;
+  border: 0px;
+  margin: 0px;  
+  /*border-radius: 6px;*/
+}
+
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+input {
+  font-size: 2.45vh;
+  width: 12vw;
+}
+.paycheck-container td {
+  width: 18vw;
+}
+
+/*.td-date { width: 20vw; }*/
+
+#tax_code {
+  width: 25vw;
+}
+
+
+
 /* tbc - table column */
 .hrs-row {
   text-align: left;
@@ -134,15 +159,6 @@ input {
 }
 .wk-row {
   text-align: left;
-}
-
-.tbc.name {
-  width: 70vw;  
-}
-
-.tbc.fin_data {
-  width: 15vw;
-  text-align: right;
 }
 
 .space-box {
@@ -179,18 +195,17 @@ label.imgSelect {
 label.imgSelect input[accept*="image"] {
   display: none;
 }
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-#mailto_b {
-  border: 1px solid #BF00FF;
-  /*border-radius: 6px;*/
+/* summary table */
+.tbc.name {
+  width: 80vw;  
 }
 
-#mailto_f {
-  border: 1px solid #BF00FF;
-  /*border-radius: 6px;*/
+.tbc.fin_data {
+  width: 15vw;
+  text-align: right;
 }
 
-#mailto_d {
-  border: 1px solid #BF00FF;
-  /*border-radius: 6px;*/
-}
+
+
