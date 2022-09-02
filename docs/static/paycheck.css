@@ -6,6 +6,7 @@
 
 body {
   margin: 0px;
+  background: #008100;
   /*margin-top: 0px;*/
   /*margin-bottom: 0px;*/
 }
@@ -49,7 +50,10 @@ body {
 
 /* BUTTON header areas */
 .lr-button {
-  padding: 0.5vh 2vw;  
+  padding: 0vh 2vw 0.2vh 2vw;
+  height: 6vh;
+  /*border: 1px;*/
+  border-color: #444;
 }
 
 .lrbl {
@@ -95,7 +99,7 @@ body {
 /* flex  items left just - spacebox - item right just */
 /* DDD EEE - - - - - - - AAA BBB CCC*/
 .flexrow-container {
-    background-color: #F4FF23;
+    /*background-color: #F4FF23;*/
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -133,10 +137,35 @@ body {
 
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
+/* week day hours boxes */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-input {
-  font-size: 2.45vh;
+.week-day-font {
+  font-size: 2.2vh;
+}
+
+.col1 {
+  text-align: left;
+}
+.col2 {
+  text-align: left;  
+}
+.col3 {
+  text-align: center;
+}
+.col4 {
+  text-align: left; 
+}
+.col5 {
+  text-align: center;
+}
+.col6 {
+  text-align: center;
+}
+.col7 {
+  text-align: center;
+}
+
+input {  
   width: 12vw;
 }
 .paycheck-container td {

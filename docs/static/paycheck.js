@@ -230,7 +230,7 @@ class PayCycle4wk{
   getWeekNoDateRange(){
     let start = this.daysInCycle[this.weekNo * 7];    // cl(start);
     let end = this.daysInCycle[(this.weekNo * 7)+6];  // cl(end);
-    return `${this.weekNo+1}-${this.weekNos[this.weekNo]} ~  ${start.HRdate} - ${end.HRdate}`;
+    return `${this.weekNo+1} / ${this.weekNos[this.weekNo]} ~  ${start.HRdate} - ${end.HRdate}`;
   }
   
   getNextPayDay(){
