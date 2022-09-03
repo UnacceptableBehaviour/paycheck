@@ -81,6 +81,17 @@ MISSING:
 "orientation": "portrait",  
 "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results."  
   
+**WARNING**
+HTML points to wrong manifest file!
+```
+IS
+<link rel="manifest" href="static/app_icons/site.webmanifest?v=0.01">
+SB
+<link rel="manifest" href="static/manifest.webmanifest?v=0.01">
+  
+**WARNING**
+Don't for get to run ```build_cache_file_list.py``` and update SW cache list!
+  
   
 Checking the favicon version adds version to a lot of things!  
 ```
