@@ -170,6 +170,13 @@ body {
   user-select: none; /* Standard */
 }
 
+.col3,
+.col4,
+.col5 {
+  contenteditable: true;
+  virtualkeyboardpolicy="manual";
+}
+
 .col1 {
   text-align: left;
   width: 5vw;
