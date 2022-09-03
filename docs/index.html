@@ -6,6 +6,8 @@
   <link rel="stylesheet" type="text/css" href="static/paycheck.css" />
   <link rel="manifest" href="static/manifest.webmanifest?v=0.01">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results."> <!--script should update this fomr manifest-->
+  </script>
   <!--icon PWA inserts START -->
   <link rel="apple-touch-icon" sizes="180x180" href="static/app_icons/apple-touch-icon.png?v=0.01">
   <link rel="icon" type="image/png" sizes="32x32" href="static/app_icons/favicon-32x32.png?v=0.01">
@@ -42,8 +44,8 @@
     <div id='ct_paycycle_summary' class='item summary'>
       <div class='flexrow-button-header' id='pay_day'>
         <span class='flexrow-button-header-text title-text' id='pay_day_js'>js_calc</span>              
-        <button id='but_4wk_bak' class='lr-button lrbl flexrow-button-header-button'><img src='static/icons/hol-left.svg'></button>
-        <button id='but_4wk_fwd' class='lr-button lrbr flexrow-button-header-button'><img src='static/icons/hol-right.svg'></button>
+        <button id='but_4wk_bak' class='lr-button lrbl flexrow-button-header-button'><img src='static/icons/hol-left.svg' alt='Back 4 weeks'></button>
+        <button id='but_4wk_fwd' class='lr-button lrbr flexrow-button-header-button'><img src='static/icons/hol-right.svg' alt='Forward 4 weeks'></button>
       </div>
       
       <div class='wk-info flexrow-container'>
@@ -74,8 +76,8 @@
         <div class='flexrow-button-header-text'>
           <span>WK:</span><span id='wk_no_js'>js_calc </span>
         </div>
-        <button id='but_wk_no_bak' class="lr-button lrbl flexrow-button-header-button"><img src='static/icons/hol-left.svg'></button>
-        <button id='but_wk_no_fwd' class="lr-button lrbr flexrow-button-header-button"><img src='static/icons/hol-right.svg'></button>
+        <button id='but_wk_no_bak' class="lr-button lrbl flexrow-button-header-button"><img src='static/icons/hol-left.svg' alt='Back 1 week'></button>
+        <button id='but_wk_no_fwd' class="lr-button lrbr flexrow-button-header-button"><img src='static/icons/hol-right.svg' alt='Forward 1 week'></button>
       </div>
 
       <table class='hrs-table' id="example">
@@ -335,7 +337,7 @@
             <div id='date-today-date'>29 Aug</div>
             <div id='date-today-year'>2050</div>        
           </div>
-          <div id='mailto_d'><img id='mail_img' src='static/icons/email-svgrepo-com.svg'></div>
+          <div id='mailto_d'><img id='mail_img' src='static/icons/email-svgrepo-com.svg' alt='eMail 4week Summary'></div>
         </div>
       </div>
     </div>
