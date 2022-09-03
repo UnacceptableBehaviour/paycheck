@@ -34,9 +34,9 @@ body {
   grid-row: 22 / span 8;
 }
 
-.paycheck-container .debug {
-  grid-row: 30 / span 4;
-}
+/*.paycheck-container .debug {*/
+/*  grid-row: 30 / span 4;*/
+/*}*/
 
 
 .item {
@@ -233,6 +233,10 @@ label.imgSelect input[accept*="image"] {
 .tbc.fin_data {
   width: 15vw;
   text-align: right;
+}
+
+#ct_debug {
+  disply: none;
 }
 
 
