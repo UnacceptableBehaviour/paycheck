@@ -800,7 +800,6 @@ window.addEventListener('load',function(){
       
       let dayNo = parseInt(event.target.parentElement.id);      
       pc.clearHours(dayNo);
-      pc.updateModelFromForms();
       pc.updateHTML();            
     });
   });
