@@ -40,7 +40,7 @@ body {
 
 
 .item {
-  padding: 8px;
+  padding: 4px;
   background-color: #ECFFE0;  
   border: 4px solid #8BC962;
   border-radius: 6px;
@@ -201,12 +201,15 @@ label.imgSelect input[accept*="image"] {
   display: none;
 }
 
-
 .col6 {
   text-align: center;
 }
 .col7 {
   text-align: center;
+}
+
+.hr-row-test {
+  background: #6600FF;
 }
 
 
