@@ -14,7 +14,7 @@ console.log('service_worker.js LOADING');
 // depends if you are using /docs/  or /master/
 // /paycheck/
 
-let verion_numner_passed_in = '00.04';
+let verion_numner_passed_in = '00.05';
 
 const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;  // TODO add version number for ServWrkr updates
 
@@ -25,14 +25,15 @@ const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;  // TODO a
 // dont cache SW - changes to SW force and update of SW and consequently caches - update version above
 //'/paycheck/service_worker.js',  // https://stackoverflow.com/questions/55027512/should-i-cache-the-serviceworker-file-in-a-pwa
 const FILES_TO_CACHE = [
+  '/paycheck/index.html',
+  '/paycheck/favicon.ico',
+  '/paycheck/apple-touch-icon.png',
   '/paycheck/static/paycheck.css',
   '/paycheck/static/paycheck.js',
-  '/paycheck/static/manifest.webmanifest',
   '/paycheck/static/focus.js',
+  '/paycheck/static/manifest.webmanifest',
   '/paycheck/static/app_icons/favicon-16x16.png',
-  '/paycheck/static/app_icons/mstile-310x310.png',
   '/paycheck/static/app_icons/android-chrome-384x384.png',
-  '/paycheck/static/app_icons/mstile-144x144.png',
   '/paycheck/static/app_icons/safari-pinned-tab.svg',
   '/paycheck/static/app_icons/favicon.ico',
   '/paycheck/static/app_icons/apple-touch-icon-120x120.png',
@@ -42,7 +43,6 @@ const FILES_TO_CACHE = [
   '/paycheck/static/app_icons/mstile-70x70.png',
   '/paycheck/static/app_icons/apple-touch-icon-152x152.png',
   '/paycheck/static/app_icons/apple-touch-icon-180x180.png',
-  '/paycheck/static/app_icons/mstile-310x150.png',
   '/paycheck/static/app_icons/apple-touch-icon-76x76.png',
   '/paycheck/static/app_icons/android-chrome-512x512.png',
   '/paycheck/static/app_icons/mstile-150x150.png',
@@ -54,6 +54,9 @@ const FILES_TO_CACHE = [
   '/paycheck/static/app_icons/android-chrome-48x48.png',
   '/paycheck/static/app_icons/favicon-32x32.png',
   '/paycheck/static/app_icons/android-chrome-144x144.png',
+  '/paycheck/static/icons/hol-left.svg',
+  '/paycheck/static/icons/email-svgrepo-com.svg',
+  '/paycheck/static/icons/hol-right.svg',
 ];
 
 
