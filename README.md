@@ -24,7 +24,7 @@ Understand relationship between DPI and PX in SVG
 What aren't these independent resolution settings?   
 Inkscape setting image to 512 x 512 pixels 72 dpi for web  
   
-![AppIcon](https://github.com/UnacceptableBehaviour/paycheck/blob/main/icon/payCheckIconMain512x512.png)  
+![AppIcon](https://github.com/UnacceptableBehaviour/paycheck/blob/main/icon/payCheckIconMain512x512.png width=180)  
   
 ## Process ICON file into platform images & manifest file:
 There are quite a few site that will do this I used https://realfavicongenerator.net/ [here](https://realfavicongenerator.net/)  
