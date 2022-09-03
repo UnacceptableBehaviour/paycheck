@@ -160,13 +160,24 @@ body {
   width: 20vw;
 }
 
+.col1,
+.col2,
+.col6,
+.col7 {
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
 
 .col1 {
   text-align: left;
   width: 5vw;
+  contenteditable: false;
 }
 .col2 {
-  text-align: left;  
+  text-align: left;
+  contenteditable: false;
 }
 .col3 {
   text-align: center;
