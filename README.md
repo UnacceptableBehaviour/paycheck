@@ -70,27 +70,38 @@ Additional files: README.md html_code.html
 ### Notes on Above 
 Icon set Version: scratch/icon_ideas/20220903_favicon_package_v0.16  
   
-This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16](https://realfavicongenerator.net/change_log#v0.16) 
+This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16]  (https://realfavicongenerator.net/change_log#v0.16)  
+  
 **Issues w/ manifest:**  
-"theme_color": "#ffffff", SB #008100
-"background_color": "#ffffff", SB #008100
-in ICON array, need to add app_icons to image paths.
+"theme_color": "#ffffff", SB #008100  
+"background_color": "#ffffff", SB #008100  
+  
+in ICON array, need to add app_icons to image paths.  
+  
 MISSING:  
 "id": "/paycheck/", 
 "scope": "https://unacceptablebehaviour.github.io/paycheck/",  
 "orientation": "portrait",  
 "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results."  
   
-**WARNING**
-HTML points to wrong manifest file!
+**WARNING**  
+HTML points to wrong manifest file!  
 ```
 IS
 <link rel="manifest" href="static/app_icons/site.webmanifest?v=0.01">
 SB
 <link rel="manifest" href="static/manifest.webmanifest?v=0.01">
+```
+    
+**WARNING**  
+Don't for get to run ```build_cache_file_list.py``` and update SW cache list!  
   
-**WARNING**
-Don't for get to run ```build_cache_file_list.py``` and update SW cache list!
+**WARNING**  
+```
+<meta name="viewport" content="width=device-width, initial-scale=1">
+```
+Missing from HTML includes
+  
   
   
 Checking the favicon version adds version to a lot of things!  
