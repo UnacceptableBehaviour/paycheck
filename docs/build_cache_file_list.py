@@ -14,7 +14,7 @@ if __name__ == '__main__':
     
     search_path = project_root
     prepend = ''
-    #prepend = f"/{repo_name}"
+    prepend = f"/{repo_name}"
     
     print("const FILES_TO_CACHE = [\n  '/',")
     
