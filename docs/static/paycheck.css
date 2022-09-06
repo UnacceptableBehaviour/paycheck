@@ -50,7 +50,7 @@ body {
 
 /* BUTTON header areas */
 .lr-button {
-  padding: 0vh 2vw 0.2vh 2vw;
+  padding: 0vh 2vw 0.2vh 2vw;   /*padding: top right bottom left;*/
   height: 6vh;
   /*border: 1px;*/
   border-color: #444;
@@ -76,7 +76,15 @@ body {
 }
 
 #tax_code {
-  width: 25vw;
+  width: 18vw;
+}
+
+#wk_range {
+  text-align: right;
+  padding-right: 1vw;
+}
+#wk_range_dates_js {
+  padding-right: 1vw;
 }
 
 /* BUTTON flex boxes */

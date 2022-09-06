@@ -329,7 +329,6 @@ class PayCycle4wk{
   updateHTML(){
     // HEADER - update pay_day, cut_off, wk_range = week no's, wk_range_dates 4week date range
     document.querySelector('#pay_day_js').textContent = `Pay Day: ${this.payDay.getDate()} ${Day.numToMonth[this.payDay.getMonth()]}`;
-    document.querySelector('#cut_off_js').textContent = `${this.cutOff.getDate()} ${Day.numToMonth[this.cutOff.getMonth()]}`;
     document.querySelector('#wk_range_js').textContent = ` ${this.getWeekNo(0)} - ${this.getWeekNo(3)}`;
     document.querySelector('#wk_range_dates_js').textContent = `${this.payStart.getDate()} ${Day.numToMonth[this.payStart.getMonth()]} - ${this.cutOff.getDate()} ${Day.numToMonth[this.cutOff.getMonth()]}`;
     document.querySelector('#wk_no_js').textContent = this.getWeekNoDateRange();
@@ -842,16 +841,16 @@ window.addEventListener('load',function(){
   
   
   // DEBUG
-  var win = window,
-      doc = document,
-      docElem = doc.documentElement,
-      body = doc.getElementsByTagName('body')[0],
-      x = win.innerWidth || docElem.clientWidth || body.clientWidth,
-      y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
-  
-  document.querySelector('#dgb_01').textContent = `WIN X:${win.innerWidth} Y:${win.innerHeight}`;
-  document.querySelector('#dgb_02').textContent = `docE X:${docElem.clientWidth} Y:${docElem.clientHeight}`;
-  document.querySelector('#dgb_03').textContent = `BODY X:${body.clientWidth} Y:${body.clientHeight}`;
+  //var win = window,
+  //    doc = document,
+  //    docElem = doc.documentElement,
+  //    body = doc.getElementsByTagName('body')[0],
+  //    x = win.innerWidth || docElem.clientWidth || body.clientWidth,
+  //    y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
+  //
+  //document.querySelector('#dgb_01').textContent = `WIN X:${win.innerWidth} Y:${win.innerHeight}`;
+  //document.querySelector('#dgb_02').textContent = `docE X:${docElem.clientWidth} Y:${docElem.clientHeight}`;
+  //document.querySelector('#dgb_03').textContent = `BODY X:${body.clientWidth} Y:${body.clientHeight}`;
   
   //cl(`DOC X:${x} Y:${y}`);
   

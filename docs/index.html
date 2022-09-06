@@ -49,26 +49,27 @@
       </div>
       
       <div class='wk-info flexrow-container'>
-        <span class='flexrow-item' id='wk_range'>Week Nos: </span>
-        <span class='flexrow-item' id='wk_range_js'>js_calc</span>
+        <div class='flexrow-item'>
+          <form action="" method="">
+            <label for="tax_code">Select tax code:</label>
+            <input list="tax_codes" name="tax_code" id="tax_code" placeholder="1257L">
+            <datalist id="tax_codes">
+              <option value="1257L">
+              <option value="Add new code">
+            </datalist>
+            <!--<input type="submit">-->
+          </form>        
+        </div>
         <span class='flexrow-middle-space space-box'></span>
         <span class='flexrow-item' id='wk_range_dates_js'>js_calc</span>
       </div>
-      
-      <div style='display: none;'>
-        <div id='cut_off'><span>Cut Off: </span><span id='cut_off_js'>js_calc</span></div>        
+            
+      <div id='wk_range'>
+        <span>Week Nos: </span>
+        <span id='wk_range_js'>js_calc</span>        
       </div>
-      <form action="" method="">
-        <label for="tax_code">Select tax code:</label>
-        <input list="tax_codes" name="tax_code" id="tax_code" placeholder="1257L">
-        <datalist id="tax_codes">
-          <option value="1257L">
-          <option value="TC_0S20">
-          <option value="TC_0S09">
-          <option value="Add new code">
-        </datalist>
-        <!--<input type="submit">-->
-      </form>      
+      
+      
     </div>
 
     <div id='ct_daily_hours' class='item daily-hours week-day-font'>
