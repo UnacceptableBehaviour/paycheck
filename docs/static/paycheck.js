@@ -478,7 +478,7 @@ class PayCycle4wk{
     for (let weekNo = 0; weekNo<4; weekNo +=1) {
       //PAD_WK_TOTS
       //cl(`WK ${weekNo+1} / ${this.weekNos[weekNo]} - ${Day.minsToHMReadable(this.weekTotalMins[weekNo])} - ${Day.minsToHDecimalReadable(this.weekTotalMins[weekNo])}`);
-      textSummary += PayCycle4wk.createLine(`WK ${weekNo+1}`,PAD_WK_TOTS,
+      textSummary += PayCycle4wk.createLine(`WK ${weekNo+1}/${this.weekNos[weekNo]}`,PAD_WK_TOTS,
                                             Day.minsToHMReadable(this.weekTotalMins[weekNo]),PAD_WK_TOTS,
                                             Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]),PAD_WK_TOTS);
     }
