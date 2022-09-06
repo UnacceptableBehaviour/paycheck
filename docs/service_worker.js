@@ -25,7 +25,6 @@ const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;  // TODO a
 // dont cache SW - changes to SW force and update of SW and consequently caches - update version above
 //'/paycheck/service_worker.js',  // https://stackoverflow.com/questions/55027512/should-i-cache-the-serviceworker-file-in-a-pwa
 const FILES_TO_CACHE = [
-  '/',
   '/paycheck/favicon.ico',
   '/paycheck/index.html',
   '/paycheck/apple-touch-icon.png',
