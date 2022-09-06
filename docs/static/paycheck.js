@@ -300,6 +300,10 @@ class PayCycle4wk{
     this.netIncomeForCycle = this.gross4wk - this.deductions;
   }
   
+  persistentSave(){
+    localStorage.setItem(this.localStorageKey, JSON.stringify(this));
+  }
+  
   // call on submit & week change  
   updateModelFromForms(){
     // cycle through days parse content into relevant object
@@ -660,7 +664,6 @@ else {                            // save a new state key
 
 window.addEventListener('load',function(){
   cl('LOADED');
-  //pc.updateModelFromForms();
   pc.updateWeekTotalMins();
   pc.finalCalulations();  
   pc.updateHTML();
@@ -673,10 +676,9 @@ window.addEventListener('load',function(){
   // << WEEK
   document.querySelector('#but_wk_no_bak').addEventListener('click', function(event){
     pc.updateModelFromForms();    
-    //cl(JSON.stringify(pc));
     pc.weekBak();
     pc.updateHTML();
-    localStorage.setItem(pc.localStorageKey, JSON.stringify(pc));
+    pc.persistentSave();    
     console.log(`Week BACK - WkNo: ${pc.getWeekNo()}`);
       
   });
@@ -684,10 +686,9 @@ window.addEventListener('load',function(){
   // WEEK >>
   document.querySelector('#but_wk_no_fwd').addEventListener('click', function(event){
     pc.updateModelFromForms();
-    //cl(JSON.stringify(pc));
     pc.weekFwd();    
     pc.updateHTML();
-    localStorage.setItem(pc.localStorageKey, JSON.stringify(pc));    
+    pc.persistentSave();    
     console.log(`Week FORWARD - WkNo: ${pc.getWeekNo()}`);
   });
   
@@ -695,7 +696,7 @@ window.addEventListener('load',function(){
   document.querySelector('#but_4wk_bak').addEventListener('click', function(event){
     cl('MOVE TO LAST 4WK CYCLE');
     
-    localStorage.setItem(pc.localStorageKey, JSON.stringify(pc));   // save current pc
+    pc.persistentSave();   // save current pc
         
     pc = new PayCycle4wk(...pc.getLastPayDay());  // create new payCycle object w/ LAST paydate & starting weekNo                                                  
       
@@ -715,7 +716,7 @@ window.addEventListener('load',function(){
 
     cl('MOVE TO NEXT 4WK CYCLE');  
 
-    localStorage.setItem(pc.localStorageKey, JSON.stringify(pc));   // save current pc
+    pc.persistentSave();   // save current pc
         
     pc = new PayCycle4wk(...pc.getNextPayDay());  // create new payCycle object w/ NEXT paydate & starting weekNo
       
@@ -737,7 +738,7 @@ window.addEventListener('load',function(){
   registerLostFocusCallback(function(){
     cl(`LostFocus, storing:${pc.localStorageKey} - - - - - - S`);
     pc.updateModelFromForms();
-    localStorage.setItem(pc.localStorageKey, JSON.stringify(pc));
+    pc.persistentSave();
     cl(`LostFocus, stored:${pc.localStorageKey} - - - - - - E`);
   });
   registerGainedFocusCallback(function(){
@@ -776,6 +777,7 @@ window.addEventListener('load',function(){
       
       event.target.parentElement.childNodes[1].textContent = fourDigitTime; // TODO choose span element instead of hardcode 1
       pc.updateModelFromForms();
+      pc.persistentSave();
       pc.updateHTML();
       cl('TimeBox change - - - - - E');
     });
@@ -785,6 +787,7 @@ window.addEventListener('load',function(){
     cl(item);
     item.addEventListener('change', event => {
       pc.updateModelFromForms();
+      pc.persistentSave();
       pc.updateHTML();          
     });
   });  
@@ -792,7 +795,7 @@ window.addEventListener('load',function(){
   document.querySelectorAll('.hrs-row').forEach(item => {
     cl(item);
     item.addEventListener('dblclick', event => {
-      cl('DB-CLICK')
+      cl('DB-CLICK');
       cl(event);
       cl(event.target);
       cl(event.target.parentElement);
@@ -800,6 +803,7 @@ window.addEventListener('load',function(){
       
       let dayNo = parseInt(event.target.parentElement.id);      
       pc.clearHours(dayNo);
+      pc.persistentSave();
       pc.updateHTML();            
     });
   });
