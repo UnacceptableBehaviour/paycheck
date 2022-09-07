@@ -261,24 +261,19 @@ Worth reading [this great gist](https://gist.github.com/kosamari/7c5d1e8449b2fbc
 Also [solid PWA tutorial](https://www.youtube.com/watch?v=6a-YsesNzIA) 9hrs in total.
   
 **Getting local host to serve w/o changing SW:**
+Serving website from **docs** directory
+  
 ```
-# serving website from docs directory
 > cd path_to_repo/
 paycheck > ls -la
-drwxr-xr-x  15 simon  staff   480  7 Sep 11:31 .git
--rw-r--r--   1 simon  staff    62 16 Aug 17:54 .gitignore
--rw-r--r--@  1 simon  staff  9811  3 Sep 17:54 README.md
 drwxr-xr-x   9 simon  staff   288  3 Sep 14:40 docs
 
-paycheck > ln -s docs paycheck
+paycheck > ln -s docs paycheck        # create simlink to doc dir
 
 paycheck > ls -la
-drwxr-xr-x  15 simon  staff   480  7 Sep 11:31 .git
--rw-r--r--   1 simon  staff    62 16 Aug 17:54 .gitignore
-drwxr-xr-x   9 simon  staff   288  3 Sep 14:40 docs
-lrwxr-xr-x   1 simon  staff     4  7 Sep 11:46 **paycheck -> docs**
+lrwxr-xr-x   1 simon  staff     4  7 Sep 11:46 paycheck -> docs
 
-paycheck > http-server -c-1  
+paycheck > http-server -c-1           # run http-server w/ caching disabled
 ```
   
 
