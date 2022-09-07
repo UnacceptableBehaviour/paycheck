@@ -145,34 +145,8 @@ Apparently no real difference although most comments & the spec lean towards usi
 <link rel="icon" sizes="512x512" href="hi_def.png">
 ```
   
-#### THE MANIFEST
-```
-{
-  "name": "payCheck",
-  "id": "/paycheck/",
-  "short_name": "payCheck",
-  "icons": [
-    {
-      "src": "./icons/android-chrome-192x192.png?v=0.01",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "./icons/android-chrome-512x512.png?v=0.01",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
-  "theme_color": "#008100",
-  "background_color": "#008100",
-  "scope": "https://unacceptablebehaviour.github.io/paycheck/",
-  "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
-  "display": "standalone",
-  "orientation": "portrait"
-}
-```
   
-#### THE MANIFEST v2
+#### THE MANIFEST  
 ```
 {
   "name": "payCheck",
@@ -280,9 +254,38 @@ Insert the following code in the `head` section of html pages:
 <meta name="theme-color" content="#008100">    
 ```
 
+
+## Service Worker
+Worth reading [this great gist](https://gist.github.com/kosamari/7c5d1e8449b2fbc97d372675f16b566e) from [kosamari](https://gist.github.com/kosamari).  
+  
+Also [solid PWA tutorial](https://www.youtube.com/watch?v=6a-YsesNzIA) 9hrs in total.
+  
+**Getting local host to serve w/o changing SW:**
+```
+# serving website from docs directory
+> cd path_to_repo/
+paycheck > ls -la
+drwxr-xr-x  15 simon  staff   480  7 Sep 11:31 .git
+-rw-r--r--   1 simon  staff    62 16 Aug 17:54 .gitignore
+-rw-r--r--@  1 simon  staff  9811  3 Sep 17:54 README.md
+drwxr-xr-x   9 simon  staff   288  3 Sep 14:40 docs
+
+paycheck > ln -s docs paycheck
+
+paycheck > ls -la
+drwxr-xr-x  15 simon  staff   480  7 Sep 11:31 .git
+-rw-r--r--   1 simon  staff    62 16 Aug 17:54 .gitignore
+drwxr-xr-x   9 simon  staff   288  3 Sep 14:40 docs
+lrwxr-xr-x   1 simon  staff     4  7 Sep 11:46 **paycheck -> docs**
+
+paycheck > http-server -c-1  
+```
   
 
 ## QUESTIONS / TODO
 In manifest file try "display": "fullscreen"  
 Check favicon with the [favicon checker](https://realfavicongenerator.net/favicon_checker)  
-Run lighthouse.
+  
+**Run lighthouse:**
+Manifest has NO maskable icon.
+
