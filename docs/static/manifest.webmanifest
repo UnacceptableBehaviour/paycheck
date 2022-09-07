@@ -4,6 +4,12 @@
   "short_name": "payCheck",
   "icons": [
     {
+      "src": "app_icons/payCheckIconMain512x512.svg?v=0.01",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "monochrome, maskable, any"
+    },
+    {
       "src": "app_icons/android-chrome-36x36.png?v=0.01",
       "sizes": "36x36",
       "type": "image/png"
@@ -47,7 +53,7 @@
       "src": "app_icons/android-chrome-512x512.png?v=0.01",
       "sizes": "512x512",
       "type": "image/png"
-    }
+    } 
   ],
   "theme_color": "#008100",
   "background_color": "#008100",

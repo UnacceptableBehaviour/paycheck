@@ -147,6 +147,8 @@ Apparently no real difference although most comments & the spec lean towards usi
   
   
 #### THE MANIFEST  
+*REF:* https://www.w3.org/TR/appmanifest/
+  
 ```
 {
   "name": "payCheck",
@@ -210,13 +212,14 @@ Apparently no real difference although most comments & the spec lean towards usi
 ```
 
 #### FIELDS
-**ID**  
+**REF:** https://developer.mozilla.org/en-US/docs/Web/Manifest/icons#values
 
+**ID**  
 https://developer.chrome.com/blog/pwa-manifest-id/?utm_source=devtools
   
 
 #### Icon paths
-Icon path are **relative to manifest file**.
+Icon path are **relative to manifest file**  
 GOOD: ```"src": "./app_icons/android-chrome-192x192.png?v=0.01",```
   
 BAD: ```"src": "paycheck/static/app_icons/android-chrome-512x512.png?v=0.01",```
@@ -253,8 +256,8 @@ Insert the following code in the `head` section of html pages:
 <meta name="msapplication-config" content="/static/icons/browserconfig.xml?v=0.01">
 <meta name="theme-color" content="#008100">    
 ```
-
-
+  
+  
 ## Service Worker
 Worth reading [this great gist](https://gist.github.com/kosamari/7c5d1e8449b2fbc97d372675f16b566e) from [kosamari](https://gist.github.com/kosamari).  
   
@@ -265,8 +268,9 @@ Serving website from **docs** directory
   
 ```
 > cd path_to_repo/
-> ln -s docs paycheck        # create simlink to doc dir using repo name - URL path
-> http-server -c-1           # run http-server w/ caching disabled
+> ln -s docs paycheck                   # create simlink to doc dir using repo name - URL path
+> http-server -c-1                      # run http-server w/ caching disabled
+> http://127.0.0.1:8081/paycheck/       # using relevant port
 ```
   
 

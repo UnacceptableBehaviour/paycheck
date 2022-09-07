@@ -14,15 +14,16 @@ console.log('service_worker.js LOADING');
 // depends if you are using /docs/  or /master/
 // /paycheck/
 
-let verion_numner_passed_in = '00.06';
-
-const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;  // TODO add version number for ServWrkr updates
-
-// run
-// build_cache_file_list.py from /paycheck/docs
-// to create updated list
-
-// dont cache SW - changes to SW force and update of SW and consequently caches - update version above
+let verion_numner_passed_in = '00.06';  // < - - - - - - - - - - - - - - - - - - - - - - //
+                                                                                          //
+const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;                     //
+                                                                                          //
+// * * * * * * * * * * * * * * * * * * * * * * * * * * *                                  //
+// run                                                                                    //
+// build_cache_file_list.py from /paycheck/docs                                           //
+// to create updated list                                                                 //
+// * * * * * * * * * * * * * * * * * * * * * * * * * * *                                  //
+// DONT cache SW - changes to SW force an update of SW, and consequently caches - UPDATE VERSION ABOVE
 //'/paycheck/service_worker.js',  // https://stackoverflow.com/questions/55027512/should-i-cache-the-serviceworker-file-in-a-pwa
 const FILES_TO_CACHE = [
   '/paycheck/favicon.ico',
@@ -43,6 +44,7 @@ const FILES_TO_CACHE = [
   '/paycheck/static/app_icons/mstile-70x70.png',
   '/paycheck/static/app_icons/apple-touch-icon-152x152.png',
   '/paycheck/static/app_icons/apple-touch-icon-180x180.png',
+  '/paycheck/static/app_icons/payCheckIconMain512x512.svg',
   '/paycheck/static/app_icons/apple-touch-icon-76x76.png',
   '/paycheck/static/app_icons/android-chrome-512x512.png',
   '/paycheck/static/app_icons/mstile-150x150.png',
