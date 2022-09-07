@@ -219,7 +219,7 @@ https://developer.chrome.com/blog/pwa-manifest-id/?utm_source=devtools
   
 
 #### Icon paths
-Icon path are **relative to manifest file**  
+Icon path are **relative to manifest file**   
 GOOD: ```"src": "./app_icons/android-chrome-192x192.png?v=0.01",```
   
 BAD: ```"src": "paycheck/static/app_icons/android-chrome-512x512.png?v=0.01",```
