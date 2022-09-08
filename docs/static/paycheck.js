@@ -3,7 +3,6 @@ import {registerGainedFocusCallback, registerLostFocusCallback} from './focus.js
 
 function cl(args) {
   console.log(args);
-  //console.log(`run mathTile.js resetRAFcallback: ${typeof(flockMod.startPageAnimation)} - E`);
 };
 
 // where to look in local storage for current state
@@ -26,7 +25,7 @@ Date.prototype.addDays = function(days) {
 //const [month, dayOfMonth, day, year] = [date.getMonth(), date.getDate(), date.getDay(), date.getFullYear()];
 //const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
 class Day{
-  // for easy internationalisatio use Intl.DateTimeFormat
+  // for easy internationalisation use Intl.DateTimeFormat
   static numToDay = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   static numToMonth = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   
@@ -67,7 +66,7 @@ class Day{
     this.inTime = start;        // 0728
     this.breakTime = breakStr;  // 30     break time in mins
     this.outTime = finish;      // 1553
-    cl(`in: ${start} break: ${breakStr} out: ${finish}`);
+    //cl(`in: ${start} break: ${breakStr} out: ${finish}`);
     if ((start === '') || (finish === '')) {
       this.totalMins = 0;
       return;
@@ -77,7 +76,7 @@ class Day{
     let hrsF = parseInt(finish.substr(0,2));
     let minF = parseInt(finish.substr(2,4));
     let toEnd = hrsF*60 + parseInt(minF);
-    cl(`finish: ${finish} -: ${toEnd} - hrs: ${hrsF} - mins:${minF} - hrs ${finish.slice(0,2)}`);
+    //cl(`finish: ${finish} -: ${toEnd} - hrs: ${hrsF} - mins:${minF} - hrs ${finish.slice(0,2)}`);
     
     // start time to mins inc 15m roundup
     let hrsS = parseInt(start.substr(0,2));
@@ -87,12 +86,12 @@ class Day{
     let roundupMins = minS? (minS-1) + (15 - ((minS-1) % 15)) : 0;  // round to nearest 15m  0=0, 1-15=15, 16-30=30, 31-45=45, 46-59=60
     let fromStart = hrsS*60 + roundupMins;
     
-    cl(`start: ${start} -: ${fromStart} - hrs: ${hrsS} - mins:${minS} - rnd:${roundupMins} - hrs ${start.slice(0,2)}`);
+    //cl(`start: ${start} -: ${fromStart} - hrs: ${hrsS} - mins:${minS} - rnd:${roundupMins} - hrs ${start.slice(0,2)}`);
     
     // mins to hhHmm 7H53
     // mins to decimal HRS 7.88Hrs
     let breakMins = parseInt(breakStr);
-    let totalMins
+    let totalMins;
     if (toEnd <= (fromStart + breakMins)) {
       const ONE_DAY = 24*60;
       totalMins = (ONE_DAY - fromStart) + toEnd - breakMins;      
@@ -103,7 +102,7 @@ class Day{
     this.totalMins = totalMins;
     this.totalMinsReadableHM = `${Math.floor(totalMins / 60)}H${(totalMins % 60).toString().padStart(2, '0')}`;
     this.totalMinsDecimalHM = `${(Math.floor(totalMins / 60) + ((totalMins % 60) / 60)).toFixed(2)}`;
-    cl(`total Mins: ${totalMins} = ${this.totalMinsReadableHM} = ${this.totalMinsDecimalHM}`);    
+    //cl(`total Mins: ${totalMins} = ${this.totalMinsReadableHM} = ${this.totalMinsDecimalHM}`);    
   }
   
   clearHours(){
@@ -117,7 +116,7 @@ class Day{
   
 }
 
-// Report emailVersionSummary PADDING
+// COLUMN WIDTHS for emailVersionSummary
 const PAD_DAY  = 4;
 const PAD_DATE = 8;
 const PAD_IN   = 6;
@@ -142,14 +141,13 @@ class PayCycle4wk{
   static DAYS_IN_CYCLE = 28;
   static prefixes = ['sun','mon','tue','wed','thu','fri','sat'];
   static postfixes = ['_date_js','_in','_break','_out','_hrs','_dhrs','',''];
+  
   static nextPayDayAfterToday(thisDate = new Date()) {
-    //cl(`now in ms: ${thisDate.getTime()}`);   // 729 - ms passed since entering function? Seems a lot!
     let refDate = new Date('2022-08-12T04:00:00');
-    //let refMsSinceEpoch = refDate.getTime();
     let refWeekNo = 28;
     let thisDayMsSinceEpoch = thisDate.getTime();
     
-    for (let i=0; i<200; i+=1) {  // 13 steps = 1 year
+    for (let i=0; i<200; i+=1) {  // 13 steps = 1 year (52 / 4week cycle)
       if (thisDayMsSinceEpoch < refDate.getTime()) return [refDate, refWeekNo];
       refDate.addDays(28);
       refWeekNo += 4;
@@ -170,14 +168,17 @@ class PayCycle4wk{
     this.weekNos  = [startWkNo, (startWkNo+1) % 52, (startWkNo+2) % 52, (startWkNo+3) % 52];
     this.weekTotalMins = [0,0,0,0];
     this.cycleTotalMins = 0;
+    
     // localstorage key format: 2022_HRS_28-31_12AUG      
     this.localStorageKey = `${this.payDay.getFullYear()}_HRS_${this.weekNos[0]}-${this.weekNos[3]}_${this.payDay.getDate()}${Day.numToMonth[this.payDay.getMonth()]}`.toUpperCase();
     this.daysInCycle = [];
+    
     var date = this.payStart;
     for (let dayNo = 0; dayNo < PayCycle4wk.DAYS_IN_CYCLE; dayNo +=1) {
       this.daysInCycle.push(new Day(date));
       date = date.copyAddDays(1);
     }
+    
     this.gross4wk = 0;
     this.annualIncomeEstimate = 0;
     this.pensionContrib = 0;
@@ -207,7 +208,7 @@ class PayCycle4wk{
       this.daysInCycle[dayNo].clearHours();
     } else {
       // TODO raise
-      cl(`clearHours FAILED - dayNo:${dayNo} - OUT OF RANGE Should be 0-${PayCycle4wk.DAYS_IN_CYCLE}`);
+      //cl(`clearHours FAILED - dayNo:${dayNo} - OUT OF RANGE Should be 0-${PayCycle4wk.DAYS_IN_CYCLE}`);
     }
   }
   
@@ -248,7 +249,6 @@ class PayCycle4wk{
   }
   
   updateWeekTotalMins(){
-    //this.weekTotalMins
     let dayOfMonth = 0;
     for (let wkNo = 0; wkNo < 4; wkNo +=1) {
       let weekTotal = 0;
@@ -277,6 +277,8 @@ class PayCycle4wk{
     this.gross4wk = (hoursForCycle * HOURLY_RATE_2022);
     this.annualIncomeEstimate = this.gross4wk / 4 * 52;
     
+    // TODO check if there's a threshold as in NI/Tax
+    // TODO add model to replace flat rate
     // pension contribution - pre tax - ~3.1% use LUT
     this.pensionContrib = this.annualIncomeEstimate * PENSION_PC / 52 * 4;
     
@@ -292,11 +294,9 @@ class PayCycle4wk{
       this.incomeTax = (( this.annualIncomeEstimate - TAX_2022_ALLOWANCE ) * TAX_RATE_2022 ) / 52 * 4;
     } else {
       this.incomeTax = 0;
-    }
+    }    
     
-    
-    this.deductions = this.incomeTax + this.contribNI + this.pensionContrib;
-    
+    this.deductions = this.incomeTax + this.contribNI + this.pensionContrib;    
     this.netIncomeForCycle = this.gross4wk - this.deductions;
   }
   
@@ -307,7 +307,7 @@ class PayCycle4wk{
   // call on submit & week change  
   updateModelFromForms(){
     // cycle through days parse content into relevant object
-    cl('> - - - processing form data');
+    //cl('> - - - processing form data');
     let startDay = this.weekNo * 7;
     for (let dayNo = startDay; dayNo < startDay+7; dayNo +=1) {
       let start = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).textContent.trim();
@@ -337,7 +337,7 @@ class PayCycle4wk{
     let startDay = this.weekNo * 7;
     let tableRowElements = document.querySelectorAll('.hrs-row');
     for (let dayNo = startDay; dayNo < startDay+7; dayNo +=1) {
-      cl(`${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].day} - ${this.daysInCycle[dayNo].HRdate}`);
+      //cl(`${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].day} - ${this.daysInCycle[dayNo].HRdate}`);
       tableRowElements[dayNo % 7].id = `${dayNo}`; // make date easy to fine when roww dblClicked
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_date_js`).textContent = this.daysInCycle[dayNo].HRdate;
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).textContent = this.daysInCycle[dayNo].inTime;
@@ -351,7 +351,7 @@ class PayCycle4wk{
     
     // WEEKLY TOTALS
     for (let weekNo = 0; weekNo<4; weekNo +=1) {
-      cl(`wkNo:${weekNo} - hrs:${Day.minsToHMReadable(this.weekTotalMins[weekNo])} - Dhrs:${Day.minsToHDecimalReadable(this.weekTotalMins[weekNo])}`);
+      //cl(`wkNo:${weekNo} - hrs:${Day.minsToHMReadable(this.weekTotalMins[weekNo])} - Dhrs:${Day.minsToHDecimalReadable(this.weekTotalMins[weekNo])}`);
       document.querySelector(`#r${weekNo+1}_wk_no`).textContent = `${weekNo+1} / ${this.weekNos[weekNo]}`;
       document.querySelector(`#r${weekNo+1}_tot_hrs`).textContent = Day.minsToHMReadable(this.weekTotalMins[weekNo]);
       document.querySelector(`#r${weekNo+1}_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]);
@@ -448,44 +448,37 @@ class PayCycle4wk{
     // mailto scheme: https://www.rfc-editor.org/rfc/rfc2368#page-3
     // more:          https://www.rfc-editor.org/rfc/rfc1738#page-12
     // use '%0D%0A' in place of '\n'
-    
-    // 4 week in cycle of 28 days
+        
     // cycle summary details
     let textSummary = this.reportTitleLine(`PayDay: ${this.payDay.getDate()}${Day.numToMonth[this.payDay.getMonth()]}  `, `WKS ${this.weekNos[0]}-${this.weekNos[3]}`, `${this.daysInCycle[0].HRdate}-${this.daysInCycle[27].HRdate}`);
     textSummary += '\n';
     
-    // column titles
-    //cl(textSummary);
+    // column titles    
     for (let weekNo = 0; weekNo<4; weekNo +=1) {
       let startDay = weekNo * 7;
       let titleString = `> WK-${this.weekNos[weekNo]} ${this.daysInCycle[startDay].HRdate} - ${this.daysInCycle[startDay+6].HRdate}`;
       
       textSummary += this.reportWeek(titleString, startDay);
-      //cl(this.reportWeek(titleString, startDay));
+
       // add totals
       textSummary += PayCycle4wk.createLine('',PAD_TOT_INDENT,
                                 'TOTAL:',PAD_TOT,
                                 Day.minsToHMReadable(this.weekTotalMins[weekNo]), PAD_TOT_HRS,
                                 Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]), PAD_TOT_DHRS);
-      //cl(PayCycle4wk.createLine('',PAD_TOT_INDENT,
-      //                          'TOTAL:',PAD_TOT,
-      //                          Day.minsToHMReadable(this.weekTotalMins[weekNo]), PAD_TOT_HRS,
-      //                          Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]), PAD_TOT_DHRS));
-      //cl('---*---');
       textSummary += '\n';
     }
+
     // Add week summaries
     textSummary += PayCycle4wk.createLine('WK',PAD_WK_TOTS,
                                           'HRS',PAD_WK_TOTS,
                                           'DHRS',PAD_WK_TOTS);    
+
     for (let weekNo = 0; weekNo<4; weekNo +=1) {
-      //PAD_WK_TOTS
-      //cl(`WK ${weekNo+1} / ${this.weekNos[weekNo]} - ${Day.minsToHMReadable(this.weekTotalMins[weekNo])} - ${Day.minsToHDecimalReadable(this.weekTotalMins[weekNo])}`);
       textSummary += PayCycle4wk.createLine(`WK ${weekNo+1}/${this.weekNos[weekNo]}`,PAD_WK_TOTS,
                                             Day.minsToHMReadable(this.weekTotalMins[weekNo]),PAD_WK_TOTS,
                                             Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]),PAD_WK_TOTS);
     }
-    //cl(`TOTAL: ${Day.minsToHMReadable(this.cycleTotalMins)} - ${Day.minsToHDecimalReadable(this.cycleTotalMins)}`);
+
     textSummary += PayCycle4wk.createLine('TOTAL:',PAD_WK_TOTS,
                                           Day.minsToHMReadable(this.cycleTotalMins),PAD_WK_TOTS,
                                           Day.minsToHDecimalReadable(this.cycleTotalMins),PAD_WK_TOTS);
@@ -503,135 +496,19 @@ class PayCycle4wk{
     
     textSummary += '\n\n';
     textSummary += `Sent on ${new Date()} by payCheck - MIT Lisence \nhttps://unacceptablebehaviour.github.io/paycheck/ \n\n`
-    // use '%0D%0A' in place of '\n' for correct display - CREATES NEW STRING!
-    //textSummary.replace('\n', '%0D%0A');    // NO WORK?
-    //textSummary.replaceAll("\n", '%0D%0A');
-    //textSummary.replace(/\n/g, '%0D%0A');
-    //cl(textSummary.replaceAll('%0D%0A','\n'))
     
     cl(textSummary);
     
-    return textSummary.replaceAll("\n", '%0D%0A');
+    return textSummary.replaceAll("\n", '%0D%0A'); // use '%0D%0A' in place of '\n' for correct display in eMail
   }
 
 }
 
 
 
-
-
-//// - - - - - - - - - - - - - - - - - - - - - - - - TESTS - - - - - - - - - - - - - - - = = = <
-//// reset to fill in standard hours
-//// reset to clear all hours to 0 and breaks to 30
-//// pension contrib LUT based on anual income
-////let payday = Date(2022-08-12);  // returns string: Thu Aug 11 2022 07:28:12 GMT+0100 (British Summer Time)
-////let payday = new Date(2022-08-12);  // returns new date object: Thu Jan 01 1970 01:00:02 GMT+0100 (Greenwich Mean Time)
-////let payday = new Date(Date.parse(2022-08-12));  // returns new date object: using parse DISCOURAGED
-////use
-////const birthday2 = new Date('1995-12-17T03:24:00')   // This is ISO8601-compliant and will work reliably
-////or
-////const birthday3 = new Date(1995, 11, 17)            // the month is 0-indexed
-//const payday = new Date('2022-08-12T04:00:00')
-//cl(payday);
-//let nextPayday = payday.copyAddDays(28);
-//cl(nextPayday);
-//let payCutOff = payday.copyAddDays(-6);
-//cl(payCutOff);
-//let payStart = payCutOff.copyAddDays(-27);
-//cl(payStart);
-//let payStart2 = payday.copyAddDays(-33);
-//cl(payStart2);
-//
-//
-//const date = payday;
-//const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
-//const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
-//var milliSeconds = date.getMilliseconds();
-//
-//let start = '0730';
-//let finish = '1553';
-//
-//// finish time to mins
-//let hrsF = parseInt(finish.substr(0,2));
-//let minF = parseInt(finish.substr(2,4));
-//let to = hrsF*60 + parseInt(minF);
-//cl(`finish: ${finish} - from SB 953: ${to} - hrs: ${hrsF} - mins:${minF} - hrs ${finish.slice(0,2)}`);
-//
-//// start time to mins inc 15m roundup
-//let hrsS = parseInt(start.substr(0,2));
-//let minS = parseInt(start.substr(2,4));
-//
-//let roundupMins = minS + (15 - (minS % 15));  // round up to the next nearest 15min 0701 = 0715 walmart sneakiness
-////for (let loopminS = 0; loopminS < 61; loopminS +=1 ) {
-////  roundupMins = loopminS? (loopminS-1) + (15 - ((loopminS-1) % 15)) : 0;    // round to nearest 15m  0=0, 1-15=15, 16-30=30, 31-45=45, 46-59=60
-////  cl(`${loopminS} near 15= ${roundupMins}`);
-////}
-//let from = hrsS*60 + roundupMins;
-//
-//cl(`start: ${start} - from SB 450: ${from} - hrs: ${hrsS} - mins:${minS} - rnd:${roundupMins} - hrs ${start.slice(0,2)}`);
-////console.assert(from === 450);
-//
-//// mins to hhHmm 7H53
-//// mins to decimal HRS 7.88Hrs
-//let breakStr = '30';
-//let breakMins = parseInt(breakStr);
-//let totalMins = to - from - breakMins;
-//let redableHM = `${Math.floor(totalMins / 60)}H${totalMins % 60}`;
-//let decimalHM = `${(Math.floor(totalMins / 60) + ((totalMins % 60) / 60)).toFixed(2)}`;
-//cl(`total Mins: ${totalMins} = ${redableHM} = ${decimalHM}`);
-//
-//cl(`minsToHMReadable:${Day.minsToHMReadable(75)} = 1H15`);
-//cl(`minsToHDecimalReadable:${Day.minsToHDecimalReadable(75)} = 1.25`);
-//
-//
-//
-////let refDate = new Date('2022-08-12T04:00:00');
-////let refMsSinceEpoch = refDate.getTime();
-////let refWeekNo = 28;
-////cl(`${refWeekNo} - ${refDate.toISOString()}`);
-////for (let i=0; i<20; i+=1) {
-////  refDate.addDays(28);
-////  refWeekNo += 4;
-////  if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
-////  cl(`${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
-////}
-////
-////function nextPayDayAfterToday(thisDate = new Date()) {
-////  //cl(`now in ms: ${thisDate.getTime()}`);   // 729 - ms passed since entering function? Seems a lot!
-////  let refDate = new Date('2022-08-12T04:00:00');
-////  //let refMsSinceEpoch = refDate.getTime();
-////  let refWeekNo = 28;
-////  let thisDayMsSinceEpoch = thisDate.getTime();
-////  
-////  for (let i=0; i<200; i+=1) {  // 13 steps = 1 year
-////    if (thisDayMsSinceEpoch < refDate.getTime()) return [refDate, refWeekNo];
-////    refDate.addDays(28);
-////    refWeekNo += 4;
-////    if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
-////    cl(`nextPD: ${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
-////  }
-////  
-////  // catch
-////  refDate = new Date('2022-08-12T04:00:00'); refWeekNo = 28;
-////  return [refDate, refWeekNo];
-////}
-//
-//cl(PayCycle4wk.nextPayDayAfterToday());
-//cl(PayCycle4wk.nextPayDayAfterToday(new Date('2022-09-10T04:00:00')));
-//cl(PayCycle4wk.nextPayDayAfterToday(new Date('2022-10-15T04:00:00')));
-//
-//// localstorage key format: 2022_HRS_28-31_12AUG
-//// setItem(key)
-//// getItem(key)
-//// removeItem(key)
-//// clear()
-//// key(idx)  // to iterate though keys
-
 // - - - - - - - - - - - - - - - - - - - - - - - - APP START- - - - - - - - - - - - - - - = = = <
 
 
-
-cl('>> = = = > CREATING new 4 Wk Cycle object');
 var pc = new PayCycle4wk(...PayCycle4wk.nextPayDayAfterToday());
 const CAMERA_MODE_GALLERY = 0;
 const CAMERA_MODE_CAPTURE = 1;
@@ -641,18 +518,16 @@ var settings = {
 };
 var stateKey = '';
 cl(pc);
-cl('- - E');
+
 if (LAST_KNOWN_STATE_KEY in localStorage) {  // retrieve current statekey, and 4wk cycle object
   stateKey = localStorage.getItem(LAST_KNOWN_STATE_KEY);
   if (stateKey in localStorage) {
     let jsonObj = JSON.parse(localStorage.getItem(stateKey));
-    cl('JSON.parse - S');
-    cl(pc.initFromJSON(jsonObj));
-    cl('JSON.parse - E');
+    pc.initFromJSON(jsonObj);
     cl(`LOADED ${stateKey} PayCycle4wk object from localStrorage - KEYS Match: ${stateKey === pc.localStorageKey}`);  
   }
-}
-else {                            // save a new state key
+} else {
+  // save a new state key
   localStorage.setItem(LAST_KNOWN_STATE_KEY, pc.localStorageKey);
 }
 
@@ -667,9 +542,6 @@ window.addEventListener('load',function(){
   pc.finalCalulations();  
   pc.updateHTML();
   cl(pc);
-  //cl('> - - - - - - JSON.stringify(pc) - - - S');
-  //cl(JSON.stringify(pc));
-  //cl('> - - - - - - JSON.stringify(pc) - - - E');
   
   // FORWARD & BACK BUTTONS WEEK & MONTH
   // << WEEK
@@ -678,8 +550,7 @@ window.addEventListener('load',function(){
     pc.weekBak();
     pc.updateHTML();
     pc.persistentSave();    
-    console.log(`Week BACK - WkNo: ${pc.getWeekNo()}`);
-      
+    //console.log(`Week BACK - WkNo: ${pc.getWeekNo()}`);      
   });
   
   // WEEK >>
@@ -688,14 +559,14 @@ window.addEventListener('load',function(){
     pc.weekFwd();    
     pc.updateHTML();
     pc.persistentSave();    
-    console.log(`Week FORWARD - WkNo: ${pc.getWeekNo()}`);
+    //console.log(`Week FORWARD - WkNo: ${pc.getWeekNo()}`);
   });
   
   // << 4WK
   document.querySelector('#but_4wk_bak').addEventListener('click', function(event){
-    cl('MOVE TO LAST 4WK CYCLE');
+    // cl('MOVE TO LAST 4WK CYCLE');
     
-    pc.persistentSave();   // save current pc
+    pc.persistentSave();
         
     pc = new PayCycle4wk(...pc.getLastPayDay());  // create new payCycle object w/ LAST paydate & starting weekNo                                                  
       
@@ -708,14 +579,14 @@ window.addEventListener('load',function(){
 
     pc.updateWeekTotalMins();
     pc.finalCalulations();         
-    pc.updateHTML();                              // update view
+    pc.updateHTML();
   });
+  
   // 4WK >>
   document.querySelector('#but_4wk_fwd').addEventListener('click', function(event){
+    //cl('MOVE TO NEXT 4WK CYCLE');  
 
-    cl('MOVE TO NEXT 4WK CYCLE');  
-
-    pc.persistentSave();   // save current pc
+    pc.persistentSave();
         
     pc = new PayCycle4wk(...pc.getNextPayDay());  // create new payCycle object w/ NEXT paydate & starting weekNo
       
@@ -723,26 +594,26 @@ window.addEventListener('load',function(){
       let jsonObj = JSON.parse(localStorage.getItem(pc.localStorageKey));
       pc.initFromJSON(jsonObj);
       cl(pc);          
-
     }
+    
     localStorage.setItem(LAST_KNOWN_STATE_KEY, pc.localStorageKey);
 
     pc.updateWeekTotalMins();
     pc.finalCalulations();          
-    pc.updateHTML();                              // update view
+    pc.updateHTML();
 
   });
 
   // store data on lost focus
   registerLostFocusCallback(function(){
-    cl(`LostFocus, storing:${pc.localStorageKey} - - - - - - S`);
+    //cl(`LostFocus, storing:${pc.localStorageKey} - - - - - - S`);
     pc.updateModelFromForms();
     pc.persistentSave();
-    cl(`LostFocus, stored:${pc.localStorageKey} - - - - - - E`);
+    //cl(`LostFocus, stored:${pc.localStorageKey} - - - - - - E`);
   });
   registerGainedFocusCallback(function(){
     pc.updateHTML();
-    cl('GainedFocus.');
+    //cl('GainedFocus.');
   });
 
   document.querySelectorAll('label.imgSelect input[accept*="image"]').forEach(item => {
@@ -807,79 +678,19 @@ window.addEventListener('load',function(){
     });
   });
 
-  
-  //document.querySelector('label.imgSelect input[accept*="image"]').addEventListener('change', function(event){
-  //  cl('EvntList change - - - - - S');
-  //  cl(event);
-  //  cl(event.target.parentElement);
-  //  let changeElement = event.target.parentElement;
-  //  cl(event.srcElement.files[0]);
-  //  let filename = event.srcElement.files[0].name;
-  //  cl(filename);
-  //  cl(event.srcElement.files[0].lastModified);
-  //  let d = new Date(event.srcElement.files[0].lastModified);
-  //  let timeFromLastModified = `timeFromLastModified: ${d.getHours()} ${d.getMinutes()}`;
-  //  cl(timeFromLastModified);
-  //  let hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
-  //  let timeMatch;
-  //  if (hrsMins) {
-  //    cl(hrsMins);      
-  //    timeMatch = `${hrsMins[1]}${hrsMins[2]}`;
-  //    cl(timeMatch);
-  //  } else {
-  //    timeMatch = `No match in: ${filename} <`
-  //    cl(timeMatch);
-  //  }
-  //  filename = '202216181_142855.jpg';
-  //  hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
-  //  cl(hrsMins);
-  //  document.querySelector('#dgb_03').textContent = timeFromLastModified;
-  //  document.querySelector('#dgb_04').textContent = timeMatch;
-  //  event.target.parentElement.textContent = timeMatch.trim();
-  //  cl('EvntList change - - - - - E');
-  //});
-  
-  
-  // DEBUG
-  //var win = window,
-  //    doc = document,
-  //    docElem = doc.documentElement,
-  //    body = doc.getElementsByTagName('body')[0],
-  //    x = win.innerWidth || docElem.clientWidth || body.clientWidth,
-  //    y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
-  //
-  //document.querySelector('#dgb_01').textContent = `WIN X:${win.innerWidth} Y:${win.innerHeight}`;
-  //document.querySelector('#dgb_02').textContent = `docE X:${docElem.clientWidth} Y:${docElem.clientHeight}`;
-  //document.querySelector('#dgb_03').textContent = `BODY X:${body.clientWidth} Y:${body.clientHeight}`;
-  
-  //cl(`DOC X:${x} Y:${y}`);
-  
-  //cl('#sun_in CLICK - - - - - S');
-  //document.getElementById("sun_in").click(); // this isnt allowed ibn this type of element
-  //cl('#sun_in CLICK - - - - - E');
-
 });
 
 // Mailing summary
 document.querySelector('#mailto_d').addEventListener('click', function(event){
-  cl('> = = = MAIL SUMMARY= = = <');
-  //window.location = "mailto:a.b@g.com?subject=Me&body=Hello!"; // works
-  //?subject=Me&body=Hello!
+  //cl('> = = = MAIL SUMMARY= = = <');
   let address = 'a.b@g.com';
-  let subject = 'payCheck Summary';
-  
-  //cl(pc.emailVersionSummary());
-  //pc.emailVersionSummary();
+  let subject = 'payCheck Summary';  
   window.location = `mailto:${address}?subject=${subject}&body=${pc.emailVersionSummary()}`;
 });
 
 
 
-
-
-
 // saving images . . . 
-
 function hasGetUserMedia() {
   return !!(navigator.mediaDevices &&
     navigator.mediaDevices.getUserMedia);
@@ -971,30 +782,33 @@ if (hasGetUserMedia()) {
 
 // turning the Choose file look of the input into a box with the time in it
 
-  
 // More on camera access
 // https://web.dev/media-capturing-images/
 // more indepth
 // https://developer.mozilla.org/en-US/docs/Web/API/Media_Capture_and_Streams_API/Taking_still_photos
 
-
-// Storing result to 
-
+// Storing result to Gallery
 
 
+// = = = minimum 'viable product' = = = 
+// Mobile display with all data summarised content sharable (eMail)
+// WORKING
 
-// = = = TODO - minimum 'viable product' = = = 
-// Mobile display with all data summarised
+// TODO - SINGLE USER
+
+// CRITICAL - - - - - - - - - - - - - - - - - - - -
+// works OFFLINE
+
+// RESPONSIVE display
 
 
-// CRITICAL - single user
+// NICE TO HAVE - - - - - - - - - - - - - - - - - -
+// QR code to share app
 
-// add photo button to image clockin system
+// Take photo of Clock in machine store time & photo in gallery for recall if necessary
 // https://stackoverflow.com/questions/23916566/html5-input-type-file-accept-image-capture-camera-display-as-image-rat
 
-
-
-// sharable summary: print / email
+// Print Summary from app
 
 // add QR code to spread app
 
@@ -1037,7 +851,7 @@ if (hasGetUserMedia()) {
 // add chat board - requires server?
 
 // LOW
-// add resposive display to include desktop
+// add responsive display to include desktop
 //    detecting device type mobile / desktop physical screen size in cm or inches
 //    dimension show as approx:
 //    desktop: 1120 x 600
