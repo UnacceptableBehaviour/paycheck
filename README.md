@@ -61,24 +61,22 @@ Turn image into monochrome (this one already is)
 Theme colour #008100  
   
 **Favicon Generator Options**  
-Path: /static/icons  
+Path: /static/app_icons
 http://example.com/favicon.ico?V=0.01  
 Compression:Default  
 AppName: payCheck  
 Additional files: README.md html_code.html 
   
 ### Notes on Above 
-Icon set Version: scratch/icon_ideas/20220903_favicon_package_v0.16  
-  
 This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16]  (https://realfavicongenerator.net/change_log#v0.16)  
+**Icon set Version:** scratch/icon_ideas/20220903_favicon_package_v0.16  
   
 **Issues w/ manifest:**  
 "theme_color": "#ffffff", SB #008100  
 "background_color": "#ffffff", SB #008100  
   
-in ICON array, need to add app_icons to image paths.  
   
-MISSING:  
+**MISSING:**  
 "id": "/paycheck/", 
 "scope": "https://unacceptablebehaviour.github.io/paycheck/",  
 "orientation": "portrait",  
