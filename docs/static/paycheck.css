@@ -64,6 +64,13 @@ body {
   border-radius: 0 5vw 5vw 0;
 }
 
+.lr-button > img {
+  /* position: absolute;           /* keep button in the middle */
+  border: 1px;
+  border-color: #424242;
+  height: 100%;
+}
+
 .font-portrait {
   font-size: 2.2vh;
   /*padding-top: 5vh;*/
