@@ -10,8 +10,7 @@ do_not_add_to_cache = ['service_worker.js','build_cache_file_list.py']
 #   '/static/offline.html',
 # ];
     
-search_path = project_root
-prepend = ''
+#prepend = ''
 prepend = f"/{repo_name}"
 
 print("const FILES_TO_CACHE = [\n  '/',")
