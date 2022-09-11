@@ -65,11 +65,18 @@ Path: /static/app_icons
 http://example.com/favicon.ico?V=0.01  
 Compression:Default  
 AppName: payCheck  
-Additional files: README.md html_code.html 
+Additional files: README.md, html_code.html 
   
 ### Notes on Above 
 This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16]  (https://realfavicongenerator.net/change_log#v0.16)  
 **Icon set Version:** scratch/icon_ideas/20220903_favicon_package_v0.16  
+  
+|No purpose attribute| "purpose":"maskable"|
+|-|-|
+|![No purpose attribute](https://github.com/UnacceptableBehaviour/paycheck/blob/main/notes/no_purpose.png)|
+![purpose attribute set to maskable](https://github.com/UnacceptableBehaviour/paycheck/blob/main/notes/maskable.png)|
+Getting rid of annoying little white fleck on the edge, combination of setting background or theme colour in the manifest and setting the purpose to maskable. TODO quick test of which.
+
   
 **Issues w/ manifest:**  
 "theme_color": "#ffffff", SB #008100  
@@ -145,7 +152,9 @@ Apparently no real difference although most comments & the spec lean towards usi
   
   
 #### THE MANIFEST  
-*REF:* https://www.w3.org/TR/appmanifest/
+*REF:* https://www.w3.org/TR/appmanifest/  
+  
+First ```"purpose": "maskable"``` icon gives single colour
   
 ```
 {
@@ -153,6 +162,12 @@ Apparently no real difference although most comments & the spec lean towards usi
   "id": "/paycheck/",
   "short_name": "payCheck",
   "icons": [
+    {
+      "src": "app_icons/android-chrome-512x512.png?v=0.01",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "app_icons/android-chrome-36x36.png?v=0.01",
       "sizes": "36x36",
@@ -197,7 +212,7 @@ Apparently no real difference although most comments & the spec lean towards usi
       "src": "app_icons/android-chrome-512x512.png?v=0.01",
       "sizes": "512x512",
       "type": "image/png"
-    }
+    } 
   ],
   "theme_color": "#008100",
   "background_color": "#008100",
