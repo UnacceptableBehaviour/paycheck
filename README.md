@@ -73,8 +73,7 @@ This package was generated with [RealFaviconGenerator](https://realfavicongenera
   
 |No purpose attribute| "purpose":"maskable"|
 |-|-|
-|![No purpose attribute](https://github.com/UnacceptableBehaviour/paycheck/blob/main/notes/no_purpose.png)
-|![purpose attribute set to maskable](https://github.com/UnacceptableBehaviour/paycheck/blob/main/notes/maskable.png)  
+![No purpose attribute](https://github.com/UnacceptableBehaviour/paycheck/blob/main/notes/no_purpose.png)|![purpose attribute set to maskable](https://github.com/UnacceptableBehaviour/paycheck/blob/main/notes/maskable.png)  
   
 Getting rid of annoying little white fleck on the edge, combination of setting background or theme colour in the manifest and setting the purpose to maskable. TODO quick test of which.
 
