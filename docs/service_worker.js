@@ -11,7 +11,7 @@
 // depends if you are using /docs/  or /master/
 // /paycheck/
 
-let verion_numner_passed_in = '00.07';  // < - - - - - - - - - - - - - - - - - - - - - - //
+let verion_numner_passed_in = '00.08';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;                     //
                                                                                           //
@@ -23,6 +23,8 @@ const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;           
 // DONT cache SW - changes to SW force an update of SW, and consequently caches - UPDATE VERSION ABOVE
 //'/paycheck/service_worker.js',  // https://stackoverflow.com/questions/55027512/should-i-cache-the-serviceworker-file-in-a-pwa
 const FILES_TO_CACHE = [
+  '/',
+  '/paycheck/',
   '/paycheck/favicon.ico',
   '/paycheck/index.html',
   '/paycheck/apple-touch-icon.png',
@@ -30,6 +32,7 @@ const FILES_TO_CACHE = [
   '/paycheck/static/paycheck.js',
   '/paycheck/static/focus.js',
   '/paycheck/static/manifest.webmanifest',
+  '/paycheck/static/manifest.local',
   '/paycheck/static/app_icons/favicon-16x16.png',
   '/paycheck/static/app_icons/android-chrome-384x384.png',
   '/paycheck/static/app_icons/safari-pinned-tab.svg',
@@ -110,10 +113,17 @@ self.addEventListener('activate', (evt) => {
 //});
 
 // fetch event - Cache falling back to network
+var fc = 0;
+
 self.addEventListener('fetch', function(event) {
+  fc += 1;
+  console.log(`[SW] fetch:${fc}`);
+  console.log(event);
+  
   event.respondWith(
     caches.match(event.request).then(function(response) {
       return response || fetch(event.request);
     })
   );
+  
 });

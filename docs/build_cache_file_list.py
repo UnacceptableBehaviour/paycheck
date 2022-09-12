@@ -13,7 +13,7 @@ do_not_add_to_cache = ['service_worker.js','build_cache_file_list.py','screensho
 #prepend = ''
 prepend = f"/{repo_name}"
 
-print("const FILES_TO_CACHE = [\n  '/',")
+print(f"const FILES_TO_CACHE = [\n  '/',\n  '/{repo_name}/',")
 
 for p in project_root.glob('**/*'):
     path = str(p)
