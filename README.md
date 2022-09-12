@@ -242,8 +242,9 @@ Should be at least 320 x 320
 (image used 320x711)  
   
 **ID**  
-https://developer.chrome.com/blog/pwa-manifest-id/?utm_source=devtools
-ID uniquely identifies app. If not present 'start_url' is used instead.
+REF: [Chrome devtools](https://developer.chrome.com/blog/pwa-manifest-id/?utm_source=devtools)  
+ID uniquely identifies app.  
+If not present 'start_url' is used instead. (So NOT critical, yet)  
   
 
 #### Icon paths
