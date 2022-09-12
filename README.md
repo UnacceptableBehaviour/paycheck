@@ -237,8 +237,9 @@ Apparently no real difference although most comments & the spec lean towards usi
 **Screen Shots**  
 REF: https://www.apptweak.com/en/aso-blog/app-screenshot-icon-video-guidelines-ios-gp  
 Mixed browser support!  
+Should be at least 320 x 320  
 ![screen shot - home screen](https://github.com/UnacceptableBehaviour/paycheck/blob/main/docs/static/images/screenshot.jpg)  
-  
+(image used 320x711)  
   
 **ID**  
 https://developer.chrome.com/blog/pwa-manifest-id/?utm_source=devtools
