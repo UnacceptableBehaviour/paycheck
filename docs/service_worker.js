@@ -24,7 +24,7 @@ const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;           
 //'/paycheck/service_worker.js',  // https://stackoverflow.com/questions/55027512/should-i-cache-the-serviceworker-file-in-a-pwa
 const FILES_TO_CACHE = [
   '/',
-  //'/paycheck/',           // local
+  '/paycheck/',           // local
   '/paycheck/favicon.ico',
   '/paycheck/index.html',
   '/paycheck/apple-touch-icon.png',
@@ -69,7 +69,11 @@ self.addEventListener('install', (evt) => {
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[ServiceWorker] Pre-caching offline page');
       console.log(`[ServiceWorker] No of FILES_TO_CACHE:${FILES_TO_CACHE.length}`);
-      
+      FILES_TO_CACHE.forEach( file => {
+          console.log(`[SW] caching: ${file}`);
+          cache.add(file);
+        }
+      );
       return cache.addAll(FILES_TO_CACHE);
     })
   );
