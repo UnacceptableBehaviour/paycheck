@@ -318,9 +318,9 @@ class PayCycle4wk{
       let breakStr = (value) ? value : placeholder;
       
       let finish = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`).textContent.trim();
-      cl(`==: ${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].HRdate} :== S`);
+      //cl(`==: ${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].HRdate} :== S`);
       this.daysInCycle[dayNo].setHours(start, breakStr, finish);
-      cl(`==: ${this.daysInCycle[dayNo].HRdate} :== E`);
+      //cl(`==: ${this.daysInCycle[dayNo].HRdate} :== E`);
     }
     this.updateWeekTotalMins();
     this.finalCalulations();

@@ -42,7 +42,7 @@ function handleVisibilityChange() {
   if (document[hidden]) {
     // not visible store data
     appVisibilityState = 'lostFocus';
-    console.log(`GONE DARK - storing data: ${appVisibilityState} <`);
+    console.log(`STATE: ${appVisibilityState} - storing data <`);
     if (lostFocus) {
       lostFocus();
     } else {
@@ -52,7 +52,7 @@ function handleVisibilityChange() {
   } else {
     // visible refresh screen
     appVisibilityState = 'gainedFocus';    
-    console.log(`HELOOO THERE I'm BACK - no action needed: ${appVisibilityState}`);
+    console.log(`STATE: ${appVisibilityState} - no action <`);
     if (gainedFocus) {
       gainedFocus();
     } else {
