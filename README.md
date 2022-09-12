@@ -227,7 +227,7 @@ Apparently no real difference although most comments & the spec lean towards usi
   "scope": "https://unacceptablebehaviour.github.io/paycheck/",
   "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
   "display": "standalone",
-  "orientation": "portrait", 
+  "orientation": "portrait" 
 }
 ```
 

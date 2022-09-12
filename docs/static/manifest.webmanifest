@@ -70,5 +70,5 @@
   "scope": "https://unacceptablebehaviour.github.io/paycheck/",
   "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
   "display": "standalone",
-  "orientation": "portrait", 
+  "orientation": "portrait" 
 }
