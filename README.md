@@ -154,13 +154,12 @@ Apparently no real difference although most comments & the spec lean towards usi
 #### THE MANIFEST  
 *REF:* https://www.w3.org/TR/appmanifest/  
   
-First ```"purpose": "maskable"``` icon gives single colour
-  
 ```
 {
   "name": "payCheck",
   "id": "/paycheck/",
   "short_name": "payCheck",
+  "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results.",
   "icons": [
     {
       "src": "app_icons/android-chrome-512x512.png?v=0.01",
@@ -214,21 +213,36 @@ First ```"purpose": "maskable"``` icon gives single colour
       "type": "image/png"
     } 
   ],
+  "screenshots" : [
+    {
+      "src": "images/screenshot.jpg",
+      "sizes": "300x667",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "Home screen"
+    }
+  ],  
   "theme_color": "#008100",
   "background_color": "#008100",
   "scope": "https://unacceptablebehaviour.github.io/paycheck/",
   "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
   "display": "standalone",
-  "orientation": "portrait",
-  "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results."
+  "orientation": "portrait", 
 }
 ```
 
 #### FIELDS
 **REF:** https://developer.mozilla.org/en-US/docs/Web/Manifest/icons#values
 
+**Screen Shots**  
+REF: https://www.apptweak.com/en/aso-blog/app-screenshot-icon-video-guidelines-ios-gp  
+Mixed browser support!  
+![screen shot - home screen](https://github.com/UnacceptableBehaviour/paycheck/blob/main/docs/static/images/screenshot.jpg)  
+  
+  
 **ID**  
 https://developer.chrome.com/blog/pwa-manifest-id/?utm_source=devtools
+ID uniquely identifies app. If not present 'start_url' is used instead.
   
 
 #### Icon paths

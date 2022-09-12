@@ -62,4 +62,13 @@
   "display": "standalone",
   "orientation": "portrait",
   "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results."
+  "screenshots" : [
+    {
+      "src": "images/screenshot.jpg",
+      "sizes": "300x667",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "Home screen"
+    }
+  ]  
 }
