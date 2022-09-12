@@ -517,14 +517,14 @@ var settings = {
   showExceptions: true,
 };
 var stateKey = '';
-cl(pc);
+//cl(pc);
 
 if (LAST_KNOWN_STATE_KEY in localStorage) {  // retrieve current statekey, and 4wk cycle object
   stateKey = localStorage.getItem(LAST_KNOWN_STATE_KEY);
   if (stateKey in localStorage) {
     let jsonObj = JSON.parse(localStorage.getItem(stateKey));
     pc.initFromJSON(jsonObj);
-    cl(`LOADED ${stateKey} PayCycle4wk object from localStrorage - KEYS Match: ${stateKey === pc.localStorageKey}`);  
+    cl(`LOADED PayCycle4wk object key: ${stateKey} < from localStrorage\n- KEYS Match: ${stateKey === pc.localStorageKey}`);  
   }
 } else {
   // save a new state key
@@ -537,7 +537,7 @@ if (LAST_KNOWN_STATE_KEY in localStorage) {  // retrieve current statekey, and 4
 
 
 window.addEventListener('load',function(){
-  cl('LOADED');
+  cl('LOADED - adding event listeners');
   pc.updateWeekTotalMins();
   pc.finalCalulations();  
   pc.updateHTML();
@@ -654,7 +654,8 @@ window.addEventListener('load',function(){
   });
 
   document.querySelectorAll('.break').forEach(item => {
-    cl(item);
+    //cl('Add event listener for');
+    //cl(item);
     item.addEventListener('change', event => {
       pc.updateModelFromForms();
       pc.persistentSave();

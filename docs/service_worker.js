@@ -1,6 +1,3 @@
-
-console.log('service_worker.js LOADING');
-
 // https://developers.google.com/web/fundamentals/primers/service-workers
 // One subtlety with the register() method is the location of the service worker file. You'll notice in this
 // case that the service worker file is at the root of the domain. This means that the service worker's scope
@@ -14,7 +11,7 @@ console.log('service_worker.js LOADING');
 // depends if you are using /docs/  or /master/
 // /paycheck/
 
-let verion_numner_passed_in = '00.06';  // < - - - - - - - - - - - - - - - - - - - - - - //
+let verion_numner_passed_in = '00.07';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;                     //
                                                                                           //
@@ -61,9 +58,10 @@ const FILES_TO_CACHE = [
   '/paycheck/static/icons/hol-right.svg',
 ];
 
+console.log(`service_worker.js V:${CACHE_NAME}`);
 
 self.addEventListener('install', (evt) => {
-  console.log('[ServiceWorker] Install');
+  console.log(`[ServiceWorker] Install V:${CACHE_NAME}`);
   evt.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[ServiceWorker] Pre-caching offline page');
