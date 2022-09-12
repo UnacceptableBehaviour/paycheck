@@ -24,15 +24,16 @@ const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;           
 //'/paycheck/service_worker.js',  // https://stackoverflow.com/questions/55027512/should-i-cache-the-serviceworker-file-in-a-pwa
 const FILES_TO_CACHE = [
   '/',
-  '/paycheck/',           // local
+  '/paycheck/',
   '/paycheck/favicon.ico',
   '/paycheck/index.html',
   '/paycheck/apple-touch-icon.png',
   '/paycheck/static/paycheck.css',
   '/paycheck/static/paycheck.js',
+  '/paycheck/static/manifest.local',
   '/paycheck/static/focus.js',
   '/paycheck/static/manifest.webmanifest',
-  '/paycheck/static/manifest.local',
+  '/paycheck/static/images/screenshot_sml.jpg',
   '/paycheck/static/app_icons/favicon-16x16.png',
   '/paycheck/static/app_icons/android-chrome-384x384.png',
   '/paycheck/static/app_icons/safari-pinned-tab.svg',
@@ -56,7 +57,10 @@ const FILES_TO_CACHE = [
   '/paycheck/static/app_icons/android-chrome-48x48.png',
   '/paycheck/static/app_icons/favicon-32x32.png',
   '/paycheck/static/app_icons/android-chrome-144x144.png',
+  '/paycheck/static/icons/hol-right.png',
+  '/paycheck/static/icons/email-svgrepo-com.png',
   '/paycheck/static/icons/hol-left.svg',
+  '/paycheck/static/icons/hol-left.png',
   '/paycheck/static/icons/email-svgrepo-com.svg',
   '/paycheck/static/icons/hol-right.svg',
 ];
