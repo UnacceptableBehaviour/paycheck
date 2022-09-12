@@ -2,6 +2,7 @@
   "name": "payCheck",
   "id": "/paycheck/",
   "short_name": "payCheck",
+  "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results.",
   "icons": [
     {
       "src": "app_icons/android-chrome-512x512.png?v=0.01",
@@ -55,13 +56,6 @@
       "type": "image/png"
     } 
   ],
-  "theme_color": "#008100",
-  "background_color": "#008100",
-  "scope": "https://unacceptablebehaviour.github.io/paycheck/",
-  "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
-  "display": "standalone",
-  "orientation": "portrait",
-  "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results."
   "screenshots" : [
     {
       "src": "images/screenshot.jpg",
@@ -70,5 +64,11 @@
       "platform": "narrow",
       "label": "Home screen"
     }
-  ]  
+  ],  
+  "theme_color": "#008100",
+  "background_color": "#008100",
+  "scope": "https://unacceptablebehaviour.github.io/paycheck/",
+  "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
+  "display": "standalone",
+  "orientation": "portrait", 
 }
