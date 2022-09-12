@@ -11,7 +11,7 @@
 // depends if you are using /docs/  or /master/
 // /paycheck/
 
-let verion_numner_passed_in = '00.08';  // < - - - - - - - - - - - - - - - - - - - - - - //
+let verion_numner_passed_in = '00.09';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;                     //
                                                                                           //
@@ -32,7 +32,7 @@ const FILES_TO_CACHE = [
   '/paycheck/static/paycheck.js',
   '/paycheck/static/manifest.local',
   '/paycheck/static/focus.js',
-  '/paycheck/static/manifest.webmanifest',
+  '/paycheck/manifest.webmanifest',
   '/paycheck/static/images/screenshot_sml.jpg',
   '/paycheck/static/app_icons/favicon-16x16.png',
   '/paycheck/static/app_icons/android-chrome-384x384.png',
