@@ -24,7 +24,7 @@ const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;           
 //'/paycheck/service_worker.js',  // https://stackoverflow.com/questions/55027512/should-i-cache-the-serviceworker-file-in-a-pwa
 const FILES_TO_CACHE = [
   '/',
-  '/paycheck/',
+  //'/paycheck/',           // local
   '/paycheck/favicon.ico',
   '/paycheck/index.html',
   '/paycheck/apple-touch-icon.png',
