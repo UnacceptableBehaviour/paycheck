@@ -75,7 +75,11 @@ self.addEventListener('install', (evt) => {
       console.log(`[ServiceWorker] No of FILES_TO_CACHE:${FILES_TO_CACHE.length}`);
       FILES_TO_CACHE.forEach( file => {
           console.log(`[SW] caching: ${file}`);
-          cache.add(file);
+          try {
+            cache.add(file);
+          } catch(e) {
+            consoel.log(`FAILED TO CACHE: ${file} ERR:${e}`);
+          }          
         }
       );
       return cache.addAll(FILES_TO_CACHE);
