@@ -15,12 +15,23 @@ prepend = f"/{repo_name}"
 
 print(f"const FILES_TO_CACHE = [\n  '/',\n  '/{repo_name}/',")
 
+found = []
 for p in project_root.glob('**/*'):
     path = str(p)
     if 'node_modules' in path or 'scratch' in path or p.is_dir() or '.DS_Store' in path: continue
     if p.name in do_not_add_to_cache: continue
-    #print(p)
-    #print(path.replace(str(project_root),''))
     print(f"  '{prepend}{path.replace(str(project_root),'')}',")
+    found.append(str(p))
 
 print('];')
+
+uniq = set(found)
+if len(uniq) != len(found):
+    print('* * * WARNING DUPLICATES IN LIST * * *')
+    dupes = []; seen = set()
+    for f in found:
+        if f in seen:
+            dupes.append(f)
+        else:
+            seen.add(f)
+    pprint(dupes)
