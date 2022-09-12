@@ -67,7 +67,7 @@
   ],  
   "theme_color": "#008100",
   "background_color": "#008100",
-  "scope": "https://unacceptablebehaviour.github.io/paycheck/",
+  "scope": "/paycheck/",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "portrait" 
