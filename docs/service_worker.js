@@ -130,6 +130,7 @@ var fc = 0;
 self.addEventListener('fetch', function(event) {
   fc += 1;
   console.log(`[SW] fetch:${fc}`);
+  console.log(event.request.url);
   console.log(event);
   
   event.respondWith(
