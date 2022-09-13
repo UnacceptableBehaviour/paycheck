@@ -305,25 +305,38 @@ Serving website from **docs** directory
 > http://127.0.0.1:8081/paycheck/       # using relevant port
 ```
   
-SW says: 	https://unacceptablebehaviour.github.io/paycheck/
-manifest:	https://unacceptablebehaviour.github.io/paycheck/
-
+SW.js says: 	https://unacceptablebehaviour.github.io/paycheck/  
+manifest:	https://unacceptablebehaviour.github.io/paycheck/  
+  
 ### SCOPE
 **Dev Cycle - SW updates**  
 (Disable browser cache: Network > Disable Cache)  
 Set correct manifest file in index.html (web/local)  
 Delete cache from cache storage  
 Unregister service worker  
-Hard Reload  
-- Empty (Browser) Cache & Hard Reload (if cache not disabled)  
+Hard Reload [ or Empty (Browser) Cache & Hard Reload (if cache not disabled) ]   
   
 LOCAL works like this:  
 ```
+/paycheck/service_worker.js
+
 /paycheck/index.html:
 navigator.serviceWorker.register('/paycheck/service_worker.js', {scope: '/paycheck/'})
 
 /paycheck/static/manifest.local
   "scope": "http://127.0.0.1:8080/paycheck/",
+  "start_url": "index.html",
+```
+  
+LOCAL ALSO works like this - **change in manifest > scope:** note: file has not moved!    
+```
+/paycheck/service_worker.js
+
+/paycheck/index.html:
+navigator.serviceWorker.register('/paycheck/service_worker.js', {scope: '/paycheck/'})
+
+/paycheck/static/manifest.local
+  "scope": "/paycheck/",
   "start_url": "index.html",
 ```
   
