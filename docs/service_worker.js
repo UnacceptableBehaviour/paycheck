@@ -62,7 +62,7 @@ const FILES_TO_CACHE = [
   '/paycheck/static/icons/hol-left.svg',
   '/paycheck/static/icons/hol-left.png',
   '/paycheck/static/icons/email-svgrepo-com.svg',
-  '/paycheck/static/icons/hol-right.svg',
+  '/paycheck/static/icons/hol-right.svg'
 ];
 
 console.log(`service_worker.js V:${CACHE_NAME}`);

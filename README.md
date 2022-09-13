@@ -342,7 +342,7 @@ navigator.serviceWorker.register('/paycheck/service_worker.js', {scope: '/payche
   "start_url": "index.html",
 ```
   
-WEB - NO WORK :/
+WEB - NO WORK :/ (Worked in paycheck_beta_20220903)
 ```
 /paycheck/service_worker.js
 
@@ -351,8 +351,8 @@ WEB - NO WORK :/
 navigator.serviceWorker.register('/paycheck/service_worker.js', {scope: '/paycheck/'})
 
 /paycheck/static/manifest.webmanifest
-  "scope": "/paycheck/",
-  "start_url": "index.html",
+  "scope": "https://unacceptablebehaviour.github.io/paycheck/",
+  "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
 ```
 
 
