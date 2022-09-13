@@ -321,6 +321,7 @@ LOCAL works like this:
 /paycheck/service_worker.js
 
 /paycheck/index.html:
+<link rel="manifest" href="static/manifest.local">
 navigator.serviceWorker.register('/paycheck/service_worker.js', {scope: '/paycheck/'})
 
 /paycheck/static/manifest.local
@@ -333,6 +334,7 @@ LOCAL ALSO works like this - **change in manifest > scope:** note: file has not 
 /paycheck/service_worker.js
 
 /paycheck/index.html:
+<link rel="manifest" href="static/manifest.local">
 navigator.serviceWorker.register('/paycheck/service_worker.js', {scope: '/paycheck/'})
 
 /paycheck/static/manifest.local
@@ -340,7 +342,23 @@ navigator.serviceWorker.register('/paycheck/service_worker.js', {scope: '/payche
   "start_url": "index.html",
 ```
   
-  
+WEB - NO WORK :/
+```
+/paycheck/service_worker.js
+
+/paycheck/index.html:
+<link rel="manifest" href="manifest.webmanifest">
+navigator.serviceWorker.register('/paycheck/service_worker.js', {scope: '/paycheck/'})
+
+/paycheck/static/manifest.webmanifest
+  "scope": "/paycheck/",
+  "start_url": "index.html",
+```
+
+
+REF: [Getting around the place in root restriction - SO](https://stackoverflow.com/questions/35780397/understanding-service-worker-scope/48068714#48068714)  
+REF: [W3 Spec - Service worker](https://w3c.github.io/ServiceWorker/#dom-serviceworkerglobalscope-serviceworker)  
+    
   
 ## QUESTIONS / TODO
 In manifest file try "display": "fullscreen"  
