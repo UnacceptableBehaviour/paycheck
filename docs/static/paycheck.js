@@ -6,7 +6,8 @@ function cl(args) {
 };
 
 // where to look in local storage for current state
-const LAST_KNOWN_STATE_KEY = 'state_key';
+const KEY_LAST_KNOWN_STATE = 'state_key';
+const KEY_SW_INFO          = 'sw_info';   // must match in SW!
 
 // +/- Days create a new Date object
 Date.prototype.copyAddDays = function(days) {
@@ -519,8 +520,8 @@ var settings = {
 var stateKey = '';
 //cl(pc);
 
-if (LAST_KNOWN_STATE_KEY in localStorage) {  // retrieve current statekey, and 4wk cycle object
-  stateKey = localStorage.getItem(LAST_KNOWN_STATE_KEY);
+if (KEY_LAST_KNOWN_STATE in localStorage) {  // retrieve current statekey, and 4wk cycle object
+  stateKey = localStorage.getItem(KEY_LAST_KNOWN_STATE);
   if (stateKey in localStorage) {
     let jsonObj = JSON.parse(localStorage.getItem(stateKey));
     pc.initFromJSON(jsonObj);
@@ -528,7 +529,7 @@ if (LAST_KNOWN_STATE_KEY in localStorage) {  // retrieve current statekey, and 4
   }
 } else {
   // save a new state key
-  localStorage.setItem(LAST_KNOWN_STATE_KEY, pc.localStorageKey);
+  localStorage.setItem(KEY_LAST_KNOWN_STATE, pc.localStorageKey);
 }
 
 function addDebugLine(text) {
@@ -536,8 +537,19 @@ function addDebugLine(text) {
 }
 
 function debugInfo(args) {
-  let debugText = "* * * DEBUG INFO (beta release) * * * "  
-  debugText += addDebugLine(`SW version: ${0.09}`);
+  let debugText = "* * * DEBUG INFO (beta release) * * * ";
+  debugText += addDebugLine('');
+  
+  if (KEY_SW_INFO in localStorage) {
+    swInfo = localStorage.getItem(KEY_SW_INFO);
+    
+    debugText += addDebugLine(`SW version: ${swInfo.swVersion}`);
+    debugText += addDebugLine(`cache: ${swInfo.cacheName}`);
+  } else {
+    debugText += addDebugLine('** WARNING **');
+    debugText += addDebugLine(`KEY: ${KEY_SW_INFO} < Not found.`);
+  }
+  
   return debugText;
 }
 
@@ -582,7 +594,7 @@ window.addEventListener('load',function(){
       pc.initFromJSON(jsonObj);
       cl(pc);          
     }    
-    localStorage.setItem(LAST_KNOWN_STATE_KEY, pc.localStorageKey);
+    localStorage.setItem(KEY_LAST_KNOWN_STATE, pc.localStorageKey);
 
     pc.updateWeekTotalMins();
     pc.finalCalulations();         
@@ -603,7 +615,7 @@ window.addEventListener('load',function(){
       cl(pc);          
     }
     
-    localStorage.setItem(LAST_KNOWN_STATE_KEY, pc.localStorageKey);
+    localStorage.setItem(KEY_LAST_KNOWN_STATE, pc.localStorageKey);
 
     pc.updateWeekTotalMins();
     pc.finalCalulations();          

@@ -11,7 +11,9 @@
 // depends if you are using /docs/  or /master/
 // /paycheck/
 
-let verion_number_passed_in = '00.09';  // < - - - - - - - - - - - - - - - - - - - - - - //
+const KEY_SW_INFO = 'sw_info';   // must match in paycheck.js!
+
+let verion_number_passed_in = '00.10';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${verion_number_passed_in}`;                     //
                                                                                           //
@@ -83,7 +85,7 @@ self.addEventListener('install', (evt) => {
         }
       );
       return cache.addAll(FILES_TO_CACHE);
-    })
+    })    
   );
 
   self.skipWaiting();
@@ -102,6 +104,10 @@ self.addEventListener('activate', (evt) => {
       }));
     })
   );
+  localStorage.setItem(KEY_SW_INFO, {
+    cacheName: CACHE_NAME,
+    swVersion: verion_number_passed_in
+  });
   self.clients.claim();
 });
 
