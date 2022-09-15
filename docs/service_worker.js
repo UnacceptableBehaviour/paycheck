@@ -11,9 +11,9 @@
 // depends if you are using /docs/  or /master/
 // /paycheck/
 
-let verion_numner_passed_in = '00.09';  // < - - - - - - - - - - - - - - - - - - - - - - //
+let verion_number_passed_in = '00.09';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
-const CACHE_NAME = `paycheck-gitio-cache_${verion_numner_passed_in}`;                     //
+const CACHE_NAME = `paycheck-gitio-cache_${verion_number_passed_in}`;                     //
                                                                                           //
 // * * * * * * * * * * * * * * * * * * * * * * * * * * *                                  //
 // run                                                                                    //
