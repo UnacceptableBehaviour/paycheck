@@ -531,8 +531,15 @@ if (LAST_KNOWN_STATE_KEY in localStorage) {  // retrieve current statekey, and 4
   localStorage.setItem(LAST_KNOWN_STATE_KEY, pc.localStorageKey);
 }
 
+function addDebugLine(text) {
+  return `<br>${text}`;
+}
 
-
+function debugInfo(args) {
+  let debugText = "* * * DEBUG INFO (beta release) * * * "  
+  debugText += addDebugLine(`SW version: ${0.09}`);
+  return debugText;
+}
 
 
 
@@ -682,13 +689,37 @@ window.addEventListener('load',function(){
 });
 
 // Mailing summary
-document.querySelector('#mailto_d').addEventListener('click', function(event){
+document.querySelector('#mail_img').addEventListener('click', function(event){
   //cl('> = = = MAIL SUMMARY= = = <');
   let address = 'a.b@g.com';
   let subject = 'payCheck Summary';  
   window.location = `mailto:${address}?subject=${subject}&body=${pc.emailVersionSummary()}`;
 });
 
+document.querySelector('#debug_img').addEventListener('click', function(event){
+  cl('> = = = POP DEBUG INFO = = = <');
+  let debugDiv = document.createElement('div');
+  debugDiv.id = "flash_dbg";
+  debugDiv.style.position = "fixed";
+  debugDiv.style.top = "50vh";
+  debugDiv.style.left = "50vw";
+  debugDiv.style.width = "80vw";  
+  debugDiv.style.marginLeft = "-43vw";
+  debugDiv.style.height = "50vh";  
+  debugDiv.style.marginTop = "-40%";
+  debugDiv.style.border = "2px solid #444";
+  debugDiv.style.borderRadius = "6px";
+  debugDiv.style.background = "#F0FF54";
+  debugDiv.style.fontsize = "2vh";
+  debugDiv.style.padding = "10px";
+  debugDiv.style.opacity = "94%";
+  debugDiv.innerHTML = debugInfo();
+  document.body.appendChild(debugDiv);  
+  document.querySelector('#flash_dbg').addEventListener('click', function(event){
+    cl('> = = = HIDE DEBUG INFO = = = <');
+    event.target.remove()
+  });
+});
 
 
 // saving images . . . 
