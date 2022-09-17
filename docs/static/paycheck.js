@@ -539,6 +539,9 @@ function addDebugLine(text) {
 function debugInfo(args) {
   let debugText = "* * * DEBUG INFO (beta release) * * * ";
   debugText += addDebugLine('');
+  debugText += addDebugLine(`paycheck.js V00.02`);
+  debugText += addDebugLine('');
+  debugText += addDebugLine('');
   
   if (KEY_SW_INFO in localStorage) {
     swInfo = localStorage.getItem(KEY_SW_INFO);
