@@ -351,8 +351,11 @@ WEB - NO WORK :/ (Worked in paycheck_beta_20220903)
 navigator.serviceWorker.register('/paycheck/service_worker.js', {scope: '/paycheck/'})
 
 /paycheck/static/manifest.webmanifest
-  "scope": "https://unacceptablebehaviour.github.io/paycheck/",
+  "scope":     "https://unacceptablebehaviour.github.io/paycheck/",
   "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
+
+Console:
+SW Registered   https://unacceptablebehaviour.github.io/paycheck/
 ```
 
 
