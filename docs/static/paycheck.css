@@ -6,7 +6,7 @@
 
 body {
   margin: 0px;
-  background: #008100;
+  background-color: #008100;
   /*margin-top: 0px;*/
   /*margin-bottom: 0px;*/
 }
@@ -274,16 +274,36 @@ label.imgSelect input[accept*="image"] {
   text-align: center;
 }
 
-.hr-row-test {
-  background: #6600FF;
+/* highLightTodaysEntry - highlight and fade out */
+:root {
+  --todays-entry-decay: 1250ms; 
+}
+.hrs-table .imgSelect {
+  transition-property: background-color;
+  transition-duration: var(--todays-entry-decay);
+}
+#date-today {
+  border-radius: 6px;
+  transition-property: background-color;
+  transition-duration: var(--todays-entry-decay);  
 }
 
+/* transition: none !important; << makes tha animation run on removal ONLY */
+.day-highlight {
+  background-color: #C60CFF !important;
+  transition: none !important;
+}
+
+
+.hr-row-test {
+  background-color: #6600FF;
+}
 
 .wk-row {
   text-align: left;
 }
 .space-box {
-  background: #FDFFF5;
+  background-color: #FDFFF5;
 }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

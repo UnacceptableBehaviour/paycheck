@@ -168,6 +168,15 @@ class PayCycle4wk{
     refDate = new Date('2022-08-12T04:00:00'); refWeekNo = 28;
     return [refDate, refWeekNo];
   }
+    
+  static highLightTodaysEntry(element=undefined){
+    if (element) {
+      document.querySelector('#date-today').classList.add('day-highlight');
+      element.classList.add('day-highlight');
+      setTimeout( ()=>{document.querySelector('#date-today').classList.remove('day-highlight');} ,10);
+      setTimeout( ()=>{element.classList.remove('day-highlight');} ,10);
+    }    
+  }
   
   constructor(payDay, startWkNo){ // let pc = new PayCycle4wk(new Date(2022, 07, 12)); // the month is 0-indexed
     this.payDay   = payDay;
@@ -337,6 +346,13 @@ class PayCycle4wk{
   }
   
   updateHTML(){
+    // TODAYS DATE
+    let todayClockElement;
+    let today = new Day(new Date());
+    document.querySelector('#date-today-day').textContent = today.day;
+    document.querySelector('#date-today-date').textContent = today.HRdate;
+    document.querySelector('#date-today-year').textContent = today.year;
+    
     // HEADER - update pay_day, cut_off, wk_range = week no's, wk_range_dates 4week date range
     document.querySelector('#pay_day_js').textContent = `Pay Day: ${this.payDay.getDate()} ${Day.numToMonth[this.payDay.getMonth()]}`;
     document.querySelector('#wk_range_js').textContent = ` ${this.getWeekNo(0)} - ${this.getWeekNo(3)}`;
@@ -356,7 +372,15 @@ class PayCycle4wk{
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`).textContent = this.daysInCycle[dayNo].outTime;
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_hrs`).textContent = this.daysInCycle[dayNo].totalMinsReadableHM;
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_dhrs`).textContent = this.daysInCycle[dayNo].totalMinsDecimalHM;
-
+      
+      // detect highLightTodaysEntry element
+      if (today.HRdate === this.daysInCycle[dayNo].HRdate) {
+        if (this.daysInCycle[dayNo].inTime === '') {
+          todayClockElement = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).parentElement;
+        } else if (this.daysInCycle[dayNo].outTime === '') {
+          todayClockElement = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`).parentElement;
+        }
+      }
     }
     
     // WEEKLY TOTALS
@@ -365,13 +389,7 @@ class PayCycle4wk{
       document.querySelector(`#r${weekNo+1}_wk_no`).textContent = `${weekNo+1} / ${this.weekNos[weekNo]}`;
       document.querySelector(`#r${weekNo+1}_tot_hrs`).textContent = Day.minsToHMReadable(this.weekTotalMins[weekNo]);
       document.querySelector(`#r${weekNo+1}_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]);
-    }
-    
-    // TODAYS DATE
-    let today = new Day(new Date());
-    document.querySelector('#date-today-day').textContent = today.day;
-    document.querySelector('#date-today-date').textContent = today.HRdate;
-    document.querySelector('#date-today-year').textContent = today.year;
+    }    
     
     // MONTHLY TOTAL
     document.querySelector(`#r5_tot_hrs`).textContent = Day.minsToHMReadable(this.cycleTotalMins);
@@ -386,6 +404,7 @@ class PayCycle4wk{
     document.querySelector('#r6_tot_dedcts').textContent = this.deductions.toFixed(2);
     document.querySelector('#r7_net').textContent = this.netIncomeForCycle.toFixed(2);
     
+    PayCycle4wk.highLightTodaysEntry(todayClockElement);
   }
   
   static createLine(t0,p0,t1,p1,t2,p2,t3,p3,t4,p4,t5,p5,t6,p6,t7,p7,t8,p8){
