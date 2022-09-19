@@ -720,7 +720,13 @@ document.querySelector('#mail_img').addEventListener('click', function(event){
   window.location = `mailto:${address}?subject=${subject}&body=${pc.emailVersionSummary()}`;
 });
 
-
+// Debug / HELP button
+// click to create minimised 
+// transition to large by adding class
+// display info wait for click
+// transition to minimised
+// delete element on transistionend event
+// NOTE: there are transitionend AND animationend EVENTS
 document.querySelector('#debug_img').addEventListener('click', function(event){  
   cl('> = = = POP DEBUG INFO = = = <');
   let debugDiv = document.createElement('div');
