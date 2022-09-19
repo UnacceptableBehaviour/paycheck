@@ -710,44 +710,46 @@ window.addEventListener('load',function(){
     });
   });
 
-});
-
-// Mailing summary
-document.querySelector('#mail_img').addEventListener('click', function(event){
-  //cl('> = = = MAIL SUMMARY= = = <');
-  let address = 'a.b@g.com';
-  let subject = 'payCheck Summary';  
-  window.location = `mailto:${address}?subject=${subject}&body=${pc.emailVersionSummary()}`;
-});
-
-// Debug / HELP button
-// click to create minimised 
-// transition to large by adding class
-// display info wait for click
-// transition to minimised
-// delete element on transistionend event
-// NOTE: there are transitionend AND animationend EVENTS
-document.querySelector('#debug_img').addEventListener('click', function(event){  
-  cl('> = = = POP DEBUG INFO = = = <');
-  let debugDiv = document.createElement('div');
-  debugDiv.id = "flash_dbg";
-  debugDiv.classList.add("flash-dbg"); // add remove toggle
-  debugDiv.innerHTML = debugInfo();
-  document.body.appendChild(debugDiv);
-  
-  // TODO is there some event we should listen for instead of using Timeout?
-  //debugDiv.classList.toggle("flash-dbg-show");  // too soon?
-  setTimeout(()=>{debugDiv.classList.toggle("flash-dbg-show"); cl('-SHOW-');}, 5);  
-  
-  document.querySelector('#flash_dbg').addEventListener('click', function(event){
-    cl('> = = = HIDE DEBUG INFO = = = <');
-    debugDiv.addEventListener('transitionend', (event)=>{ // NOT animationend
-      debugDiv.remove();
-      //cl('-transitionEnd-');
-    });    
-    debugDiv.classList.toggle("flash-dbg-show");  // NOT animate! TRANSITION!
+  // Mailing summary
+  document.querySelector('#mail_img').addEventListener('click', function(event){
+    //cl('> = = = MAIL SUMMARY= = = <');
+    let address = 'a.b@g.com';
+    let subject = 'payCheck Summary';  
+    window.location = `mailto:${address}?subject=${subject}&body=${pc.emailVersionSummary()}`;
   });
-});
+  
+  // Debug / HELP button
+  // click to create minimised 
+  // transition to large by adding class
+  // display info wait for click
+  // transition to minimised
+  // delete element on transistionend event
+  // NOTE: there are transitionend AND animationend EVENTS
+  document.querySelector('#debug_img').addEventListener('click', function(event){  
+    cl('> = = = POP DEBUG INFO = = = <');
+    let debugDiv = document.createElement('div');
+    debugDiv.id = "flash_dbg";
+    debugDiv.classList.add("flash-dbg"); // add remove toggle
+    debugDiv.innerHTML = debugInfo();
+    document.body.appendChild(debugDiv);
+    
+    // TODO is there some event we should listen for instead of using Timeout?
+    //debugDiv.classList.toggle("flash-dbg-show");  // too soon?
+    setTimeout(()=>{debugDiv.classList.toggle("flash-dbg-show"); cl('-SHOW-');}, 5);  
+    
+    document.querySelector('#flash_dbg').addEventListener('click', function(event){
+      cl('> = = = HIDE DEBUG INFO = = = <');
+      debugDiv.addEventListener('transitionend', (event)=>{ // NOT animationend
+        debugDiv.remove();
+        //cl('-transitionEnd-');
+      });    
+      debugDiv.classList.toggle("flash-dbg-show");  // NOT animate! TRANSITION!
+    });
+  });
+
+  
+});  // load END - - - - <
+
 
 
 // saving images . . . 
