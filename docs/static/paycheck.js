@@ -30,11 +30,11 @@ class Day{
   static numToDay = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   static numToMonth = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   
-  static minsToHMReadable(totalMins){
-    return `${Math.floor(totalMins / 60)}H${(totalMins % 60).toString().padStart(2, '0')}`;
+  static minsToHMReadable(mins){
+    return `${Math.floor(mins / 60)}H${(mins % 60).toString().padStart(2, '0')}`;
   }
-  static minsToHDecimalReadable(totalMins){
-    return `${(Math.floor(totalMins / 60) + ((totalMins % 60) / 60)).toFixed(2)}`;
+  static minsToHDecimalReadable(mins){
+    return `${(Math.floor(mins / 60) + ((mins % 60) / 60)).toFixed(2)}`;
   }
   
   constructor(date){
@@ -287,10 +287,11 @@ class PayCycle4wk{
   
   finalCalulations(){
     // TODO - move to settings
+    // https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2022-to-2023
     const TAX_RATE_2022 = 0.20;
-    const TAX_2022_ALLOWANCE = 12570;
-    const NI_RATE_2022 = 0.12;
-    const NI_2022_ALLOWANCE = 9564;
+    const TAX_2022_ALLOWANCE = 12570;     // 12570-37700 @20% 37701-150000 @40% rest @45%
+    const NI_RATE_2022_23 = 0.1325;       // for 2022 to 2023 tax year, returns to 0.12 after that when new tax being introduced
+    const NI_2022_23_ALLOWANCE = 12584;   // 242/wk  . . was const NI_2022_ALLOWANCE = 9564; 
     const HOURLY_RATE_2022 = 10.10;
     const PENSION_PC = 0.031;
     
@@ -305,8 +306,8 @@ class PayCycle4wk{
     this.pensionContrib = this.annualIncomeEstimate * PENSION_PC / 52 * 4;
     
     // NI @ 12% Allowance 9564
-    if (this.annualIncomeEstimate > NI_2022_ALLOWANCE) {
-      this.contribNI = (( this.annualIncomeEstimate - NI_2022_ALLOWANCE ) * NI_RATE_2022 ) / 52 * 4;
+    if (this.annualIncomeEstimate > NI_2022_23_ALLOWANCE) {
+      this.contribNI = (( this.annualIncomeEstimate - NI_2022_23_ALLOWANCE ) * NI_RATE_2022_23 ) / 52 * 4;
     } else {
       this.contribNI = 0;
     }    
