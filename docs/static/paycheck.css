@@ -302,6 +302,10 @@ label.imgSelect input[accept*="image"] {
 .wk-row {
   text-align: left;
 }
+.wk-row-hide {
+  display: none;
+}
+
 .space-box {
   background-color: #FDFFF5;
 }

@@ -46,6 +46,7 @@ class Day{
     this.breakTime = '30';    // 30     break time in mins
     this.outTime = '';        // 1553
     this.totalMins = 0;       // integer
+    this.totalALMins = 0;     // integer
     this.year = date.getFullYear();
   }
   
@@ -57,6 +58,8 @@ class Day{
     this.breakTime = jsonObj.breakTime;
     this.outTime = jsonObj.outTime;
     this.totalMins = jsonObj.totalMins;
+    this.totalALMins = jsonObj.totalALMins;
+    if (this.totalALMins === undefined) this.totalALMins = 0;
     this.totalMinsReadableHM  = jsonObj.totalMinsReadableHM;
     this.totalMinsDecimalHM = jsonObj.totalMinsDecimalHM;
     //cl(`initJSON-DAY(): ${this.day}-${this.HRdate}:${this.inTime}-${this.breakTime}-${this.outTime}`);
@@ -71,8 +74,11 @@ class Day{
     if (this.breakTime === 'AL') { // Anual Leave - 7hr day
       this.inTime = '0700';
       this.outTime = '1400';
-      this.totalMins = 7 * 60;
-      
+      this.totalMins = 0;
+      this.totalALMins = 7 * 60;
+      this.totalMinsReadableHM = '7H00';
+      this.totalMinsDecimalHM = '7.00';
+
     } else {
       if ((start === '') || (finish === '')) {
         this.totalMins = 0;
@@ -107,11 +113,9 @@ class Day{
       }
       
       this.totalMins = totalMins;
-    }
-
-    this.totalMinsReadableHM = `${Math.floor(this.totalMins / 60)}H${(this.totalMins % 60).toString().padStart(2, '0')}`;
-    this.totalMinsDecimalHM = `${(Math.floor(this.totalMins / 60) + ((this.totalMins % 60) / 60)).toFixed(2)}`;
-    //cl(`total Mins: ${totalMins} = ${this.totalMinsReadableHM} = ${this.totalMinsDecimalHM}`);    
+      this.totalMinsReadableHM = `${Math.floor(this.totalMins / 60)}H${(this.totalMins % 60).toString().padStart(2, '0')}`;
+      this.totalMinsDecimalHM = `${(Math.floor(this.totalMins / 60) + ((this.totalMins % 60) / 60)).toFixed(2)}`;      
+    }  
   }
   
   clearHours(){
@@ -119,6 +123,7 @@ class Day{
     this.breakTime = '30';
     this.outTime = '';
     this.totalMins = 0;
+    this.totalALMins = 0;
     this.totalMinsReadableHM = '';
     this.totalMinsDecimalHM = '';
   }
@@ -188,7 +193,9 @@ class PayCycle4wk{
     this.weekNo   = 0;  // 0-3
     this.weekNos  = [startWkNo, (startWkNo+1) % 52, (startWkNo+2) % 52, (startWkNo+3) % 52];
     this.weekTotalMins = [0,0,0,0];
+    this.weekTotalALMins = [0,0,0,0];
     this.cycleTotalMins = 0;
+    this.cycleTotalALMins = 0;
     
     // localstorage key format: 2022_HRS_28-31_12AUG      
     this.localStorageKey = `${this.payDay.getFullYear()}_HRS_${this.weekNos[0]}-${this.weekNos[3]}_${this.payDay.getDate()}${Day.numToMonth[this.payDay.getMonth()]}`.toUpperCase();
@@ -273,15 +280,20 @@ class PayCycle4wk{
     let dayOfMonth = 0;
     for (let wkNo = 0; wkNo < 4; wkNo +=1) {
       let weekTotal = 0;
+      let weekALTotal = 0;
       for (let dayNo = 0; dayNo < 7; dayNo +=1) {
         dayOfMonth = 7 * wkNo + dayNo;
         weekTotal += this.daysInCycle[dayOfMonth].totalMins;
+        weekALTotal += this.daysInCycle[dayOfMonth].totalALMins;
       }
       this.weekTotalMins[wkNo] = weekTotal;
+      this.weekTotalALMins[wkNo] = weekALTotal;
     }
     this.cycleTotalMins = 0;
+    this.cycleTotalALMins = 0;
     for (let wkNo = 0; wkNo < 4; wkNo +=1) {
       this.cycleTotalMins += this.weekTotalMins[wkNo];
+      this.cycleTotalALMins += this.weekTotalALMins[wkNo];
     }    
   }
   
@@ -293,11 +305,13 @@ class PayCycle4wk{
     const NI_RATE_2022_23 = 0.1325;       // for 2022 to 2023 tax year, returns to 0.12 after that when new tax being introduced
     const NI_2022_23_ALLOWANCE = 12584;   // 242/wk  . . was const NI_2022_ALLOWANCE = 9564; 
     const HOURLY_RATE_2022 = 10.10;
+    const HOURLY_RATE_AL_2022 = HOURLY_RATE_2022 * 1.2; // its more complicated than this - find out details TODO
     const PENSION_PC = 0.031;
     
     // anual /4 * 52
     let hoursForCycle = parseFloat(Day.minsToHDecimalReadable(this.cycleTotalMins));
-    this.gross4wk = (hoursForCycle * HOURLY_RATE_2022);
+    let hoursALForCycle = parseFloat(Day.minsToHDecimalReadable(this.cycleTotalALMins));
+    this.gross4wk = (hoursForCycle * HOURLY_RATE_2022) + (hoursALForCycle * HOURLY_RATE_AL_2022);
     this.annualIncomeEstimate = this.gross4wk / 4 * 52;
     
     // TODO check if there's a threshold as in NI/Tax
@@ -393,11 +407,21 @@ class PayCycle4wk{
       document.querySelector(`#r${weekNo+1}_wk_no`).textContent = `${weekNo+1} / ${this.weekNos[weekNo]}`;
       document.querySelector(`#r${weekNo+1}_tot_hrs`).textContent = Day.minsToHMReadable(this.weekTotalMins[weekNo]);
       document.querySelector(`#r${weekNo+1}_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]);
+      // AL hours if present
+      let anualLeavMins = this.weekTotalALMins[weekNo];
+      if (anualLeavMins) {
+        document.getElementById(`al_wkr${weekNo+1}`).classList.remove('wk-row-hide');
+        document.querySelector(`#r${weekNo+1}h_wk_no`).textContent = `${weekNo+1} / AL`;
+        document.querySelector(`#r${weekNo+1}h_tot_hrs`).textContent = Day.minsToHMReadable(anualLeavMins);
+        document.querySelector(`#r${weekNo+1}h_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(anualLeavMins);
+      } else {
+        document.getElementById(`al_wkr${weekNo+1}`).classList.add('wk-row-hide');
+      }
     }    
     
     // MONTHLY TOTAL
-    document.querySelector(`#r5_tot_hrs`).textContent = Day.minsToHMReadable(this.cycleTotalMins);
-    document.querySelector(`#r5_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.cycleTotalMins);
+    document.querySelector(`#r5_tot_hrs`).textContent = Day.minsToHMReadable(this.cycleTotalMins + this.cycleTotalALMins);
+    document.querySelector(`#r5_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.cycleTotalMins + this.cycleTotalALMins);
     
     // TOTALS    
     document.querySelector('#r1_anual_in').textContent = this.annualIncomeEstimate.toFixed(2);
@@ -496,8 +520,8 @@ class PayCycle4wk{
       // add totals
       textSummary += PayCycle4wk.createLine('',PAD_TOT_INDENT,
                                 'TOTAL:',PAD_TOT,
-                                Day.minsToHMReadable(this.weekTotalMins[weekNo]), PAD_TOT_HRS,
-                                Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]), PAD_TOT_DHRS);
+                                Day.minsToHMReadable(this.weekTotalMins[weekNo] + this.weekTotalALMins[weekNo]), PAD_TOT_HRS,
+                                Day.minsToHDecimalReadable(this.weekTotalMins[weekNo] + this.weekTotalALMins[weekNo]), PAD_TOT_DHRS);
       textSummary += '\n';
     }
 
@@ -510,11 +534,18 @@ class PayCycle4wk{
       textSummary += PayCycle4wk.createLine(`WK ${weekNo+1}/${this.weekNos[weekNo]}`,PAD_WK_TOTS,
                                             Day.minsToHMReadable(this.weekTotalMins[weekNo]),PAD_WK_TOTS,
                                             Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]),PAD_WK_TOTS);
+      
+      let anualLeavMins = this.weekTotalALMins[weekNo];
+      if (anualLeavMins) {
+        textSummary += PayCycle4wk.createLine(`WK ${weekNo+1}/AL`,PAD_WK_TOTS,
+                                            Day.minsToHMReadable(anualLeavMins),PAD_WK_TOTS,
+                                            Day.minsToHDecimalReadable(anualLeavMins),PAD_WK_TOTS);
+      }
     }
 
     textSummary += PayCycle4wk.createLine('TOTAL:',PAD_WK_TOTS,
-                                          Day.minsToHMReadable(this.cycleTotalMins),PAD_WK_TOTS,
-                                          Day.minsToHDecimalReadable(this.cycleTotalMins),PAD_WK_TOTS);
+                                          Day.minsToHMReadable(this.cycleTotalMins + this.cycleTotalALMins),PAD_WK_TOTS,
+                                          Day.minsToHDecimalReadable(this.cycleTotalMins + this.cycleTotalALMins),PAD_WK_TOTS);
     textSummary += '\n';
 
     // Add totals
