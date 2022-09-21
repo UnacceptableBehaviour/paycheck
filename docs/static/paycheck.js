@@ -143,6 +143,9 @@ const PAD_TOT_DHRS = PAD_DHRS;
 const PAD_WK_TOTS = 10;
 const PAD_TOTS_DEDS_TITLE = 30;
 const PAD_TOTS_DEDS_VAL = 10;
+const FORMAT_EMAIL  = 0;
+const FORMAT_TXT    = 1;
+const FORMAT_HTML   = 2;
 
 class PayCycle4wk{
   static OFFSET_CUTOFF = -6;
@@ -289,7 +292,7 @@ class PayCycle4wk{
     const NI_RATE_2022 = 0.12;
     const NI_2022_ALLOWANCE = 9564;
     const HOURLY_RATE_2022 = 10.10;
-    const PENSION_PC = 0.031
+    const PENSION_PC = 0.031;
     
     // anual /4 * 52
     let hoursForCycle = parseFloat(Day.minsToHDecimalReadable(this.cycleTotalMins));
@@ -473,7 +476,7 @@ class PayCycle4wk{
     return `${title}\n${weekDays}`;
   }
   
-  emailVersionSummary(){ // feels like a rehash of updateHTML - maybe a smarter way to do both?
+  emailVersionSummary(emailFormat=FORMAT_EMAIL){ // feels like a rehash of updateHTML - maybe a smarter way to do both?
     // mailto scheme: https://www.rfc-editor.org/rfc/rfc2368#page-3
     // more:          https://www.rfc-editor.org/rfc/rfc1738#page-12
     // use '%0D%0A' in place of '\n'
@@ -527,8 +530,15 @@ class PayCycle4wk{
     textSummary += `Sent on ${new Date()} by payCheck - MIT Lisence \nhttps://unacceptablebehaviour.github.io/paycheck/ \n\n`
     
     cl(textSummary);
-    
-    return textSummary.replaceAll("\n", '%0D%0A'); // use '%0D%0A' in place of '\n' for correct display in eMail
+
+    switch(emailFormat) {
+      case FORMAT_EMAIL:
+        return textSummary.replaceAll("\n", '%0D%0A'); // use '%0D%0A' in place of '\n' for correct display in eMail
+      case FORMAT_HTML:
+        return textSummary.replaceAll("\n", '<br>');
+      default:
+        return textSummary;
+    }
   }
 
 }
@@ -749,7 +759,8 @@ window.addEventListener('load',function(){
     let debugDiv = document.createElement('div');
     debugDiv.id = "flash_dbg";
     debugDiv.classList.add("flash-dbg"); // add remove toggle
-    debugDiv.innerHTML = debugInfo();
+    //debugDiv.innerHTML = debugInfo();
+    debugDiv.innerHTML = pc.emailVersionSummary(FORMAT_HTML)
     document.body.appendChild(debugDiv);
     
     // TODO is there some event we should listen for instead of using Timeout?
