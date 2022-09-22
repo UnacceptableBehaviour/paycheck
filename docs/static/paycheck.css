@@ -204,8 +204,10 @@ body {
 }
 .flash-qr > img {
   width: 90%;
+  max-height: 90%;
   margin: auto;
   display: block;
+  object-fit: contain;
 }
 .flash-dbg-show{
   opacity: 94%;
