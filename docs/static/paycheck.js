@@ -838,24 +838,9 @@ window.addEventListener('load',function(){
 
   if (document.querySelector('#qr_but')) {
     document.querySelector('#qr_but').addEventListener('click', function(event){  
-      cl('> = = = POP QR CODE = = = <');
-      let debugDiv = document.createElement('div');
-      debugDiv.id = "flash_QR";
-      debugDiv.classList.add("flash", "flash-qr"); // add remove toggle
-      //debugDiv.innerHTML = debugInfo();
-      //debugDiv.innerHTML = ""
-      document.body.appendChild(debugDiv);
-      
-      setTimeout(()=>{debugDiv.classList.add("flash-qr-show"); cl('-SHOW-');}, 5);  
-      
-      document.querySelector('#flash_QR').addEventListener('click', function(event){
-        cl('> = = = HIDE QR CODE = = = <');
-        debugDiv.addEventListener('transitionend', (event)=>{ // NOT animationend
-          debugDiv.remove();
-          //cl('-transitionEnd-');
-        });    
-        debugDiv.classList.remove("flash-qr-show");  // NOT animate! TRANSITION!
-      });
+      //displayFlash(event, id, classSpecific, classShow, innerHTML='')
+      let img = '<img src="static/images/QR-code-w-icon-noShort.png">';
+      displayFlash(event, 'flash_QR', ['flash-qr'], 'flash-qr-show', img);
     });  
   }
   
