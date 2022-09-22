@@ -86,7 +86,7 @@ self.addEventListener('install', (evt) => {
           }          
         }
       );
-      return cache.addAll(FILES_TO_CACHE);
+      return; //cache.addAll(FILES_TO_CACHE);
     })    
   );
 
