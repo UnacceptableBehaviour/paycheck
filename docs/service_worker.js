@@ -35,7 +35,7 @@ const FILES_TO_CACHE = [
   '/paycheck/static/manifest.local',
   '/paycheck/static/focus.js',
   '/paycheck/static/manifest.webmanifest',
-  '/paycheck/static/images/screenshot_sml.jpg',
+  '/paycheck/static/images/screenshot.jpg',
   '/paycheck/static/app_icons/favicon-16x16.png',
   '/paycheck/static/app_icons/android-chrome-384x384.png',
   '/paycheck/static/app_icons/safari-pinned-tab.svg',
