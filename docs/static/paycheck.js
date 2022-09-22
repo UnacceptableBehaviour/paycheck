@@ -810,29 +810,8 @@ window.addEventListener('load',function(){
   // NOTE: there are transitionend AND animationend EVENTS
   if (document.querySelector('#debug_img')) {
     document.querySelector('#debug_img').addEventListener('click', function(event){  
-      cl('> = = = POP DEBUG INFO = = = <');
-      let targetBtn = event.target;
-      let debugDiv = document.createElement('div');
-      debugDiv.id = "flash_dbg";
-      debugDiv.classList.add("flash", "flash-dbg"); // add remove toggle
-      //debugDiv.innerHTML = debugInfo();
-      debugDiv.innerHTML = pc.emailVersionSummary(FORMAT_HTML)
-      document.body.appendChild(debugDiv);
-      targetBtn.classList.add('btn-disable');
-      
-      // TODO is there some event we should listen for instead of using Timeout?
-      //debugDiv.classList.toggle("flash-dbg-show");  // too soon?
-      setTimeout(()=>{debugDiv.classList.toggle("flash-dbg-show"); cl('-SHOW-');}, 5);  
-      
-      document.querySelector('#flash_dbg').addEventListener('click', function(event){
-        cl('> = = = HIDE DEBUG INFO = = = <');
-        debugDiv.addEventListener('transitionend', (event)=>{ // NOT animationend
-          debugDiv.remove();
-          targetBtn.classList.remove('btn-disable');
-          //cl('-transitionEnd-');
-        });    
-        debugDiv.classList.toggle("flash-dbg-show");  // NOT animate! TRANSITION!
-      });
+      //displayFlash(event, id, classSpecific, classShow, innerHTML='')
+      displayFlash(event, 'flash_dbg', ['flash-dbg'], 'flash-dbg-show', debugInfo());
     });
   }
 
