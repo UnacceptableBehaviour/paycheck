@@ -154,7 +154,7 @@ body {
   width: 10vw;
 }
 #mail_img {
-  padding-right: 6vw;
+  padding-right: 2vw;
 }
 #debug_img {
   border: 1px solid #444;
@@ -170,8 +170,8 @@ body {
   align-content: center;
   background-color: buttonface;
   font-size: 5vw;
-  padding: 1vw;
-  width: 10vw;  
+  padding: 1.5vw;
+  margin-right: 2vw;
 }
 .btn-disable {
   pointer-events: none;
