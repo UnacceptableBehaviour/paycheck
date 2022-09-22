@@ -559,7 +559,7 @@ class PayCycle4wk{
     textSummary += document.querySelector('#r7_net_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)         +this.netIncomeForCycle.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
     
     textSummary += '\n\n';
-    textSummary += `Sent on ${new Date()} by payCheck - MIT Lisence \nhttps://unacceptablebehaviour.github.io/paycheck/ \n\n`
+    textSummary += `Sent on ${new Date()} by payCheck - MIT Lisence \nhttps://unacceptablebehaviour.github.io/paycheck/ \n\n`;
     
     cl(textSummary);
 
@@ -626,7 +626,29 @@ function debugInfo(args) {
   return debugText;
 }
 
-
+function displayFlash(event, id, classSpecific, classShow, innerHTML='') {
+  cl(`> = = = POP FLASH ${id} = = = <`);
+  let targetBtn = event.target;
+  let debugDiv = document.createElement('div');
+  debugDiv.id = id;
+  debugDiv.classList.add("flash", ...classSpecific); // add remove toggle
+  //debugDiv.innerHTML = debugInfo();
+  debugDiv.innerHTML = innerHTML;
+  document.body.appendChild(debugDiv);
+  targetBtn.classList.add('btn-disable');
+  
+  setTimeout(()=>{debugDiv.classList.add(classShow); cl('-SHOW-');}, 5);  
+  
+  document.getElementById(id).addEventListener('click', function(event){
+    cl(`> = = = HIDE FLASH ${id} = = = <`);
+    debugDiv.addEventListener('transitionend', (event)=>{ // NOT animationend
+      debugDiv.remove();
+      targetBtn.classList.remove('btn-disable');
+      //cl('-transitionEnd-');
+    });    
+    debugDiv.classList.remove(classShow);  // NOT animate! TRANSITION!
+  });  
+}
 
 window.addEventListener('load',function(){
   cl('LOADED - adding event listeners');
@@ -786,29 +808,57 @@ window.addEventListener('load',function(){
   // transition to minimised
   // delete element on transistionend event
   // NOTE: there are transitionend AND animationend EVENTS
-  document.querySelector('#debug_img').addEventListener('click', function(event){  
-    cl('> = = = POP DEBUG INFO = = = <');
-    let debugDiv = document.createElement('div');
-    debugDiv.id = "flash_dbg";
-    debugDiv.classList.add("flash-dbg"); // add remove toggle
-    //debugDiv.innerHTML = debugInfo();
-    debugDiv.innerHTML = pc.emailVersionSummary(FORMAT_HTML)
-    document.body.appendChild(debugDiv);
-    
-    // TODO is there some event we should listen for instead of using Timeout?
-    //debugDiv.classList.toggle("flash-dbg-show");  // too soon?
-    setTimeout(()=>{debugDiv.classList.toggle("flash-dbg-show"); cl('-SHOW-');}, 5);  
-    
-    document.querySelector('#flash_dbg').addEventListener('click', function(event){
-      cl('> = = = HIDE DEBUG INFO = = = <');
-      debugDiv.addEventListener('transitionend', (event)=>{ // NOT animationend
-        debugDiv.remove();
-        //cl('-transitionEnd-');
-      });    
-      debugDiv.classList.toggle("flash-dbg-show");  // NOT animate! TRANSITION!
+  if (document.querySelector('#debug_img')) {
+    document.querySelector('#debug_img').addEventListener('click', function(event){  
+      cl('> = = = POP DEBUG INFO = = = <');
+      let targetBtn = event.target;
+      let debugDiv = document.createElement('div');
+      debugDiv.id = "flash_dbg";
+      debugDiv.classList.add("flash", "flash-dbg"); // add remove toggle
+      //debugDiv.innerHTML = debugInfo();
+      debugDiv.innerHTML = pc.emailVersionSummary(FORMAT_HTML)
+      document.body.appendChild(debugDiv);
+      targetBtn.classList.add('btn-disable');
+      
+      // TODO is there some event we should listen for instead of using Timeout?
+      //debugDiv.classList.toggle("flash-dbg-show");  // too soon?
+      setTimeout(()=>{debugDiv.classList.toggle("flash-dbg-show"); cl('-SHOW-');}, 5);  
+      
+      document.querySelector('#flash_dbg').addEventListener('click', function(event){
+        cl('> = = = HIDE DEBUG INFO = = = <');
+        debugDiv.addEventListener('transitionend', (event)=>{ // NOT animationend
+          debugDiv.remove();
+          targetBtn.classList.remove('btn-disable');
+          //cl('-transitionEnd-');
+        });    
+        debugDiv.classList.toggle("flash-dbg-show");  // NOT animate! TRANSITION!
+      });
     });
-  });
+  }
 
+  if (document.querySelector('#qr_but')) {
+    document.querySelector('#qr_but').addEventListener('click', function(event){  
+      cl('> = = = POP QR CODE = = = <');
+      let debugDiv = document.createElement('div');
+      debugDiv.id = "flash_QR";
+      debugDiv.classList.add("flash", "flash-qr"); // add remove toggle
+      //debugDiv.innerHTML = debugInfo();
+      //debugDiv.innerHTML = ""
+      document.body.appendChild(debugDiv);
+      
+      setTimeout(()=>{debugDiv.classList.add("flash-qr-show"); cl('-SHOW-');}, 5);  
+      
+      document.querySelector('#flash_QR').addEventListener('click', function(event){
+        cl('> = = = HIDE QR CODE = = = <');
+        debugDiv.addEventListener('transitionend', (event)=>{ // NOT animationend
+          debugDiv.remove();
+          //cl('-transitionEnd-');
+        });    
+        debugDiv.classList.remove("flash-qr-show");  // NOT animate! TRANSITION!
+      });
+    });  
+  }
+  
   
 });  // load END - - - - <
 
