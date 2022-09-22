@@ -609,7 +609,7 @@ function addDebugLine(text) {
 function debugInfo(args) {
   let debugText = "* * * DEBUG INFO (beta release) * * * ";
   debugText += addDebugLine('');
-  debugText += addDebugLine(`paycheck.js V00.03`);
+  debugText += addDebugLine(`paycheck.js V00.04`);
   debugText += addDebugLine('');
   debugText += addDebugLine('');
   
