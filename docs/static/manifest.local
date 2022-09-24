@@ -59,7 +59,7 @@
   "screenshots" : [
     {
       "src": "images/screenshot.png",
-      "sizes": "320x711",
+      "sizes": "320x512",
       "type": "image/webp",
       "platform": "narrow",
       "label": "Home screen"
