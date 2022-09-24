@@ -13,7 +13,7 @@
 
 const KEY_SW_INFO = 'sw_info';   // must match in paycheck.js!
 
-let verion_number_passed_in = '00.19';  // < - - - - - - - - - - - - - - - - - - - - - - //
+let verion_number_passed_in = '00.20';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${verion_number_passed_in}`;                     //
                                                                                           //
@@ -35,7 +35,7 @@ const FILES_TO_CACHE = [
   '/paycheck/static/manifest.local',
   '/paycheck/static/focus.js',
   '/paycheck/static/manifest.webmanifest',
-  '/paycheck/static/images/screenshot.jpg',
+  '/paycheck/static/images/screenshot.png',
   '/paycheck/static/app_icons/favicon-16x16.png',
   '/paycheck/static/app_icons/android-chrome-384x384.png',
   '/paycheck/static/app_icons/safari-pinned-tab.svg',

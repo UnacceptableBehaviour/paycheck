@@ -4,7 +4,7 @@ from pprint import pprint
 
 repo_name = 'paycheck'
 project_root = Path('/Users/simon/a_syllabus/lang/html_css_js/paycheck/docs')
-do_not_add_to_cache = ['service_worker.js','build_cache_file_list.py','screenshot.jpg']
+do_not_add_to_cache = ['service_worker.js','build_cache_file_list.py']
 
 # const FILES_TO_CACHE = [
 #   '/static/offline.html',

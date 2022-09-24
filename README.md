@@ -215,7 +215,7 @@ Apparently no real difference although most comments & the spec lean towards usi
   ],
   "screenshots" : [
     {
-      "src": "images/screenshot.jpg",
+      "src": "images/screenshot.png",
       "sizes": "300x667",
       "type": "image/webp",
       "platform": "narrow",
@@ -238,7 +238,7 @@ Apparently no real difference although most comments & the spec lean towards usi
 REF: https://www.apptweak.com/en/aso-blog/app-screenshot-icon-video-guidelines-ios-gp  
 Mixed browser support!  
 Should be at least 320 x 320  
-![screen shot - home screen](https://github.com/UnacceptableBehaviour/paycheck/blob/main/docs/static/images/screenshot.jpg)  
+![screen shot - home screen](https://github.com/UnacceptableBehaviour/paycheck/blob/main/docs/static/images/screenshot.png)  
 (image used 320x711)  
   
 **ID**  
