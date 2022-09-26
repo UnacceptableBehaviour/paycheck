@@ -616,7 +616,7 @@ function debugInfo(args) {
   
   // based on
   debugText += addDebugLine(`Based on year: ${settings.taxYear}`);
-  debugText += addDebugLine(`UK-ENGLAND: ${}`);
+  debugText += addDebugLine('UK-ENGLAND');
   debugText += addDebugLine('-');
   debugText += addDebugLine('TODO - update w/ bands');
   debugText += addDebugLine('-');
