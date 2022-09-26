@@ -620,7 +620,7 @@ function debugInfo(args) {
   debugText += addDebugLine('-');
   debugText += addDebugLine('TODO - update w/ bands');
   debugText += addDebugLine('-');
-  debugText += addDebugLine(`TAX_RATE_2022/3: ${TAX_RATE_2022}`);
+  debugText += addDebugLine(`TAX_RATE_2022/3: ${0.20}`);
   debugText += addDebugLine(`TAX_2022_ALLOWANCE: ${TAX_2022_ALLOWANCE}`);
   debugText += addDebugLine(`NI_RATE_2022_23: ${NI_RATE_2022_23}`);
   debugText += addDebugLine(`NI_2022_23_ALLOWANCE: ${NI_2022_23_ALLOWANCE}`);
