@@ -586,6 +586,7 @@ const CAMERA_MODE_CAPTURE = 1;
 var settings = {
   cameraMode: CAMERA_MODE_GALLERY,
   showExceptions: true,
+  taxYear: '2022-23',
 };
 var stateKey = '';
 //cl(pc);
@@ -612,6 +613,21 @@ function debugInfo(args) {
   debugText += addDebugLine(`paycheck.js V00.05 / SW 00.21`);
   debugText += addDebugLine('');
   debugText += addDebugLine('');
+  
+  // based on
+  debugText += addDebugLine(`Based on year: ${settings.taxYear}`);
+  debugText += addDebugLine(`UK-ENGLAND: ${}`);
+  debugText += addDebugLine('-');
+  debugText += addDebugLine('TODO - update w/ bands');
+  debugText += addDebugLine('-');
+  debugText += addDebugLine(`TAX_RATE_2022/3: ${TAX_RATE_2022}`);
+  debugText += addDebugLine(`TAX_2022_ALLOWANCE: ${TAX_2022_ALLOWANCE}`);
+  debugText += addDebugLine(`NI_RATE_2022_23: ${NI_RATE_2022_23}`);
+  debugText += addDebugLine(`NI_2022_23_ALLOWANCE: ${NI_2022_23_ALLOWANCE}`);
+  debugText += addDebugLine(`HOURLY_RATE_2022: ${HOURLY_RATE_2022}`);
+  debugText += addDebugLine(`HOURLY_RATE_2022_AL: ${HOURLY_RATE_AL_2022}`);
+  //debugText += addDebugLine(`PENSION_PC: ${PENSION_PC}`);
+  debugText += addDebugLine('PENSION_PC: TBC');
   
   if (KEY_SW_INFO in localStorage) {
     swInfo = localStorage.getItem(KEY_SW_INFO);
