@@ -13,7 +13,7 @@
 
 const KEY_SW_INFO = 'sw_info';   // must match in paycheck.js!
 
-let verion_number_passed_in = '00.23';  // < - - - - - - - - - - - - - - - - - - - - - - //
+let verion_number_passed_in = '00.24';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${verion_number_passed_in}`;                     //
                                                                                           //
