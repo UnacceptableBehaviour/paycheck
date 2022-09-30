@@ -9,6 +9,23 @@ function cl(args) {
 const KEY_LAST_KNOWN_STATE = 'state_key';
 const KEY_SW_INFO          = 'sw_info';   // must match in SW!
 
+// settings & configuration
+const CAMERA_MODE_GALLERY = 0;
+const CAMERA_MODE_CAPTURE = 1;
+const HOURLY_RATE_2022 = 10.10;
+var settings = {
+  cameraMode: CAMERA_MODE_GALLERY,
+  showExceptions: true,                             // show hand authorized exception in mail breakdown 
+  taxYear: '2022-23',                               // https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2022-to-2023
+  TAX_RATE_2022: 0.20,
+  TAX_2022_ALLOWANCE: 12570,                        // for 2022 to 2023 tax year: 12570-37700 @20% 37701-150000 @40% rest @45%
+  NI_RATE_2022_23: 0.1325,                          // for 2022 to 2023 tax year, returns to 0.12 after that when new tax being introduced
+  NI_2022_23_ALLOWANCE: 12584,                      // for 2022 to 2023 tax year 242/wk  . . was const NI_2022_ALLOWANCE = 9564; 
+  HOURLY_RATE_2022: HOURLY_RATE_2022,
+  HOURLY_RATE_AL_2022: HOURLY_RATE_2022 * 1.2,      // its more complicated than this - find out details TODO
+  PENSION_PC: 0.05,                                 // TODO add correct pension model
+};
+
 // +/- Days create a new Date object
 Date.prototype.copyAddDays = function(days) {
   let returnDate = new Date(this);
@@ -297,38 +314,28 @@ class PayCycle4wk{
     }    
   }
   
-  finalCalulations(){
-    // TODO - move to settings
-    // https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2022-to-2023
-    const TAX_RATE_2022 = 0.20;
-    const TAX_2022_ALLOWANCE = 12570;     // 12570-37700 @20% 37701-150000 @40% rest @45%
-    const NI_RATE_2022_23 = 0.1325;       // for 2022 to 2023 tax year, returns to 0.12 after that when new tax being introduced
-    const NI_2022_23_ALLOWANCE = 12584;   // 242/wk  . . was const NI_2022_ALLOWANCE = 9564; 
-    const HOURLY_RATE_2022 = 10.10;
-    const HOURLY_RATE_AL_2022 = HOURLY_RATE_2022 * 1.2; // its more complicated than this - find out details TODO
-    const PENSION_PC = 0.031;
-    
+  finalCalulations(){    
     // anual /4 * 52
     let hoursForCycle = parseFloat(Day.minsToHDecimalReadable(this.cycleTotalMins));
     let hoursALForCycle = parseFloat(Day.minsToHDecimalReadable(this.cycleTotalALMins));
-    this.gross4wk = (hoursForCycle * HOURLY_RATE_2022) + (hoursALForCycle * HOURLY_RATE_AL_2022);
+    this.gross4wk = (hoursForCycle * settings.HOURLY_RATE_2022) + (hoursALForCycle * settings.HOURLY_RATE_AL_2022);
     this.annualIncomeEstimate = this.gross4wk / 4 * 52;
     
     // TODO check if there's a threshold as in NI/Tax
     // TODO add model to replace flat rate
     // pension contribution - pre tax - ~3.1% use LUT
-    this.pensionContrib = this.annualIncomeEstimate * PENSION_PC / 52 * 4;
+    this.pensionContrib = this.annualIncomeEstimate * settings.PENSION_PC / 52 * 4;
     
     // NI @ 12% Allowance 9564
-    if (this.annualIncomeEstimate > NI_2022_23_ALLOWANCE) {
-      this.contribNI = (( this.annualIncomeEstimate - NI_2022_23_ALLOWANCE ) * NI_RATE_2022_23 ) / 52 * 4;
+    if (this.annualIncomeEstimate > settings.NI_2022_23_ALLOWANCE) {
+      this.contribNI = (( this.annualIncomeEstimate - settings.NI_2022_23_ALLOWANCE ) * settings.NI_RATE_2022_23 ) / 52 * 4;
     } else {
       this.contribNI = 0;
     }    
     
     // Tax @ 20% Allowance 12570
-    if (this.annualIncomeEstimate > TAX_2022_ALLOWANCE) {
-      this.incomeTax = (( this.annualIncomeEstimate - TAX_2022_ALLOWANCE ) * TAX_RATE_2022 ) / 52 * 4;
+    if (this.annualIncomeEstimate > settings.TAX_2022_ALLOWANCE) {
+      this.incomeTax = (( this.annualIncomeEstimate - settings.TAX_2022_ALLOWANCE ) * settings.TAX_RATE_2022 ) / 52 * 4;
     } else {
       this.incomeTax = 0;
     }    
@@ -581,13 +588,6 @@ class PayCycle4wk{
 
 
 var pc = new PayCycle4wk(...PayCycle4wk.nextPayDayAfterToday());
-const CAMERA_MODE_GALLERY = 0;
-const CAMERA_MODE_CAPTURE = 1;
-var settings = {
-  cameraMode: CAMERA_MODE_GALLERY,
-  showExceptions: true,
-  taxYear: '2022-23',
-};
 var stateKey = '';
 //cl(pc);
 
@@ -620,14 +620,15 @@ function debugInfo(args) {
   debugText += addDebugLine('-');
   debugText += addDebugLine('TODO - update w/ bands');
   debugText += addDebugLine('-');
-  debugText += addDebugLine(`TAX_RATE_2022/3: ${0.20}`);
-  debugText += addDebugLine(`TAX_2022_ALLOWANCE: ${TAX_2022_ALLOWANCE}`);
-  debugText += addDebugLine(`NI_RATE_2022_23: ${NI_RATE_2022_23}`);
-  debugText += addDebugLine(`NI_2022_23_ALLOWANCE: ${NI_2022_23_ALLOWANCE}`);
-  debugText += addDebugLine(`HOURLY_RATE_2022: ${HOURLY_RATE_2022}`);
-  debugText += addDebugLine(`HOURLY_RATE_2022_AL: ${HOURLY_RATE_AL_2022}`);
-  //debugText += addDebugLine(`PENSION_PC: ${PENSION_PC}`);
-  debugText += addDebugLine('PENSION_PC: TBC');
+  debugText += addDebugLine(`TAX_RATE_2022/3: ${(settings.TAX_RATE_2022 * 100).toFixed(2)}%`);
+  debugText += addDebugLine(`TAX_2022_ALLOWANCE: £${settings.TAX_2022_ALLOWANCE}`);
+  debugText += addDebugLine(`NI_RATE_2022_23: ${(settings.NI_RATE_2022_23 * 100).toFixed(2)}%`);
+  debugText += addDebugLine(`NI_2022_23_ALLOWANCE: £${settings.NI_2022_23_ALLOWANCE}`);
+  debugText += addDebugLine(`HOURLY_RATE_2022: £${(settings.HOURLY_RATE_2022).toFixed(2)}`);
+  debugText += addDebugLine(`HOURLY_RATE_2022_AL: £${settings.HOURLY_RATE_AL_2022} (fixed:TODO update model)`);
+  //debugText += addDebugLine(`PENSION_PC: ${settings.PENSION_PC}`);
+  debugText += addDebugLine(`PENSION_PC: ${(settings.PENSION_PC * 100).toFixed(2)}% (fixed:TODO update model)`);
+  debugText += addDebugLine('-');
   
   if (KEY_SW_INFO in localStorage) {
     swInfo = localStorage.getItem(KEY_SW_INFO);
