@@ -617,7 +617,7 @@ function debugInfo(args) {
   debugText += addDebugLine(`Based on year: ${settings.taxYear}`);
   debugText += addDebugLine('UK-ENGLAND');
   debugText += addDebugLine('-');
-  debugText += addDebugLine('TODO - update w/ bands');
+  debugText += addDebugLine('AL: Annual Leave');
   debugText += addDebugLine('-');
   debugText += addDebugLine(`TAX_RATE_2022/3: ${(settings.TAX_RATE_2022 * 100).toFixed(2)}%`);
   debugText += addDebugLine(`TAX_2022_ALLOWANCE: £${settings.TAX_2022_ALLOWANCE}`);
