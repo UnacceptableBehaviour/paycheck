@@ -612,7 +612,6 @@ function debugInfo(args) {
   debugText += addDebugLine('');
   debugText += addDebugLine(`paycheck.js V00.06 / SW 00.25`); // verion_number_passed_in
   debugText += addDebugLine('');
-  debugText += addDebugLine('');
   
   // based on
   debugText += addDebugLine(`Based on year: ${settings.taxYear}`);
@@ -625,9 +624,10 @@ function debugInfo(args) {
   debugText += addDebugLine(`NI_RATE_2022_23: ${(settings.NI_RATE_2022_23 * 100).toFixed(2)}%`);
   debugText += addDebugLine(`NI_2022_23_ALLOWANCE: £${settings.NI_2022_23_ALLOWANCE}`);
   debugText += addDebugLine(`HOURLY_RATE_2022: £${(settings.HOURLY_RATE_2022).toFixed(2)}`);
-  debugText += addDebugLine(`HOURLY_RATE_2022_AL: £${settings.HOURLY_RATE_AL_2022} (fixed:TODO update model)`);
-  //debugText += addDebugLine(`PENSION_PC: ${settings.PENSION_PC}`);
-  debugText += addDebugLine(`PENSION_PC: ${(settings.PENSION_PC * 100).toFixed(2)}% (fixed:TODO update model)`);
+  debugText += addDebugLine(`HOURLY_RATE_2022_AL: £${settings.HOURLY_RATE_AL_2022}`);
+  debugText += addDebugLine('(fixed:TODO update model)');
+  debugText += addDebugLine(`PENSION_PC: ${(settings.PENSION_PC * 100).toFixed(2)}%`);
+  debugText += addDebugLine('(fixed:TODO update model)');
   debugText += addDebugLine('-');
   
   if (KEY_SW_INFO in localStorage) {
