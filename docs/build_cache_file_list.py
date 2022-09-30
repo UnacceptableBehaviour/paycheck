@@ -1,10 +1,15 @@
 #! /usr/bin/env python
 from pathlib import Path
 from pprint import pprint
+import requests
+import sys
 
-repo_name = 'paycheck'
+repo_name = 'paycheck'                                    #----\
 project_root = Path('/Users/simon/a_syllabus/lang/html_css_js/paycheck/docs')
 do_not_add_to_cache = ['service_worker.js','build_cache_file_list.py']
+dev_root = f"http://127.0.0.1:8080/{repo_name}/"
+web_root = f"https://unacceptablebehaviour.github.io/{repo_name}/"
+url_root = dev_root
 
 # const FILES_TO_CACHE = [
 #   '/static/offline.html',
@@ -35,3 +40,31 @@ if len(uniq) != len(found):
         else:
             seen.add(f)
     pprint(dupes)
+
+
+def url_exists(url):
+    response = requests.get(url)
+    if url_root == web_root: print(f"{response.status_code}\t{url}")
+    return response.status_code == requests.codes.ok
+
+if '-w' in sys.argv:
+    url_root = web_root
+    
+urls_to_check = [url_root]
+for f in found:
+    filepath = f.split(f"{repo_name}/docs/")[1]
+    urls_to_check.append(f"{url_root}{filepath}")
+
+fails = []
+for u in urls_to_check:
+    if not url_exists(u):
+        fails.append(u)
+        
+if len(fails) > 0:
+    print('* * * WARNING * * *   FAILED to retrieve following URL(s)')
+    pprint(fails)
+else:
+    print('SUCCESS: all files present!')
+
+if '-h' in sys.argv or '-help' in sys.argv or '--help' in sys.argv:
+    print('-w (web) to check online existence of files')
