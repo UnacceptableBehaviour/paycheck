@@ -5,8 +5,9 @@ See app here: https://unacceptablebehaviour.github.io/paycheck/
 ## Contents  
 1. [Contents](#contents)  
 2. [AIM:](#aim)  
-3. [Create Icon](#create-icon)  
-4. [Process ICON file into platform images & manifest file:](#process-icon-file-into-platform-images--manifest-file)  
+3. [Directory structure & main files](#directory-structure--main-files)  
+4. [Create Icon](#create-icon)  
+5. [Process ICON file into platform images & manifest file:](#process-icon-file-into-platform-images--manifest-file)  
 	1. [Upload SVG (create png assets)](#upload-svg-create-png-assets)  
 	2. [Notes on Above](#notes-on-above)  
 		1. [Download zip of items](#download-zip-of-items)  
@@ -17,14 +18,37 @@ See app here: https://unacceptablebehaviour.github.io/paycheck/
 		4. [Icon paths](#icon-paths)  
 		5. [Manifest Difference between "scope": "./" vs "scope": "/"](#manifest-difference-between-scope--vs-scope-)  
 		6. [HTML - Icon/Manifest support](#html---iconmanifest-support)  
-5. [Service Worker](#service-worker)  
+6. [Service Worker](#service-worker)  
 	1. [SCOPE](#scope)  
-6. [QUESTIONS / TODO](#questions--todo)  
+7. [QUESTIONS / TODO](#questions--todo)  
 
 
 ## AIM:  
 
 PWA appshell  
+  
+## Directory structure & main files  
+```
+docs (dir)
+  index.html                # entry point
+  service_worker.js         # proxy - internet fetch intercept - cache strategies
+
+  static (dir)
+    manifest.webmanifest    # phenotype - directs the browser how to present app on device
+  
+    paycheck.css            # CSS styling
+  
+    paycheck.js             # App.main
+    focus.js                # additional function - require / import / include
+  
+    assets (dir)            # assets
+      app_icons               
+      icons
+      images
+  
+  apple-touch-icon.png      # device icon
+  favicon.ico               # device icon
+```
   
 ## Create Icon
 This will be the main icon from which all other client facing touch icons are derived.  
