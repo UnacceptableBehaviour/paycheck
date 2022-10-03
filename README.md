@@ -4,7 +4,7 @@ See app here: https://unacceptablebehaviour.github.io/paycheck/
 
 ## Contents  
 1. [Contents](#contents)  
-2. [AIM: PWA appshell](#aim-pwa-appshell)  
+2. [AIM:](#aim)  
 3. [Create Icon](#create-icon)  
 4. [Process ICON file into platform images & manifest file:](#process-icon-file-into-platform-images--manifest-file)  
 	1. [Upload SVG (create png assets)](#upload-svg-create-png-assets)  
@@ -24,6 +24,7 @@ See app here: https://unacceptablebehaviour.github.io/paycheck/
 
 ## AIM:  
 
+PWA appshell  
   
 ## Create Icon
 This will be the main icon from which all other client facing touch icons are derived.  
