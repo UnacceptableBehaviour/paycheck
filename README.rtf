@@ -6,11 +6,38 @@
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
 \f0\fs24 \cf0 # paycheck\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf0 Single page PWA to add up hours, and work out tax and NI contributions to compare to payroll.\
+Single page PWA to add up hours, and work out tax and NI contributions to compare to payroll.\
 See app here: https://unacceptablebehaviour.github.io/paycheck/\
 \
+## Contents  \
 \
+  \
+## AIM:  \
+PWA appshell  \
+  \
+## Directory structure & main files  \
+```\
+docs (dir)\
+  index.html                # entry point\
+  service_worker.js         # proxy - internet fetch intercept - cache strategies\
+\
+  static (dir)\
+    manifest.webmanifest    # phenotype - directs the browser how to present app on device\
+  \
+    paycheck.css            # CSS styling\
+  \
+    paycheck.js             # App.main\
+    focus.js                # additional function - require / import / include\
+  \
+    assets (dir)            # assets\
+      app_icons               \
+      icons\
+      images\
+  \
+  apple-touch-icon.png      # device icon\
+  favicon.ico               # device icon\
+```\
+  \
 ## Create Icon\
 This will be the main icon from which all other client facing touch icons are derived.  \
 Tool: [Inkscape](https://inkscape.org/release/inkscape-1.2.1/) Desktop, Open Source   \
