@@ -2,9 +2,11 @@
 .DS_Store
 .AppleDouble
 
-scratch/
 paycheck
 
 # Logs
 logs
 *.log
+scratch/
+venv/
+__pycache__/
