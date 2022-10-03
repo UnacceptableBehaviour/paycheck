@@ -2,7 +2,29 @@
 Single page PWA to add up hours, and work out tax and NI contributions to compare to payroll.
 See app here: https://unacceptablebehaviour.github.io/paycheck/
 
+## Contents  
+1. [Contents](#contents)  
+2. [AIM: PWA appshell](#aim-pwa-appshell)  
+3. [Create Icon](#create-icon)  
+4. [Process ICON file into platform images & manifest file:](#process-icon-file-into-platform-images--manifest-file)  
+	1. [Upload SVG (create png assets)](#upload-svg-create-png-assets)  
+	2. [Notes on Above](#notes-on-above)  
+		1. [Download zip of items](#download-zip-of-items)  
+	3. [Adding Manifest](#adding-manifest)  
+		1. [Difference manifest.json vs manifest.webmanifest vs site.webmanifest](#difference-manifestjson-vs-manifestwebmanifest-vs-sitewebmanifest)  
+		2. [THE MANIFEST](#the-manifest)  
+		3. [FIELDS](#fields)  
+		4. [Icon paths](#icon-paths)  
+		5. [Manifest Difference between "scope": "./" vs "scope": "/"](#manifest-difference-between-scope--vs-scope-)  
+		6. [HTML - Icon/Manifest support](#html---iconmanifest-support)  
+5. [Service Worker](#service-worker)  
+	1. [SCOPE](#scope)  
+6. [QUESTIONS / TODO](#questions--todo)  
 
+
+## AIM:  
+
+  
 ## Create Icon
 This will be the main icon from which all other client facing touch icons are derived.  
 Tool: [Inkscape](https://inkscape.org/release/inkscape-1.2.1/) Desktop, Open Source   
