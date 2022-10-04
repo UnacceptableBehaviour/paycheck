@@ -1,21 +1,26 @@
 #! /usr/bin/env python
+
+# print 
+
 from pathlib import Path
 from pprint import pprint
 import requests
 import sys
 
-repo_name = 'paycheck'                                    #----\
+user_name = 'unacceptablebehaviour'
+repo_name = 'paycheck' # >--------------------------------------\
 project_root = Path('/Users/simon/a_syllabus/lang/html_css_js/paycheck/docs')
-do_not_add_to_cache = ['service_worker.js','build_cache_file_list.py']
+
 dev_root = f"http://127.0.0.1:8080/{repo_name}/"
-web_root = f"https://unacceptablebehaviour.github.io/{repo_name}/"
+web_root = f"https://{user_name}.github.io/{repo_name}/"
 url_root = dev_root
+
+do_not_add_to_cache = ['service_worker.js','build_cache_file_list.py']
 
 # const FILES_TO_CACHE = [
 #   '/static/offline.html',
 # ];
     
-#prepend = ''
 prepend = f"/{repo_name}"
 
 print(f"const FILES_TO_CACHE = [\n  '/',\n  '/{repo_name}/',")
@@ -49,6 +54,17 @@ def url_exists(url):
 
 if '-w' in sys.argv:
     url_root = web_root
+
+try:
+    print(f"Connecting to: {url_root} <")
+    url_exists(url_root)
+except requests.exceptions.ConnectionError:
+    print(f"USE option -w to connect to web URL:{web_root}")
+    sys.exit(f"Refused to connect to: {url_root} < Is server up?")
+except BaseException as err:
+    print(f"Unexpected {err=}\n{type(err)=}")
+    #raise
+    sys.exit(f"Failed trying to connect: {url_root}")
     
 urls_to_check = [url_root]
 for f in found:
