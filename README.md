@@ -11,16 +11,16 @@ See app here: https://unacceptablebehaviour.github.io/paycheck/
 	1. [Upload SVG (create png assets)](#upload-svg-create-png-assets)  
 	2. [Notes on Above](#notes-on-above)  
 		1. [Download zip of items](#download-zip-of-items)  
-	3. [Adding Manifest](#adding-manifest)  
+6. [Adding Manifest](#adding-manifest)  
 		1. [Difference manifest.json vs manifest.webmanifest vs site.webmanifest](#difference-manifestjson-vs-manifestwebmanifest-vs-sitewebmanifest)  
 		2. [THE MANIFEST](#the-manifest)  
 		3. [FIELDS](#fields)  
 		4. [Icon paths](#icon-paths)  
 		5. [Manifest Difference between "scope": "./" vs "scope": "/"](#manifest-difference-between-scope--vs-scope-)  
 		6. [HTML - Icon/Manifest support](#html---iconmanifest-support)  
-6. [Service Worker](#service-worker)  
+7. [Service Worker](#service-worker)  
 	1. [SCOPE](#scope)  
-7. [QUESTIONS / TODO](#questions--todo)  
+8. [QUESTIONS / TODO](#questions--todo)  
 
 
 ## AIM:  
@@ -179,7 +179,7 @@ apple-touch-icon.png in root: ```paycheck/docs```
 **REF:** Maskable Icons https://web.dev/maskable-icon/#what  
 **REF:** https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs  
   
-### Adding Manifest
+## Adding Manifest
 REF to spec: [W3 Web Application Manifest](https://w3c.github.io/manifest/#web-application-manifest). 
 [Ref Mozilla Clear Concise](https://developer.mozilla.org/en-US/docs/Web/Manifest).  
   
@@ -209,53 +209,53 @@ Apparently no real difference although most comments & the spec lean towards usi
   "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results.",
   "icons": [
     {
-      "src": "app_icons/android-chrome-512x512.png?v=0.01",
+      "src": "app_icons/payCheckIconMain512x512_sqr.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "app_icons/android-chrome-36x36.png?v=0.01",
+      "src": "app_icons/android-chrome-36x36.png",
       "sizes": "36x36",
       "type": "image/png"
     },
     {
-      "src": "app_icons/android-chrome-48x48.png?v=0.01",
+      "src": "app_icons/android-chrome-48x48.png",
       "sizes": "48x48",
       "type": "image/png"
     },
     {
-      "src": "app_icons/android-chrome-72x72.png?v=0.01",
+      "src": "app_icons/android-chrome-72x72.png",
       "sizes": "72x72",
       "type": "image/png"
     },
     {
-      "src": "app_icons/android-chrome-96x96.png?v=0.01",
+      "src": "app_icons/android-chrome-96x96.png",
       "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "app_icons/android-chrome-144x144.png?v=0.01",
+      "src": "app_icons/android-chrome-144x144.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "app_icons/android-chrome-192x192.png?v=0.01",
+      "src": "app_icons/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "app_icons/android-chrome-256x256.png?v=0.01",
+      "src": "app_icons/android-chrome-256x256.png",
       "sizes": "256x256",
       "type": "image/png"
     },
     {
-      "src": "app_icons/android-chrome-384x384.png?v=0.01",
+      "src": "app_icons/android-chrome-384x384.png",
       "sizes": "384x384",
       "type": "image/png"
     },
     {
-      "src": "app_icons/android-chrome-512x512.png?v=0.01",
+      "src": "app_icons/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     } 
@@ -263,7 +263,7 @@ Apparently no real difference although most comments & the spec lean towards usi
   "screenshots" : [
     {
       "src": "images/screenshot.png",
-      "sizes": "300x667",
+      "sizes": "320x512",
       "type": "image/webp",
       "platform": "narrow",
       "label": "Home screen"
@@ -271,8 +271,8 @@ Apparently no real difference although most comments & the spec lean towards usi
   ],  
   "theme_color": "#008100",
   "background_color": "#008100",
-  "scope": "https://unacceptablebehaviour.github.io/paycheck/",
-  "start_url": "https://unacceptablebehaviour.github.io/paycheck/",
+  "scope": "/paycheck/",
+  "start_url": "/paycheck/index.html",
   "display": "standalone",
   "orientation": "portrait" 
 }
