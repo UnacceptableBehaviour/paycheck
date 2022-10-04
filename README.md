@@ -10,7 +10,6 @@ See app here: https://unacceptablebehaviour.github.io/paycheck/
 5. [Process ICON file into platform images & manifest file:](#process-icon-file-into-platform-images--manifest-file)  
 	1. [Upload SVG (create png assets)](#upload-svg-create-png-assets)  
 	2. [Notes on Above](#notes-on-above)  
-		1. [Download zip of items](#download-zip-of-items)  
 6. [Adding Manifest](#adding-manifest)  
 		1. [Difference manifest.json vs manifest.webmanifest vs site.webmanifest](#difference-manifestjson-vs-manifestwebmanifest-vs-sitewebmanifest)  
 		2. [THE MANIFEST](#the-manifest)  
@@ -101,18 +100,24 @@ Use colour: #008100
 Declare assets in ```browserconfig.xml```  
 * SML square  
 * MED square  
-Linked to in HTML: ```<meta name="msapplication-config" content="static/app_icons/browserconfig.xml">```  
+Linked to in index.HTML: ```<meta name="msapplication-config" content="static/assets/app_icons/browserconfig.xml">```  
   
 **macOS Safari**  
 Turn image into monochrome (this one already is)  
 Theme colour #008100  
   
 **Favicon Generator Options**  
-Path: /static/app_icons
-http://example.com/favicon.ico?V=0.01  
+Path: /static/assets/app_icons
+http://example.com/favicon.ico  
 Compression:Default  
 AppName: payCheck  
 Additional files: README.md, html_code.html 
+  
+**Download zip of items**  
+
+Image files in ```paycheck/docs/static/assets/app_icons```  
+favicon.ico in root: ```paycheck/docs```  
+apple-touch-icon.png in root: ```paycheck/docs```  
   
 ### Notes on Above 
 This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16]  (https://realfavicongenerator.net/change_log#v0.16)  
@@ -140,41 +145,31 @@ Getting rid of annoying little white fleck on the edge, combination of setting b
 HTML points to wrong manifest file!  
 ```
 IS
-<link rel="manifest" href="static/app_icons/site.webmanifest?v=0.01">
+<link rel="manifest" href="static/app_icons/site.webmanifest">
 SB
-<link rel="manifest" href="static/manifest.webmanifest?v=0.01">
+<link rel="manifest" href="static/manifest.webmanifest">
 ```
-    
+   
 **WARNING**  
-Don't for get to run ```build_cache_file_list.py``` and update SW cache list!  
+Don't forget to run ```build_cache_file_list.py``` and update SW cache list & version number!  
   
 **WARNING**  
+Missing from HTML includes (flagged by Lighthouse):
 ```
 <meta name="viewport" content="width=device-width, initial-scale=1">
 ```
-Missing from HTML includes
-  
-  
   
 Checking the favicon version adds version to a lot of things!  
 ```
-CHECK: http://example.com/favicon.ico?V=0.01
-<link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png?v=0.01">
-<link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png?v=0.01">
-<link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png?v=0.01">
-<link rel="manifest" href="/static/icons/site.webmanifest?v=0.01">
-<link rel="mask-icon" href="/static/icons/safari-pinned-tab.svg?v=0.01" color="#008100">
-<link rel="shortcut icon" href="/static/icons/favicon.ico?v=0.01">
-<meta name="msapplication-config" content="/static/icons/browserconfig.xml?v=0.01">
+CHECK: http://example.com/favicon.ico
+<link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png">
+<link rel="manifest" href="/static/icons/site.webmanifest">
+<link rel="mask-icon" href="/static/icons/safari-pinned-tab.svg" color="#008100">
+<link rel="shortcut icon" href="/static/icons/favicon.ico">
+<meta name="msapplication-config" content="/static/icons/browserconfig.xml">
 ```
-
-#### Download zip of items
-Experiments in ```/paycheck/scratch```  
-Prototype 1 in ```/paycheck/scratch/realfavicongenerator.net.2-1```  
-Prototype 2 in ```/paycheck/scratch/20220903_favicon_package_v0.16```  
-Image files in ```paycheck/docs/static/app_icons```  
-favicon.ico in root: ```paycheck/docs```  
-apple-touch-icon.png in root: ```paycheck/docs```  
   
 **REF:** Maskable Icons https://web.dev/maskable-icon/#what  
 **REF:** https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs  
@@ -296,9 +291,9 @@ If not present 'start_url' is used instead. (So NOT critical, yet)
 
 #### Icon paths
 Icon path are **relative to manifest file**   
-GOOD: ```"src": "./app_icons/android-chrome-192x192.png?v=0.01",```
+GOOD: ```"src": "./app_icons/android-chrome-192x192.png",```
   
-BAD: ```"src": "paycheck/static/app_icons/android-chrome-512x512.png?v=0.01",```
+BAD: ```"src": "paycheck/static/app_icons/android-chrome-512x512.png",```
   
 #### Manifest Difference between "scope": "./" vs "scope": "/"
 The scope member is a string that defines the navigation scope of this web application's application context. It restricts what web pages can be viewed while the manifest is applied. If the user **navigates outside** the scope, it **reverts to a normal web page inside a browser tab or window**.
@@ -321,18 +316,18 @@ SEE Service Worker for more on scope.
 Insert the following code in the `head` section of html pages:  
 **NOTE: manifest renamed & moved from that generated by tool!**
 ```
-<link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png?v=0.01">
-<link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png?v=0.01">
-<link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png?v=0.01">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png">
 
-**<link rel="manifest" href="/static/manifest.webmanifest?v=0.01">**
+**<link rel="manifest" href="/static/manifest.webmanifest">**
 
-<link rel="mask-icon" href="/static/icons/safari-pinned-tab.svg?v=0.01" color="#008100">
-<link rel="shortcut icon" href="/static/icons/favicon.ico?v=0.01">
+<link rel="mask-icon" href="/static/icons/safari-pinned-tab.svg" color="#008100">
+<link rel="shortcut icon" href="/static/icons/favicon.ico">
 <meta name="apple-mobile-web-app-title" content="payCheck">
 <meta name="application-name" content="payCheck">
 <meta name="msapplication-TileColor" content="#008100">
-<meta name="msapplication-config" content="/static/icons/browserconfig.xml?v=0.01">
+<meta name="msapplication-config" content="/static/icons/browserconfig.xml">
 <meta name="theme-color" content="#008100">    
 ```
   
