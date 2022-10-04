@@ -135,9 +135,10 @@ Getting rid of annoying little white fleck on the edge, combination of setting b
 "background_color": "#ffffff", SB #008100  
   
   
-**MISSING:**  
-"id": "/paycheck/", 
-"scope": "https://unacceptablebehaviour.github.io/paycheck/",  
+**MISSING or WRONG:**  
+"id": "/paycheck/",  
+"scope": "/paycheck/",  
+"start_url": "/paycheck/index.html",  
 "orientation": "portrait",  
 "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results."  
   
@@ -180,8 +181,9 @@ REF to spec: [W3 Web Application Manifest](https://w3c.github.io/manifest/#web-a
   
 #### Difference manifest.json vs manifest.webmanifest vs site.webmanifest
 Apparently no real difference although most comments & the spec lean towards using ```manifest.webmanifest```.  
+The important thing to note is it's in JSON format. Lint it here: https://jsonlint.com/
   
-**Include is using the following:**  
+**Include manifest from index.html using the following:**  
 ```
 <!-- Startup configuration -->
 <link rel="manifest" href="manifest.webmanifest">
@@ -194,7 +196,7 @@ Apparently no real difference although most comments & the spec lean towards usi
   
   
 #### THE MANIFEST  
-*REF:* https://www.w3.org/TR/appmanifest/  
+**REF:** [Ref Mozilla Clear Concise](https://developer.mozilla.org/en-US/docs/Web/Manifest).  
   
 ```
 {
@@ -290,10 +292,10 @@ If not present 'start_url' is used instead. (So NOT critical, yet)
   
 
 #### Icon paths
-Icon path are **relative to manifest file**   
-GOOD: ```"src": "./app_icons/android-chrome-192x192.png",```
+Icon paths are **relative to manifest file**   
+GOOD: ```"src": "./assets/app_icons/android-chrome-192x192.png",```
   
-BAD: ```"src": "paycheck/static/app_icons/android-chrome-512x512.png",```
+BAD: ```"src": "paycheck/static/assets/app_icons/android-chrome-512x512.png",```
   
 #### Manifest Difference between "scope": "./" vs "scope": "/"
 The scope member is a string that defines the navigation scope of this web application's application context. It restricts what web pages can be viewed while the manifest is applied. If the user **navigates outside** the scope, it **reverts to a normal web page inside a browser tab or window**.
