@@ -835,7 +835,7 @@ window.addEventListener('load',function(){
   if (document.querySelector('#qr_but')) {
     document.querySelector('#qr_but').addEventListener('click', function(event){  
       //displayFlash(event, id, classSpecific, classShow, innerHTML='')
-      let img = '<img src="static/images/QR-code-w-icon-noShort.png">';
+      let img = '<img src="static/assets/images/QR-code-w-icon-noShort.png">';
       displayFlash(event, 'flash_QR', ['flash-qr'], 'flash-qr-show', img);
     });  
   }

@@ -10,3 +10,6 @@ logs
 scratch/
 venv/
 __pycache__/
+create_TOC_for_md.py
+install_createTOC.sh
+render.py

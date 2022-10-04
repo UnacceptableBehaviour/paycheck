@@ -18,24 +18,24 @@ PWA appshell  \
 ## Directory structure & main files  \
 ```\
 docs (dir)\
-  index.html                # entry point\
-  service_worker.js         # proxy - internet fetch intercept - cache strategies\
+    index.html                # entry point\
+    service_worker.js         # proxy - internet fetch intercept - cache strategies\
 \
-  static (dir)\
-    manifest.webmanifest    # phenotype - directs the browser how to present app on device\
-  \
-    paycheck.css            # CSS styling\
-  \
-    paycheck.js             # App.main\
-    focus.js                # additional function - require / import / include\
-  \
-    assets (dir)            # assets\
-      app_icons               \
-      icons\
-      images\
-  \
-  apple-touch-icon.png      # device icon\
-  favicon.ico               # device icon\
+    static (dir)\
+        manifest.webmanifest  # phenotype - directs the browser how to present app on device\
+\
+        paycheck.css          # CSS styling\
+\
+        paycheck.js           # App.main\
+        focus.js              # additional function - require / import / include\
+\
+        assets (dir)          # assets\
+            app_icons               \
+            icons\
+            images\
+\
+    apple-touch-icon.png      # device icon\
+    favicon.ico               # device icon\
 ```\
   \
 ## Create Icon\
@@ -167,7 +167,7 @@ apple-touch-icon.png in root: ```paycheck/docs```  \
 **REF:** Maskable Icons https://web.dev/maskable-icon/#what  \
 **REF:** https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs  \
   \
-### Adding Manifest\
+## Adding Manifest\
 REF to spec: [W3 Web Application Manifest](https://w3c.github.io/manifest/#web-application-manifest). \
 [Ref Mozilla Clear Concise](https://developer.mozilla.org/en-US/docs/Web/Manifest).  \
   \
@@ -197,53 +197,53 @@ Apparently no real difference although most comments & the spec lean towards usi
   "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results.",\
   "icons": [\
     \{\
-      "src": "app_icons/android-chrome-512x512.png?v=0.01",\
+      "src": "app_icons/payCheckIconMain512x512_sqr.png",\
       "sizes": "512x512",\
       "type": "image/png",\
       "purpose": "maskable"\
     \},\
     \{\
-      "src": "app_icons/android-chrome-36x36.png?v=0.01",\
+      "src": "app_icons/android-chrome-36x36.png",\
       "sizes": "36x36",\
       "type": "image/png"\
     \},\
     \{\
-      "src": "app_icons/android-chrome-48x48.png?v=0.01",\
+      "src": "app_icons/android-chrome-48x48.png",\
       "sizes": "48x48",\
       "type": "image/png"\
     \},\
     \{\
-      "src": "app_icons/android-chrome-72x72.png?v=0.01",\
+      "src": "app_icons/android-chrome-72x72.png",\
       "sizes": "72x72",\
       "type": "image/png"\
     \},\
     \{\
-      "src": "app_icons/android-chrome-96x96.png?v=0.01",\
+      "src": "app_icons/android-chrome-96x96.png",\
       "sizes": "96x96",\
       "type": "image/png"\
     \},\
     \{\
-      "src": "app_icons/android-chrome-144x144.png?v=0.01",\
+      "src": "app_icons/android-chrome-144x144.png",\
       "sizes": "144x144",\
       "type": "image/png"\
     \},\
     \{\
-      "src": "app_icons/android-chrome-192x192.png?v=0.01",\
+      "src": "app_icons/android-chrome-192x192.png",\
       "sizes": "192x192",\
       "type": "image/png"\
     \},\
     \{\
-      "src": "app_icons/android-chrome-256x256.png?v=0.01",\
+      "src": "app_icons/android-chrome-256x256.png",\
       "sizes": "256x256",\
       "type": "image/png"\
     \},\
     \{\
-      "src": "app_icons/android-chrome-384x384.png?v=0.01",\
+      "src": "app_icons/android-chrome-384x384.png",\
       "sizes": "384x384",\
       "type": "image/png"\
     \},\
     \{\
-      "src": "app_icons/android-chrome-512x512.png?v=0.01",\
+      "src": "app_icons/android-chrome-512x512.png",\
       "sizes": "512x512",\
       "type": "image/png"\
     \} \
@@ -251,7 +251,7 @@ Apparently no real difference although most comments & the spec lean towards usi
   "screenshots" : [\
     \{\
       "src": "images/screenshot.png",\
-      "sizes": "300x667",\
+      "sizes": "320x512",\
       "type": "image/webp",\
       "platform": "narrow",\
       "label": "Home screen"\
@@ -259,8 +259,8 @@ Apparently no real difference although most comments & the spec lean towards usi
   ],  \
   "theme_color": "#008100",\
   "background_color": "#008100",\
-  "scope": "https://unacceptablebehaviour.github.io/paycheck/",\
-  "start_url": "https://unacceptablebehaviour.github.io/paycheck/",\
+  "scope": "/paycheck/",\
+  "start_url": "/paycheck/index.html",\
   "display": "standalone",\
   "orientation": "portrait" \
 \}\
