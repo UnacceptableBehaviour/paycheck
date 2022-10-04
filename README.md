@@ -30,24 +30,24 @@ PWA appshell
 ## Directory structure & main files  
 ```
 docs (dir)
-  index.html                # entry point
-  service_worker.js         # proxy - internet fetch intercept - cache strategies
+    index.html                # entry point
+    service_worker.js         # proxy - internet fetch intercept - cache strategies
 
-  static (dir)
-    manifest.webmanifest    # phenotype - directs the browser how to present app on device
-  
-    paycheck.css            # CSS styling
-  
-    paycheck.js             # App.main
-    focus.js                # additional function - require / import / include
-  
-    assets (dir)            # assets
-      app_icons               
-      icons
-      images
-  
-  apple-touch-icon.png      # device icon
-  favicon.ico               # device icon
+    static (dir)
+        manifest.webmanifest  # phenotype - directs the browser how to present app on device
+
+        paycheck.css          # CSS styling
+
+        paycheck.js           # App.main
+        focus.js              # additional function - require / import / include
+
+        assets (dir)          # assets
+            app_icons               
+            icons
+            images
+
+    apple-touch-icon.png      # device icon
+    favicon.ico               # device icon
 ```
   
 ## Create Icon
