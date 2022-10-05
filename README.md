@@ -282,7 +282,7 @@ The important thing to note is it's in JSON format. Lint it here: https://jsonli
 REF: https://www.apptweak.com/en/aso-blog/app-screenshot-icon-video-guidelines-ios-gp  
 Mixed browser support!  
 Should be at least 320 x 320  
-![screen shot - home screen](https://github.com/UnacceptableBehaviour/paycheck/blob/main/docs/static/images/screenshot.png)  
+![screen shot - home screen](https://github.com/UnacceptableBehaviour/paycheck/blob/main/docs/static/assets/images/screenshot.png)  
 (image used 320x711)  
   
 **ID**  
