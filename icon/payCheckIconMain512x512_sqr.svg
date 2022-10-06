@@ -28,7 +28,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
      inkscape:cx="384.28571"
-     inkscape:cy="560"
+     inkscape:cy="445.71429"
      inkscape:document-units="px"
      inkscape:current-layer="layer3"
      inkscape:document-rotation="0"
@@ -37,7 +37,7 @@
      width="512px"
      inkscape:window-width="1252"
      inkscape:window-height="755"
-     inkscape:window-x="41"
+     inkscape:window-x="21"
      inkscape:window-y="508"
      inkscape:window-maximized="0" />
   <metadata
@@ -70,20 +70,8 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
-    <circle
-       style="fill:#008000;stroke-width:0.264583"
-       id="path14"
-       sodipodi:type="arc"
-       sodipodi:cx="-92.982147"
-       sodipodi:cy="198.05952"
-       sodipodi:rx="66.523811"
-       sodipodi:ry="66.523811"
-       sodipodi:start="0"
-       sodipodi:end="6.2783158"
-       sodipodi:open="true"
-       sodipodi:arc-type="arc"
-       d="m -26.458336,198.05952 a 66.523811,66.523811 0 0 1 -66.442827,66.52377 66.523811,66.523811 0 0 1 -66.604597,-66.3618 66.523811,66.523811 0 0 1 66.28066,-66.68533 66.523811,66.523811 0 0 1 66.765975,66.19943" />
+     id="layer1"
+     style="display:inline">
     <rect
        style="fill:#ffffff;stroke-width:0.264583"
        id="rect130-5"
@@ -102,7 +90,8 @@
   <g
      inkscape:groupmode="layer"
      id="layer3"
-     inkscape:label="Layer 3">
+     inkscape:label="Layer 3"
+     style="display:inline">
     <g
        id="g31"
        transform="translate(2.2678598)">
@@ -146,8 +135,4 @@
          y="90.060463" />
     </g>
   </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Layer 2" />
 </svg>
