@@ -13,7 +13,7 @@
 
 const KEY_SW_INFO = 'sw_info';   // must match in paycheck.js!
 
-let verion_number_passed_in = '00.28';  // < - - - - - - - - - - - - - - - - - - - - - - //
+let verion_number_passed_in = '00.29';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${verion_number_passed_in}`;                     //
                                                                                           //
@@ -36,30 +36,14 @@ const FILES_TO_CACHE = [
   '/paycheck/static/manifest.webmanifest',
   '/paycheck/static/assets/images/QR-code-w-icon-noShort.png',
   '/paycheck/static/assets/images/screenshot.png',
-  '/paycheck/static/assets/app_icons/favicon-16x16.png',
-  '/paycheck/static/assets/app_icons/android-chrome-384x384.png',
-  '/paycheck/static/assets/app_icons/safari-pinned-tab.svg',
   '/paycheck/static/assets/app_icons/favicon.ico',
-  '/paycheck/static/assets/app_icons/apple-touch-icon-120x120.png',
-  '/paycheck/static/assets/app_icons/android-chrome-192x192.png',
+  '/paycheck/static/assets/app_icons/payCheckIcon-192.png',
   '/paycheck/static/assets/app_icons/apple-touch-icon.png',
-  '/paycheck/static/assets/app_icons/android-chrome-256x256.png',
   '/paycheck/static/assets/app_icons/mstile-70x70.png',
-  '/paycheck/static/assets/app_icons/apple-touch-icon-152x152.png',
-  '/paycheck/static/assets/app_icons/apple-touch-icon-180x180.png',
-  '/paycheck/static/assets/app_icons/payCheckIconMain512x512.svg',
-  '/paycheck/static/assets/app_icons/apple-touch-icon-76x76.png',
-  '/paycheck/static/assets/app_icons/android-chrome-512x512.png',
+  '/paycheck/static/assets/app_icons/payCheckIcon-512.png',
+  '/paycheck/static/assets/app_icons/payCheckIcon.svg',
   '/paycheck/static/assets/app_icons/mstile-150x150.png',
-  '/paycheck/static/assets/app_icons/android-chrome-36x36.png',
-  '/paycheck/static/assets/app_icons/android-chrome-96x96.png',
-  '/paycheck/static/assets/app_icons/android-chrome-72x72.png',
-  '/paycheck/static/assets/app_icons/apple-touch-icon-60x60.png',
   '/paycheck/static/assets/app_icons/browserconfig.xml',
-  '/paycheck/static/assets/app_icons/payCheckIconMain512x512_sqr.png',
-  '/paycheck/static/assets/app_icons/android-chrome-48x48.png',
-  '/paycheck/static/assets/app_icons/favicon-32x32.png',
-  '/paycheck/static/assets/app_icons/android-chrome-144x144.png',
   '/paycheck/static/assets/icons/hol-right.png',
   '/paycheck/static/assets/icons/debug.svg',
   '/paycheck/static/assets/icons/email-svgrepo-com.png',

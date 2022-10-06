@@ -610,7 +610,7 @@ function addDebugLine(text) {
 function debugInfo(args) {
   let debugText = "* * * DEBUG INFO (beta release) * * * ";
   debugText += addDebugLine('');
-  debugText += addDebugLine(`paycheck.js V00.06 / SW 00.28`); // verion_number_passed_in
+  debugText += addDebugLine(`paycheck.js V00.07 / SW 00.29`); // verion_number_passed_in
   debugText += addDebugLine('');
   
   // based on
