@@ -1,6 +1,14 @@
 #! /usr/bin/env python
 
-# print 
+# cd into paycheck/docs
+# run build_cache_file_list.py
+# it will generate the FILES_TO_CACHE array / list
+# copy paste it into SW
+
+# if the local server is runing it will check if all files are present
+# cd paycheck/
+# run http-server -c-1
+# re-run build_cache_file_list.py
 
 from pathlib import Path
 from pprint import pprint
