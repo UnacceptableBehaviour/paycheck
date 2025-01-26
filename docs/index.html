@@ -8,7 +8,7 @@
   <link rel="manifest" href="static/manifest.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results."> <!--script should update this fomr manifest-->
-  </script>
+
   <!--icon PWA inserts START -->
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="static/assets/app_icons/apple-touch-icon.png">  
@@ -40,348 +40,348 @@
 
 <body style="font-family:'Arial';">
   <div class="paycheck-container font-portrait">
-    <div id='ct_paycycle_summary' class='item summary'>
-      <div class='flexrow-button-header' id='pay_day'>
-        <span class='flexrow-button-header-text title-text' id='pay_day_js'>js_calc</span>              
-        <button id='but_4wk_bak' class='lr-button lrbl flexrow-button-header-button'><img src='static/assets/icons/hol-left.svg' alt='Back 4 weeks'></button>
-        <button id='but_4wk_fwd' class='lr-button lrbr flexrow-button-header-button'><img src='static/assets/icons/hol-right.svg' alt='Forward 4 weeks'></button>
+    <div id="ct_paycycle_summary" class="item summary">
+      <div class="flexrow-button-header" id="pay_day">
+        <span class="flexrow-button-header-text title-text" id="pay_day_js">js_calc</span>              
+        <button id="but_4wk_bak" class="lr-button lrbl flexrow-button-header-button"><img src="static/assets/icons/hol-left.svg" alt="Back 4 weeks"></button>
+        <button id="but_4wk_fwd" class="lr-button lrbr flexrow-button-header-button"><img src="static/assets/icons/hol-right.svg" alt="Forward 4 weeks"></button>
       </div>
       
-      <div class='wk-info flexrow-container'>
-        <div class='flexrow-item'>
+      <div class="wk-info flexrow-container">
+        <div class="flexrow-item">
           <form action="" method="">
             <label for="tax_code">Select tax code:</label>
             <input list="tax_codes" name="tax_code" id="tax_code" placeholder="1257L">
             <datalist id="tax_codes">
-              <option value="1257L">
-              <option value="Add new code">
+              <option value="1257L"></option>
+              <option value="Add new code"></option>
             </datalist>
             <!--<input type="submit">-->
           </form>        
         </div>
-        <span class='flexrow-middle-space space-box'></span>
-        <span class='flexrow-item' id='wk_range_dates_js'>js_calc</span>
+        <span class="flexrow-middle-space space-box"></span>
+        <span class="flexrow-item" id="wk_range_dates_js">js_calc</span>
       </div>
             
-      <div id='wk_range'>
+      <div id="wk_range">
         <span>Week Nos: </span>
-        <span id='wk_range_js'>js_calc</span>        
+        <span id="wk_range_js">js_calc</span>        
       </div>
       
       
     </div>
 
-    <div id='ct_daily_hours' class='item daily-hours week-day-font'>
-      <div id='wk_no' class='flexrow-button-header'>
-        <div class='flexrow-button-header-text'>
-          <span>WK:</span><span id='wk_no_js'>js_calc </span>
+    <div id="ct_daily_hours" class="item daily-hours week-day-font">
+      <div id="wk_no" class="flexrow-button-header">
+        <div class="flexrow-button-header-text">
+          <span>WK:</span><span id="wk_no_js">js_calc </span>
         </div>
-        <button id='but_wk_no_bak' class="lr-button lrbl flexrow-button-header-button"><img src='static/assets/icons/hol-left.svg' alt='Back 1 week'></button>
-        <button id='but_wk_no_fwd' class="lr-button lrbr flexrow-button-header-button"><img src='static/assets/icons/hol-right.svg' alt='Forward 1 week'></button>
+        <button id="but_wk_no_bak" class="lr-button lrbl flexrow-button-header-button"><img src="static/assets/icons/hol-left.svg" alt="Back 1 week"></button>
+        <button id="but_wk_no_fwd" class="lr-button lrbr flexrow-button-header-button"><img src="static/assets/icons/hol-right.svg" alt="Forward 1 week"></button>
       </div>
 
-      <table class='hrs-table' id="example">
+      <table class="hrs-table" id="example">
         <thead>
-            <tr class='hrs-head'>
-                <th class='col1'>Day</th>
-                <th class='col2'>Date</th>
-                <th class='col3'>IN</th>
-                <th class='col4'>Brk?</th>
-                <th class='col5'>OUT</th>
-                <th class='col6'>Hrs</th>
-                <th class='col7'>DHrs</th>
+            <tr class="hrs-head">
+                <th class="col1">Day</th>
+                <th class="col2">Date</th>
+                <th class="col3">IN</th>
+                <th class="col4">Brk?</th>
+                <th class="col5">OUT</th>
+                <th class="col6">Hrs</th>
+                <th class="col7">DHrs</th>
             </tr>
         </thead>
         <tbody>
-            <tr class='hrs-row'>
-              <td class='col1' id='sun_day'>Sun</td>
-              <td class='col2' id='sun_date_js' class='td-date'>js_calc</td>
-              <td class='col3'>                
+            <tr class="hrs-row">
+              <td class="col1" id="sun_day">Sun</td>
+              <td class="col2 td-date" id="sun_date_js">js_calc</td>
+              <td class="col3">                
                 <label class="imgSelect">
-                  <span id='sun_in'></span>
+                  <span id="sun_in"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <!--<td class='col'><input type="text" pattern="[0-9]{1,3}" id="tue_break" name="tue_break" value="30"></td>-->
-              <td class='col4'>
-                <input id="sun_break" class="break" list="break-times" name="break-len" placeholder="30">
-                  <datalist id="break-times">
-                    <option value="00">
-                    <option value="15">
-                    <option value="30">
-                    <option value="45">
-                    <option value="60">
-                    <option value="75">
-                    <option value="90">
-                    <option value="AL">
+              <!--<td class="col"><input type="text" pattern="[0-9]{1,3}" id="tue_break" name="tue_break" value="30"></td>-->
+              <td class="col4">
+                <input id="sun_break" class="break" list="break-times-sun" name="break-len" placeholder="30">
+                  <datalist id="break-times-sun">
+                    <option value="AL"></option>
+                    <option value="00"></option>
+                    <option value="15"></option>
+                    <option value="30"></option>
+                    <option value="45"></option>
+                    <option value="60"></option>
+                    <option value="75"></option>
+                    <option value="90"></option>
                 </datalist>
               </td>  
-              <td class='col5'>                
+              <td class="col5">                
                 <label class="imgSelect">
-                  <span id='sun_out'></span>
+                  <span id="sun_out"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col6'><span id="sun_hrs" name="sun_hrs" value=""></span></td>
-              <td class='col7'><span id="sun_dhrs" name="sun_dhrs" value=""></span></td>
+              <td class="col6"><span id="sun_hrs" name="sun_hrs" value=""></span></td>
+              <td class="col7"><span id="sun_dhrs" name="sun_dhrs" value=""></span></td>
             </tr>
-            <tr class='hrs-row'>
-              <td class='col1' id='mon_day'>Mon</td>
-              <td class='col2' id='mon_date_js' class='td-date'>js_calc</td>
-              <td class='col3'>                
+            <tr class="hrs-row">
+              <td class="col1" id="mon_day">Mon</td>
+              <td class="col2 td-date" id="mon_date_js">js_calc</td>
+              <td class="col3">                
                 <label class="imgSelect">
-                  <span id='mon_in'></span>
+                  <span id="mon_in"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col4'>
-                <input id="mon_break" class="break" list="break-times" name="break-len" placeholder="30">
-                  <datalist id="break-times">
-                    <option value="00">
-                    <option value="15">
-                    <option value="30">
-                    <option value="45">
-                    <option value="60">
-                    <option value="75">
-                    <option value="90">
-                    <option value="AL">
+              <td class="col4">
+                <input id="mon_break" class="break" list="break-times-mon" name="break-len" placeholder="30">
+                  <datalist id="break-times-mon">
+                    <option value="AL"></option>
+                    <option value="00"></option>
+                    <option value="15"></option>
+                    <option value="30"></option>
+                    <option value="45"></option>
+                    <option value="60"></option>
+                    <option value="75"></option>
+                    <option value="90"></option>
                 </datalist>
               </td>  
-              <td class='col5'>                
+              <td class="col5">                
                 <label class="imgSelect">
-                  <span id='mon_out'></span>
+                  <span id="mon_out"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col6'><span id="mon_hrs" name="mon_hrs" value=""></span></td>
-              <td class='col7'><span id="mon_dhrs" name="mon_dhrs" value=""></span></td>
+              <td class="col6"><span id="mon_hrs" name="mon_hrs" value=""></span></td>
+              <td class="col7"><span id="mon_dhrs" name="mon_dhrs" value=""></span></td>
             </tr>
-            <tr class='hrs-row'>
-              <td class='col1' id='tue_day'>Tue</td>
-              <td class='col2' id='tue_date_js' class='td-date'>js_calc</td>
-              <td class='col3'>                
+            <tr class="hrs-row">
+              <td class="col1" id="tue_day">Tue</td>
+              <td class="col2 td-date" id="tue_date_js">js_calc</td>
+              <td class="col3">                
                 <label class="imgSelect">
-                  <span id='tue_in'></span>
+                  <span id="tue_in"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col4'>
-                <input id="tue_break" class="break" list="break-times" name="break-len" placeholder="30">
-                  <datalist id="break-times">
-                    <option value="00">
-                    <option value="15">
-                    <option value="30">
-                    <option value="45">
-                    <option value="60">
-                    <option value="75">
-                    <option value="90">
-                    <option value="AL">
+              <td class="col4">
+                <input id="tue_break" class="break" list="break-times-tue" name="break-len" placeholder="30">
+                  <datalist id="break-times-tue">
+                    <option value="AL"></option>
+                    <option value="00"></option>
+                    <option value="15"></option>
+                    <option value="30"></option>
+                    <option value="45"></option>
+                    <option value="60"></option>
+                    <option value="75"></option>
+                    <option value="90"></option>
                 </datalist>
               </td>  
-              <td class='col5'>                
+              <td class="col5">                
                 <label class="imgSelect">
-                  <span id='tue_out'></span>
+                  <span id="tue_out"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col6'><span id="tue_hrs" name="tue_hrs" value=""></span></td>
-              <td class='col7'><span id="tue_dhrs" name="tue_dhrs" value=""></span></td>
+              <td class="col6"><span id="tue_hrs" name="tue_hrs" value=""></span></td>
+              <td class="col7"><span id="tue_dhrs" name="tue_dhrs" value=""></span></td>
             </tr>
-            <tr class='hrs-row'>
-              <td class='col1' id='wed_day'>Wed</td>
-              <td class='col2' id='wed_date_js' class='td-date'>js_calc</td>
-              <td class='col3'>                
+            <tr class="hrs-row">
+              <td class="col1" id="wed_day">Wed</td>
+              <td class="col2 td-date" id="wed_date_js">js_calc</td>
+              <td class="col3">                
                 <label class="imgSelect">
-                  <span id='wed_in'></span>
+                  <span id="wed_in"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col4'>
-                <input id="wed_break" class="break" list="break-times" name="break-len" placeholder="30">
-                  <datalist id="break-times">
-                    <option value="00">
-                    <option value="15">
-                    <option value="30">
-                    <option value="45">
-                    <option value="60">
-                    <option value="75">
-                    <option value="90">
-                    <option value="AL">  
+              <td class="col4">
+                <input id="wed_break" class="break" list="break-times-wed" name="break-len" placeholder="30">
+                  <datalist id="break-times-wed">
+                    <option value="AL"></option>
+                    <option value="00"></option>
+                    <option value="15"></option>
+                    <option value="30"></option>
+                    <option value="45"></option>
+                    <option value="60"></option>
+                    <option value="75"></option>
+                    <option value="90"></option>  
                 </datalist>
               </td>  
-              <td class='col5'>                
+              <td class="col5">                
                 <label class="imgSelect">
-                  <span id='wed_out'></span>
+                  <span id="wed_out"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col6'><span id="wed_hrs" name="wed_hrs" value=""></span></td>
-              <td class='col7'><span id="wed_dhrs" name="wed_dhrs" value=""></span></td>
+              <td class="col6"><span id="wed_hrs" name="wed_hrs" value=""></span></td>
+              <td class="col7"><span id="wed_dhrs" name="wed_dhrs" value=""></span></td>
             </tr>
-            <tr class='hrs-row'>
-              <td class='col1' id='thu_day'>Thu</td>
-              <td class='col2' id='thu_date_js' class='td-date'>js_calc</td>
-              <td class='col3'>                
+            <tr class="hrs-row">
+              <td class="col1" id="thu_day">Thu</td>
+              <td class="col2 td-date" id="thu_date_js">js_calc</td>
+              <td class="col3">                
                 <label class="imgSelect">
-                  <span id='thu_in'></span>
+                  <span id="thu_in"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col4'>
-                <input id="thu_break" class="break" list="break-times" name="break-len" placeholder="30">
-                  <datalist id="break-times">
-                    <option value="00">
-                    <option value="15">
-                    <option value="30">
-                    <option value="45">
-                    <option value="60">
-                    <option value="75">
-                    <option value="90">
-                    <option value="AL">
+              <td class="col4">
+                <input id="thu_break" class="break" list="break-times-thu" name="break-len" placeholder="30">
+                  <datalist id="break-times-thu">
+                    <option value="AL"></option>
+                    <option value="00"></option>
+                    <option value="15"></option>
+                    <option value="30"></option>
+                    <option value="45"></option>
+                    <option value="60"></option>
+                    <option value="75"></option>
+                    <option value="90"></option>
                 </datalist>
               </td>  
-              <td class='col5'>                
+              <td class="col5">                
                 <label class="imgSelect">
-                  <span id='thu_out'></span>
+                  <span id="thu_out"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col6'><span id="thu_hrs" name="thu_hrs" value=""></span></td>
-              <td class='col7'><span id="thu_dhrs" name="thu_dhrs" value=""></span></td>
+              <td class="col6"><span id="thu_hrs" name="thu_hrs" value=""></span></td>
+              <td class="col7"><span id="thu_dhrs" name="thu_dhrs" value=""></span></td>
             </tr>
-            <tr class='hrs-row'>
-              <td class='col1' id='fri_day'>Fri</td>
-              <td class='col2' id='fri_date_js' class='td-date'>js_calc</td>
-              <td class='col3'>                
+            <tr class="hrs-row">
+              <td class="col1" id="fri_day">Fri</td>
+              <td class="col2 td-date" id="fri_date_js">js_calc</td>
+              <td class="col3">                
                 <label class="imgSelect">
-                  <span id='fri_in'></span>
+                  <span id="fri_in"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col4'>
-                <input id="fri_break" class="break" list="break-times" name="break-len" placeholder="30">
-                  <datalist id="break-times">
-                    <option value="00">
-                    <option value="15">
-                    <option value="30">
-                    <option value="45">
-                    <option value="60">
-                    <option value="75">
-                    <option value="90">
-                    <option value="AL">
+              <td class="col4">
+                <input id="fri_break" class="break" list="break-times-fri" name="break-len" placeholder="30">
+                  <datalist id="break-times-fri">
+                    <option value="AL"></option>
+                    <option value="00"></option>
+                    <option value="15"></option>
+                    <option value="30"></option>
+                    <option value="45"></option>
+                    <option value="60"></option>
+                    <option value="75"></option>
+                    <option value="90"></option>
                 </datalist>
               </td>  
-              <td class='col5'>                
+              <td class="col5">                
                 <label class="imgSelect">
-                  <span id='fri_out'></span>
+                  <span id="fri_out"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col6'><span id="fri_hrs" name="fri_hrs" value=""></span></td>
-              <td class='col7'><span id="fri_dhrs" name="fri_dhrs" value=""></span></td>
+              <td class="col6"><span id="fri_hrs" name="fri_hrs" value=""></span></td>
+              <td class="col7"><span id="fri_dhrs" name="fri_dhrs" value=""></span></td>
             </tr>
-            <tr class='hrs-row'>
-              <td class='col1' id='sat_day'>Sat</td>
-              <td class='col2' id='sat_date_js' class='td-date'>js_calc</td>
-              <td class='col3'>                
+            <tr class="hrs-row">
+              <td class="col1" id="sat_day">Sat</td>
+              <td class="col2 td-date" id="sat_date_js">js_calc</td>
+              <td class="col3">                
                 <label class="imgSelect">
-                  <span id='sat_in'></span>
+                  <span id="sat_in"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col4'>
+              <td class="col4">
                 <input id="sat_break" class="break" list="break-times" name="break-len" placeholder="30">
                   <datalist id="break-times">
-                    <option value="00">
-                    <option value="15">
-                    <option value="30">
-                    <option value="45">
-                    <option value="60">
-                    <option value="75">
-                    <option value="90">
-                    <option value="AL">
+                    <option value="AL"></option>
+                    <option value="00"></option>
+                    <option value="15"></option>
+                    <option value="30"></option>
+                    <option value="45"></option>
+                    <option value="60"></option>
+                    <option value="75"></option>
+                    <option value="90"></option>
                   </datalist>
               </td>  
-              <td class='col5'>                
+              <td class="col5">                
                 <label class="imgSelect">
-                  <span id='sat_out'></span>
+                  <span id="sat_out"></span>
                   <input type="file" name="video" accept="image/*">
                 </label>
               </td>
-              <td class='col6'><span id="sat_hrs" name="sat_hrs" value=""></span></td>
-              <td class='col7'><span id="sat_dhrs" name="sat_dhrs" value=""></span></td>
+              <td class="col6"><span id="sat_hrs" name="sat_hrs" value=""></span></td>
+              <td class="col7"><span id="sat_dhrs" name="sat_dhrs" value=""></span></td>
             </tr>
         </tbody>
       </table>
     </div>    
     
-    <div id='ct_week_totals' class='item week-totals'>
-      <div class='flexrow-container'>
+    <div id="ct_week_totals" class="item week-totals">
+      <div class="flexrow-container">
         <div>      
           <table>
               <thead>
-                  <tr class='wk-row'>
+                  <tr class="wk-row">
                       <th>Week</th>
                       <th>Hrs</th>
                       <th>DHrs</th>
                   </tr>
               </thead>
               <tbody>
-                  <tr class='wk-row'><td id='r1_wk_no'>js_calc</td><td id='r1_tot_hrs'>js_calc</td><td id='r1_tot_dhrs'>js_calc</td></tr>
-                  <tr class='wk-row' id='al_wkr1' ><td id='r1h_wk_no'>js_calc</td><td id='r1h_tot_hrs'>js_calc</td><td id='r1h_tot_dhrs'>js_calc</td></tr>
+                  <tr class="wk-row"><td id="r1_wk_no">js_calc</td><td id="r1_tot_hrs">js_calc</td><td id="r1_tot_dhrs">js_calc</td></tr>
+                  <tr class="wk-row" id="al_wkr1" ><td id="r1h_wk_no">js_calc</td><td id="r1h_tot_hrs">js_calc</td><td id="r1h_tot_dhrs">js_calc</td></tr>
                   
-                  <tr class='wk-row'><td id='r2_wk_no'>js_calc</td><td id='r2_tot_hrs'>js_calc</td><td id='r2_tot_dhrs'>js_calc</td></tr>
-                  <tr class='wk-row' id='al_wkr2' ><td id='r2h_wk_no'>js_calc</td><td id='r2h_tot_hrs'>js_calc</td><td id='r2h_tot_dhrs'>js_calc</td></tr>
+                  <tr class="wk-row"><td id="r2_wk_no">js_calc</td><td id="r2_tot_hrs">js_calc</td><td id="r2_tot_dhrs">js_calc</td></tr>
+                  <tr class="wk-row" id="al_wkr2" ><td id="r2h_wk_no">js_calc</td><td id="r2h_tot_hrs">js_calc</td><td id="r2h_tot_dhrs">js_calc</td></tr>
                   
-                  <tr class='wk-row'><td id='r3_wk_no'>js_calc</td><td id='r3_tot_hrs'>js_calc</td><td id='r3_tot_dhrs'>js_calc</td></tr>
-                  <tr class='wk-row' id='al_wkr3' ><td id='r3h_wk_no'>js_calc</td><td id='r3h_tot_hrs'>js_calc</td><td id='r3h_tot_dhrs'>js_calc</td></tr>
+                  <tr class="wk-row"><td id="r3_wk_no">js_calc</td><td id="r3_tot_hrs">js_calc</td><td id="r3_tot_dhrs">js_calc</td></tr>
+                  <tr class="wk-row" id="al_wkr3" ><td id="r3h_wk_no">js_calc</td><td id="r3h_tot_hrs">js_calc</td><td id="r3h_tot_dhrs">js_calc</td></tr>
                   
-                  <tr class='wk-row'><td id='r4_wk_no'>js_calc</td><td id='r4_tot_hrs'>js_calc</td><td id='r4_tot_dhrs'>js_calc</td></tr>
-                  <tr class='wk-row' id='al_wkr4' ><td id='r4h_wk_no'>js_calc</td><td id='r4h_tot_hrs'>js_calc</td><td id='r4h_tot_dhrs'>js_calc</td></tr>
+                  <tr class="wk-row"><td id="r4_wk_no">js_calc</td><td id="r4_tot_hrs">js_calc</td><td id="r4_tot_dhrs">js_calc</td></tr>
+                  <tr class="wk-row" id="al_wkr4" ><td id="r4h_wk_no">js_calc</td><td id="r4h_tot_hrs">js_calc</td><td id="r4h_tot_dhrs">js_calc</td></tr>
               </tbody>
               <tfoot>
-                  <tr class='wk-row'><td>Total</td><td id='r5_tot_hrs'>js_calc</td><td id='r5_tot_dhrs'>js_calc</td></tr>   
+                  <tr class="wk-row"><td>Total</td><td id="r5_tot_hrs">js_calc</td><td id="r5_tot_dhrs">js_calc</td></tr>   
               </tfoot>    
           </table>
         </div>
-        <span class='flexrow-middle-space space-box'></span>
+        <span class="flexrow-middle-space space-box"></span>
         <div>
-          <!--<div id='date-today' class='time-font'>-->
-          <div class='time-font'>
-            <div id='date-today'>
-              <div id='date-today-day'>Mon</div>
-              <div id='date-today-date'>29 Aug</div>
-              <div id='date-today-year'>2050</div>
+          <!--<div id="date-today" class="time-font">-->
+          <div class="time-font">
+            <div id="date-today">
+              <div id="date-today-day">Mon</div>
+              <div id="date-today-date">29 Aug</div>
+              <div id="date-today-year">2050</div>
             </div>            
           </div>          
-          <div id='mailto_d'>
-            <img id='mail_img' src='static/assets/icons/email-svgrepo-com.svg' alt='eMail 4week Summary'>
-            <div id='qr_but' alt='share with QR code'>QR</div> 
-            <img id='debug_img' src='static/assets/icons/debug.png' alt='debug Info button'>
+          <div id="mailto_d">
+            <img id="mail_img" src="static/assets/icons/email-svgrepo-com.svg" alt="eMail 4week Summary">
+            <div id="qr_but" alt="share with QR code">QR</div> 
+            <img id="debug_img" src="static/assets/icons/debug.png" alt="debug Info button">
           </div>
           
         </div>
       </div>
     </div>
     
-    <div id='ct_final_calc' class='item totals'>
-      <div id='r0_final_tots_title'><b>Estimates and Deductions</b></div>
+    <div id="ct_final_calc" class="item totals">
+      <div id="r0_final_tots_title"><b>Estimates and Deductions</b></div>
       <table>
           <tbody>
-              <tr><td class='tbc name' id='r1_anual_in_t'>Predicted pre-tax Anual income</td><td class='tbc fin_data' id='r1_anual_in'>js_calc</td>  </tr>        
-              <tr><td class='tbc name' id='r2_gross_4wk_t'>4wk Gross</td>                    <td class='tbc fin_data' id='r2_gross_4wk'>js_calc</td> </tr>
-              <tr><td class='tbc name' id='r3_pension_t'>Pension contribution</td>           <td class='tbc fin_data' id='r3_pension'>js_calc</td>   </tr>
-              <tr><td class='tbc name' id='r4_ni_t'>NI</td>                                  <td class='tbc fin_data' id='r4_ni'>js_calc</td>        </tr>
-              <tr><td class='tbc name' id='r5_tax_t'>Tax</td>                                <td class='tbc fin_data' id='r5_tax'>js_calc</td>       </tr>        
-              <tr><td class='tbc name' id='r6_tot_dedcts_t'>Deductions</td>                  <td class='tbc fin_data' id='r6_tot_dedcts'>js_cal</td> </tr>
-              <tr><td class='tbc name' id='r7_net_t'>Take home</td>                          <td class='tbc fin_data' id='r7_net'>js_calc</td>       </tr>   
+              <tr><td class="tbc name" id="r1_anual_in_t">Predicted pre-tax Anual income</td><td class="tbc fin_data" id="r1_anual_in">js_calc</td>  </tr>        
+              <tr><td class="tbc name" id="r2_gross_4wk_t">4wk Gross</td>                    <td class="tbc fin_data" id="r2_gross_4wk">js_calc</td> </tr>
+              <tr><td class="tbc name" id="r3_pension_t">Pension contribution</td>           <td class="tbc fin_data" id="r3_pension">js_calc</td>   </tr>
+              <tr><td class="tbc name" id="r4_ni_t">NI</td>                                  <td class="tbc fin_data" id="r4_ni">js_calc</td>        </tr>
+              <tr><td class="tbc name" id="r5_tax_t">Tax</td>                                <td class="tbc fin_data" id="r5_tax">js_calc</td>       </tr>        
+              <tr><td class="tbc name" id="r6_tot_dedcts_t">Deductions</td>                  <td class="tbc fin_data" id="r6_tot_dedcts">js_cal</td> </tr>
+              <tr><td class="tbc name" id="r7_net_t">Take home</td>                          <td class="tbc fin_data" id="r7_net">js_calc</td>       </tr>   
           </tbody>  
       </table>
     </div>
 
   </div>
-  <script type="module" src='static/focus.js'></script>
-  <script type="module" src='static/paycheck.js'></script>  
+  <script type="module" src="static/focus.js"></script>
+  <script type="module" src="static/paycheck.js"></script>  
 </body>
 </html>
 
