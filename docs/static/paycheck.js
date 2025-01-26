@@ -379,7 +379,7 @@ class PayCycle4wk{
     document.querySelector('#date-today-year').textContent = today.year;
     
     // HEADER - update pay_day, cut_off, wk_range = week no's, wk_range_dates 4week date range
-    document.querySelector('#pay_day_js').textContent = `Pay Day: ${this.payDay.getDate()} ${Day.numToMonth[this.payDay.getMonth()]}`;
+    document.querySelector('#pay_day_js').textContent = `Pay Day: ${this.payDay.getDate()} ${Day.numToMonth[this.payDay.getMonth()]} ${this.payDay.getFullYear().toString().slice(-2)}`;
     document.querySelector('#wk_range_js').textContent = ` ${this.getWeekNo(0)} - ${this.getWeekNo(3)}`;
     document.querySelector('#wk_range_dates_js').textContent = `${this.payStart.getDate()} ${Day.numToMonth[this.payStart.getMonth()]} - ${this.cutOff.getDate()} ${Day.numToMonth[this.cutOff.getMonth()]}`;
     document.querySelector('#wk_no_js').textContent = this.getWeekNoDateRange();
@@ -995,6 +995,10 @@ if (hasGetUserMedia()) {
 
 
 // HIGH - multi user
+// integrate pension calcs & update model
+// add pension calcs to settings display
+
+
 // synch data desktop /mobile
 // need login (w/ gmail?)
 
