@@ -80,15 +80,17 @@ body {
 }
 
 #tax_code {
-  width: 18vw;
+  width: 21vw;
   height: 2.2vh;
+  font-size: 2.1vh;
 }
 #pension_text {
   width: 18vw;
 }
 #pension_pc {
-  width: 15vw;
+  width: 17vw;
   height: 2.2vh;
+  font-size: 2.1vh;  
 }
 
 
@@ -206,6 +208,7 @@ body {
 
 #quick_calc {
   display: flex;
+  min-height: 3vh;
 }
 
 
@@ -213,10 +216,16 @@ body {
   width: 10vw;
 }
 #quick_calc_hrs {
-  width: 10vw;
+  width: 12vw;
+  height: 2.2vh;
+  font-size: 2.1vh;
+  padding-bottom: 0.25vh;
 }
 #quick_calc_hol_hrs {
-  width: 10vw;
+  width: 12vw;
+  height: 2.2vh;
+  font-size: 2.1vh;
+  padding-bottom: 0.25vh;
 }
 
 
