@@ -81,12 +81,14 @@ body {
 
 #tax_code {
   width: 18vw;
+  height: 2.2vh;
 }
 #pension_text {
   width: 18vw;
 }
 #pension_pc {
   width: 15vw;
+  height: 2.2vh;
 }
 
 
@@ -136,10 +138,27 @@ body {
     text-align: center;
 }
 
+.time-cloud {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-bottom: 0.5vh;
+}
+
+.cloud-butn {
+  padding-left: 10%;
+  /* display: flex; 
+  justify-content: center; 
+  align-items: center;   
+  align-items: left;
+  flex-direction: column; */
+}
+
 .time-font {
   font-size: 3vh;
   padding: 0.5vh 1vw;
-  padding-right: 6vw;
+  padding-right: 3vw;
+  padding-left: 3vw;  
   text-align: center;
 }
 .time-font > div {
@@ -155,7 +174,8 @@ body {
   align-items: center;  
   padding: 0.1vh 4vw;
   border: 0px;
-  margin: 0px;  
+  margin: 0px;
+  padding-bottom: 1vh;  
 }
 #mailto_d > img{
   width: 10vw;
@@ -184,7 +204,12 @@ body {
   pointer-events: none;
 }
 
-#calc_button, #export_button {
+#quick_calc {
+  display: flex;
+}
+
+
+#calc_button, #export-button-up, #export-button-down {
   width: 10vw;
 }
 #quick_calc_hrs {
