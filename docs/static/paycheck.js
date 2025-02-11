@@ -552,10 +552,18 @@ class PayCycle4wk {
         document.getElementById(`al_wkr${weekNo+1}`).classList.add('wk-row-hide');
       }
     }    
-    
+
+    // HRS SUB-TOTAL
+    document.querySelector(`#r5_subtot_hrs`).textContent = Day.minsToHMReadable(this.cycleTotalMins);
+    document.querySelector(`#r5_subtot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.cycleTotalMins);
+
+    // AL HRS SUB-TOTAL
+    document.querySelector(`#r5_subtot_al_hrs`).textContent = Day.minsToHMReadable(this.cycleTotalALMins);
+    document.querySelector(`#r5_subtot_al_dhrs`).textContent =  Day.minsToHDecimalReadable(this.cycleTotalALMins);
+
     // MONTHLY TOTAL
-    document.querySelector(`#r5_tot_hrs`).textContent = Day.minsToHMReadable(this.cycleTotalMins + this.cycleTotalALMins);
-    document.querySelector(`#r5_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.cycleTotalMins + this.cycleTotalALMins);
+    document.querySelector(`#r6_tot_hrs`).textContent = Day.minsToHMReadable(this.cycleTotalMins + this.cycleTotalALMins);
+    document.querySelector(`#r6_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.cycleTotalMins + this.cycleTotalALMins);
 
     // TOTALS
     document.querySelector("#r1_anual_in").textContent =

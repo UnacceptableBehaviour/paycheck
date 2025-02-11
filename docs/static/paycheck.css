@@ -366,13 +366,8 @@ label.imgSelect input[accept*="image"] {
 }
 /* summary table */
 /* tbc - table column */
-.tbc.name {
-  width: 40vw;  
-}
-.tbc.fin_data {
-  width: 60vw;
-  text-align: right;
-}
+
+
 
 #ct_debug {
   disply: none;

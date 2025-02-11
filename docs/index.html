@@ -354,9 +354,9 @@
       </table>
     </div>
 
-    <div id="ct_week_totals" class="item week-totals">
+    <div class="item week-totals">
       <div class="flexrow-container">
-        <div>
+        <div id="ct_week_totals" class="week-day-font" >
           <table>
             <thead>
               <tr class="wk-row">
@@ -409,12 +409,23 @@
                 <td id="r4h_tot_hrs">js_calc</td>
                 <td id="r4h_tot_dhrs">js_calc</td>
               </tr>
+
+              <tr class="wk-row">
+                <td>Hrs</td>
+                <td id="r5_subtot_hrs">js_calc</td>
+                <td id="r5_subtot_dhrs">js_calc</td>
+              </tr>
+              <tr class="wk-row">
+                <td>AL Hrs</td>
+                <td id="r5_subtot_al_hrs">js_calc</td>
+                <td id="r5_subtot_al_dhrs">js_calc</td>
+              </tr>                        
             </tbody>
             <tfoot>
               <tr class="wk-row">
                 <td>Total</td>
-                <td id="r5_tot_hrs">js_calc</td>
-                <td id="r5_tot_dhrs">js_calc</td>
+                <td id="r6_tot_hrs">js_calc</td>
+                <td id="r6_tot_dhrs">js_calc</td>
               </tr>
             </tfoot>
           </table>
@@ -457,41 +468,65 @@
     </div>
   </div>
 
-  <div id="ct_final_calc" class="item totals">
+  <div id="ct_final_calc" class="item totals week-day-font">
     <div id="r0_final_tots_title"><b>Estimates and Deductions</b></div>
     <table>
       <tbody>
         <tr>
-          <td class="tbc name" id="r1_anual_in_t">Predicted pre-tax Anual income</td>
-          <td class="tbc fin_data" id="r1_anual_in">js_calc</td>
+          <div class="flexrow-container">
+            <span class="tbc name flexrow-item" id="r1_anual_in_t">Predicted pre-tax Anual income</span>
+            <span class="flexrow-middle-space space-box"></span>
+            <span class="tbc fin_data flexrow-item" id="r1_anual_in">js_calc</span>
+          </div>
         </tr>
         <tr>
-          <td class="tbc name" id="r2_gross_4wk_t">4wk Gross</td>
-          <td class="tbc fin_data" id="r2_gross_4wk">js_calc</td>
+          <div class="flexrow-container">
+            <span class="tbc name flexrow-item" id="r2_gross_4wk_t">4wk Gross</span>
+            <span class="flexrow-middle-space space-box"></span>
+            <span class="tbc fin_data flexrow-item" id="r2_gross_4wk">js_calc</span>
+          </div>
         </tr>
         <tr>
-          <td class="tbc name" id="r3_pension_employer_t">Pension employer</td>
-          <td class="tbc fin_data" id="r3_pension_employer">js_calc</td>
+          <div class="flexrow-container">
+            <span class="tbc name flexrow-item" id="r3_pension_employer_t">Pension employer</span>
+            <span class="flexrow-middle-space space-box"></span>
+            <span class="tbc fin_data flexrow-item" id="r3_pension_employer">js_calc</span>
+          </div>
         </tr>
         <tr>
-          <td class="tbc name" id="r4_pension_employee_t">Pension employee</td>
-          <td class="tbc fin_data" id="r4_pension_employee">js_calc</td>
+          <div class="flexrow-container">
+            <span class="tbc name flexrow-item" id="r4_pension_employee_t">Pension employee</span>
+            <span class="flexrow-middle-space space-box"></span>
+            <span class="tbc fin_data flexrow-item" id="r4_pension_employee">js_calc</span>
+          </div>
         </tr>
         <tr>
-          <td class="tbc name" id="r5_ni_t">NI</td>
-          <td class="tbc fin_data" id="r5_ni">js_calc</td>
+          <div class="flexrow-container">
+            <span class="tbc name flexrow-item" id="r5_ni_t">NI</span>
+            <span class="flexrow-middle-space space-box"></span>
+            <span class="tbc fin_data flexrow-item" id="r5_ni">js_calc</span>
+          </div>
         </tr>
         <tr>
-          <td class="tbc name" id="r6_tax_t">Tax</td>
-          <td class="tbc fin_data" id="r6_tax">js_calc</td>
+          <div class="flexrow-container">
+            <span class="tbc name flexrow-item" id="r6_tax_t">Tax</span>
+            <span class="flexrow-middle-space space-box"></span>
+            <span class="tbc fin_data flexrow-item" id="r6_tax">js_calc</span>
+          </div>
         </tr>
         <tr>
-          <td class="tbc name" id="r7_tot_dedcts_t">Deductions</td>
-          <td class="tbc fin_data" id="r7_tot_dedcts">js_cal</td>
+          <div class="flexrow-container">
+            <span class="tbc name flexrow-item" id="r7_tot_dedcts_t">Deductions</span>
+            <span class="flexrow-middle-space space-box"></span>
+            <span class="tbc fin_data flexrow-item" id="r7_tot_dedcts">js_calc</span>
+          </div>
         </tr>
         <tr>
-          <td class="tbc name" id="r8_net_t">Take home</td>
-          <td class="tbc fin_data" id="r8_net">js_calc</td>
+          <div class="flexrow-container">
+            <span class="tbc name flexrow-item" id="r8_net_t">Take home</span>
+            <span class="flexrow-middle-space space-box"></span>
+            <span class="tbc fin_data flexrow-item" id="r8_net">js_calc</span>
+          </div>
         </tr>
       </tbody>
     </table>
