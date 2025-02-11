@@ -11,9 +11,9 @@
 // depends if you are using /docs/  or /master/
 // /paycheck/
 
-const KEY_SW_INFO = 'sw_info';   // must match in paycheck.js!
-
-let verion_number_passed_in = '00.29';  // < - - - - - - - - - - - - - - - - - - - - - - //
+const KEY_SW_INFO = 'sw_info';    // must match in paycheck.js!
+                                 //
+let verion_number_passed_in = '00.31';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${verion_number_passed_in}`;                     //
                                                                                           //
@@ -47,11 +47,15 @@ const FILES_TO_CACHE = [
   '/paycheck/static/assets/icons/hol-right.png',
   '/paycheck/static/assets/icons/debug.svg',
   '/paycheck/static/assets/icons/email-svgrepo-com.png',
+  '/paycheck/static/assets/icons/export.svg',
   '/paycheck/static/assets/icons/hol-left.svg',
   '/paycheck/static/assets/icons/hol-left.png',
+  '/paycheck/static/assets/icons/export.png',
   '/paycheck/static/assets/icons/email-svgrepo-com.svg',
   '/paycheck/static/assets/icons/debug.png',
-  '/paycheck/static/assets/icons/hol-right.svg'
+  '/paycheck/static/assets/icons/hol-right.svg',
+  '/paycheck/static/assets/icons/calculator.png',
+  '/paycheck/static/assets/icons/calculator.svg',
 ];
 
 console.log(`service_worker.js V:${CACHE_NAME}`);
@@ -120,6 +124,20 @@ self.addEventListener('activate', (evt) => {
 // fetch event - Cache falling back to network
 var fc = 0;
 
+// self.addEventListener('fetch', function(event) {
+//   fc += 1;
+//   console.log(`[SW] fetch:${fc}`);
+//   console.log(event.request.url);
+//   console.log(event);
+  
+//   event.respondWith(
+//     caches.match(event.request).then(function(response) {
+//       return response || fetch(event.request);
+//     })
+//   );
+  
+// });
+
 self.addEventListener('fetch', function(event) {
   fc += 1;
   console.log(`[SW] fetch:${fc}`);
@@ -128,8 +146,22 @@ self.addEventListener('fetch', function(event) {
   
   event.respondWith(
     caches.match(event.request).then(function(response) {
-      return response || fetch(event.request);
+      if (response) {
+        return response;
+      }
+      return fetch(event.request).then(function(networkResponse) {
+        return networkResponse;
+      }).catch(function(error) {
+        console.error('Fetching failed:', error);
+        throw error;
+      });
     })
   );
-  
+});
+
+// allow retrieval of SW version from paycheck.js
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'GET_SW_VERSION') {
+    event.ports[0].postMessage({ version: SW_VERSION });
+  }
 });

@@ -12,18 +12,22 @@ const KEY_SW_INFO          = 'sw_info';   // must match in SW!
 // settings & configuration
 const CAMERA_MODE_GALLERY = 0;
 const CAMERA_MODE_CAPTURE = 1;
-const HOURLY_RATE_2022 = 10.10;
+const HOURLY_RATE_2024_25 = 12.04;
 var settings = {
   cameraMode: CAMERA_MODE_GALLERY,
   showExceptions: true,                             // show hand authorized exception in mail breakdown 
-  taxYear: '2022-23',                               // https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2022-to-2023
-  TAX_RATE_2022: 0.20,
-  TAX_2022_ALLOWANCE: 12570,                        // for 2022 to 2023 tax year: 12570-37700 @20% 37701-150000 @40% rest @45%
-  NI_RATE_2022_23: 0.1325,                          // for 2022 to 2023 tax year, returns to 0.12 after that when new tax being introduced
-  NI_2022_23_ALLOWANCE: 12584,                      // for 2022 to 2023 tax year 242/wk  . . was const NI_2022_ALLOWANCE = 9564; 
-  HOURLY_RATE_2022: HOURLY_RATE_2022,
-  HOURLY_RATE_AL_2022: HOURLY_RATE_2022 * 1.2,      // its more complicated than this - find out details TODO
-  PENSION_PC: 0.05,                                 // TODO add correct pension model
+  taxYear: '2024-25',                               // https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2024-to-2025
+  TAX_RATE_2024_25: 0.20,
+  TAX_2024_25_PERSONAL_ALLOWANCE: 12570,                     // for 2024 to 2025 tax year: 12571-50270 @20% 50271-125140 @40% rest @45%
+  NI_RATE_LOWER_2024_25: 0.08,                      // for 2024 to 2025 tax year
+  NI_RATE_UPPER_2024_25: 0.02,
+  NI_2024_25_LOWER_THRESHOLD: (242 * 4) - 1,                // for 2024 to 2025 tax year 242/wk
+  NI_2024_25_UPPER_THRESHOLD: (967 * 4) - 1,                // for 2024 to 2025 tax year 967/wk
+  HOURLY_RATE_2024_25: HOURLY_RATE_2024_25,
+  HOURLY_RATE_AL_2024_25: 20.3062, //HOURLY_RATE_2024_25 * 1.5,// its more complicated than this - find out details TODO
+  PENSION_EMPLOYEE_PC: 0.15,  // 0.05,
+  PENSION_EMPLOYER_PC: 0.03,
+  PENSION_EXEMPTION: 480
 };
 
 // +/- Days create a new Date object
@@ -169,70 +173,88 @@ const FORMAT_EMAIL  = 0;
 const FORMAT_TXT    = 1;
 const FORMAT_HTML   = 2;
 
-class PayCycle4wk{
+class PayCycle4wk {
   static OFFSET_CUTOFF = -6;
   static OFFSET_START = -33;
   static DAYS_IN_CYCLE = 28;
-  static prefixes = ['sun','mon','tue','wed','thu','fri','sat'];
+  static prefixes = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
   static postfixes = ['_date_js','_in','_break','_out','_hrs','_dhrs','',''];
-  
+
   static nextPayDayAfterToday(thisDate = new Date()) {
-    let refDate = new Date('2022-08-12T04:00:00');
+    let refDate = new Date("2022-08-12T04:00:00");
     let refWeekNo = 28;
     let thisDayMsSinceEpoch = thisDate.getTime();
-    
-    for (let i=0; i<200; i+=1) {  // 13 steps = 1 year (52 / 4week cycle)
+
+    for (let i = 0; i < 200; i += 1) {
+      // 13 steps = 1 year (52 / 4week cycle)
       if (thisDayMsSinceEpoch < refDate.getTime()) return [refDate, refWeekNo];
       refDate.addDays(28);
       refWeekNo += 4;
       if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
       //cl(`nextPD: ${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
     }
-    
+
     // catch
-    refDate = new Date('2022-08-12T04:00:00'); refWeekNo = 28;
+    refDate = new Date("2022-08-12T04:00:00");
+    refWeekNo = 28;
     return [refDate, refWeekNo];
   }
-    
-  static highLightTodaysEntry(element=undefined){
+
+  static highLightTodaysEntry(element = undefined) {
     if (element) {
-      document.querySelector('#date-today').classList.add('day-highlight');
-      element.classList.add('day-highlight');
-      setTimeout( ()=>{document.querySelector('#date-today').classList.remove('day-highlight');} ,10);
-      setTimeout( ()=>{element.classList.remove('day-highlight');} ,10);
-    }    
+      document.querySelector("#date-today").classList.add("day-highlight");
+      element.classList.add("day-highlight");
+      setTimeout(() => {
+        document.querySelector("#date-today").classList.remove("day-highlight");
+      }, 10);
+      setTimeout(() => {
+        element.classList.remove("day-highlight");
+      }, 10);
+    }
   }
-  
-  constructor(payDay, startWkNo){ // let pc = new PayCycle4wk(new Date(2022, 07, 12)); // the month is 0-indexed
-    this.payDay   = payDay;
-    this.cutOff   = payDay.copyAddDays(PayCycle4wk.OFFSET_CUTOFF);
+
+  constructor(payDay, startWkNo) {
+    // let pc = new PayCycle4wk(new Date(2022, 07, 12)); // the month is 0-indexed
+    this.payDay = payDay;
+    this.cutOff = payDay.copyAddDays(PayCycle4wk.OFFSET_CUTOFF);
     this.payStart = payDay.copyAddDays(PayCycle4wk.OFFSET_START);
-    this.weekNo   = 0;  // 0-3
-    this.weekNos  = [startWkNo, (startWkNo+1) % 52, (startWkNo+2) % 52, (startWkNo+3) % 52];
-    this.weekTotalMins = [0,0,0,0];
-    this.weekTotalALMins = [0,0,0,0];
+    this.weekNo = 0; // 0-3
+    this.weekNos = [
+      startWkNo,
+      (startWkNo + 1) % 52,
+      (startWkNo + 2) % 52,
+      (startWkNo + 3) % 52,
+    ];
+    this.weekTotalMins = [0, 0, 0, 0];
+    this.weekTotalALMins = [0, 0, 0, 0];
     this.cycleTotalMins = 0;
     this.cycleTotalALMins = 0;
-    
-    // localstorage key format: 2022_HRS_28-31_12AUG      
-    this.localStorageKey = `${this.payDay.getFullYear()}_HRS_${this.weekNos[0]}-${this.weekNos[3]}_${this.payDay.getDate()}${Day.numToMonth[this.payDay.getMonth()]}`.toUpperCase();
+
+    // localstorage key format: 2022_HRS_28-31_12AUG
+    this.localStorageKey = `${this.payDay.getFullYear()}_HRS_${
+      this.weekNos[0]
+    }-${this.weekNos[3]}_${this.payDay.getDate()}${
+      Day.numToMonth[this.payDay.getMonth()]
+    }`.toUpperCase();
     this.daysInCycle = [];
-    
+
     var date = this.payStart;
-    for (let dayNo = 0; dayNo < PayCycle4wk.DAYS_IN_CYCLE; dayNo +=1) {
+    for (let dayNo = 0; dayNo < PayCycle4wk.DAYS_IN_CYCLE; dayNo += 1) {
       this.daysInCycle.push(new Day(date));
       date = date.copyAddDays(1);
     }
-    
+
     this.gross4wk = 0;
     this.annualIncomeEstimate = 0;
-    this.pensionContrib = 0;
+    this.pensionEmployer = 0;
+    this.pensionEmployee = 0;
+    this.taxableIncome = 0; // after pension deduction
     this.contribNI = 0;
-    this.incomeTax = 0;    
-    this.deductions = 0;    
+    this.incomeTax = 0;
+    this.deductions = 0;
     this.netIncomeForCycle = 0;
   }
-  
+
   initFromJSON(jsonObj){ // let dt = new Date("2022-08-06T03:00:00.000Z")
     //cl('initFromJSON() - - - - - - - - S');
     this.payDay           = new Date(jsonObj.payDay);   //cl(jsonObj.payDay']);  
@@ -248,23 +270,23 @@ class PayCycle4wk{
     //cl('initFromJSON() - - - - - - - - E');
   }
 
-  clearHours(dayNo){
-    if ((dayNo >= 0) && (dayNo < PayCycle4wk.DAYS_IN_CYCLE)) {
+  clearHours(dayNo) {
+    if (dayNo >= 0 && dayNo < PayCycle4wk.DAYS_IN_CYCLE) {
       this.daysInCycle[dayNo].clearHours();
     } else {
       // TODO raise
       //cl(`clearHours FAILED - dayNo:${dayNo} - OUT OF RANGE Should be 0-${PayCycle4wk.DAYS_IN_CYCLE}`);
     }
   }
-  
-  weekBak(){
+
+  weekBak() {
     if (this.weekNo > 0) this.weekNo -= 1;
   }
-  
-  weekFwd(){
-    if (this.weekNo < 3) this.weekNo += 1;    
+
+  weekFwd() {
+    if (this.weekNo < 3) this.weekNo += 1;
   }
-  
+
   getWeekNo(no=-1){
     let wkNoIndex = no;
     if      (no < 0) { wkNoIndex = this.weekNo; }
@@ -272,33 +294,33 @@ class PayCycle4wk{
 
     return this.weekNos[wkNoIndex];
   }
-  
-  getWeekNoDateRange(){
-    let start = this.daysInCycle[this.weekNo * 7];    // cl(start);
-    let end = this.daysInCycle[(this.weekNo * 7)+6];  // cl(end);
+
+  getWeekNoDateRange() {
+    let start = this.daysInCycle[this.weekNo * 7]; // cl(start);
+    let end = this.daysInCycle[this.weekNo * 7 + 6]; // cl(end);
     return `${this.weekNo+1} / ${this.weekNos[this.weekNo]} ~  ${start.HRdate} - ${end.HRdate}`;
   }
-  
-  getNextPayDay(){
+
+  getNextPayDay() {
     var returnDate = this.payDay.copyAddDays(PayCycle4wk.DAYS_IN_CYCLE);
-    var weekNo = this.weekNos[0] += 4;
+    var weekNo = (this.weekNos[0] += 4);
     if (weekNo > 52) weekNo = weekNo - 52;
     return [returnDate, weekNo];
   }
-  
-  getLastPayDay(){
-    var returnDate = this.payDay.copyAddDays(PayCycle4wk.DAYS_IN_CYCLE*-1);
-    var weekNo = this.weekNos[0] -= 4;
+
+  getLastPayDay() {
+    var returnDate = this.payDay.copyAddDays(PayCycle4wk.DAYS_IN_CYCLE * -1);
+    var weekNo = (this.weekNos[0] -= 4);
     if (weekNo < 1) weekNo = weekNo + 52;
-    return [returnDate, weekNo];    
+    return [returnDate, weekNo];
   }
-  
-  updateWeekTotalMins(){
+
+  updateWeekTotalMins() {
     let dayOfMonth = 0;
-    for (let wkNo = 0; wkNo < 4; wkNo +=1) {
+    for (let wkNo = 0; wkNo < 4; wkNo += 1) {
       let weekTotal = 0;
       let weekALTotal = 0;
-      for (let dayNo = 0; dayNo < 7; dayNo +=1) {
+      for (let dayNo = 0; dayNo < 7; dayNo += 1) {
         dayOfMonth = 7 * wkNo + dayNo;
         weekTotal += this.daysInCycle[dayOfMonth].totalMins;
         weekALTotal += this.daysInCycle[dayOfMonth].totalALMins;
@@ -308,68 +330,173 @@ class PayCycle4wk{
     }
     this.cycleTotalMins = 0;
     this.cycleTotalALMins = 0;
-    for (let wkNo = 0; wkNo < 4; wkNo +=1) {
+    for (let wkNo = 0; wkNo < 4; wkNo += 1) {
       this.cycleTotalMins += this.weekTotalMins[wkNo];
       this.cycleTotalALMins += this.weekTotalALMins[wkNo];
-    }    
+    }
   }
-  
-  finalCalulations(){    
-    // anual /4 * 52
-    let hoursForCycle = parseFloat(Day.minsToHDecimalReadable(this.cycleTotalMins));
-    let hoursALForCycle = parseFloat(Day.minsToHDecimalReadable(this.cycleTotalALMins));
-    this.gross4wk = (hoursForCycle * settings.HOURLY_RATE_2022) + (hoursALForCycle * settings.HOURLY_RATE_AL_2022);
-    this.annualIncomeEstimate = this.gross4wk / 4 * 52;
-    
-    // TODO check if there's a threshold as in NI/Tax
-    // TODO add model to replace flat rate
-    // pension contribution - pre tax - ~3.1% use LUT
-    this.pensionContrib = this.annualIncomeEstimate * settings.PENSION_PC / 52 * 4;
-    
-    // NI @ 12% Allowance 9564
-    if (this.annualIncomeEstimate > settings.NI_2022_23_ALLOWANCE) {
-      this.contribNI = (( this.annualIncomeEstimate - settings.NI_2022_23_ALLOWANCE ) * settings.NI_RATE_2022_23 ) / 52 * 4;
-    } else {
+
+  // Function to calculate gross earnings
+  calculateGrossEarnings(hourlyRate, hoursWorked) {
+    return hourlyRate * hoursWorked;
+  }
+
+  // Function to calculate pension contributions
+  calculatePension(grossEarnings) {
+    const earningsSubjectToPension =
+      grossEarnings > settings.PENSION_EXEMPTION
+        ? grossEarnings - settings.PENSION_EXEMPTION
+        : 0;
+
+    const employeeContribution = earningsSubjectToPension * settings.PENSION_EMPLOYEE_PC;
+    const employerContribution = earningsSubjectToPension * settings.PENSION_EMPLOYER_PC;
+
+    this.pensionEmployee = employeeContribution;
+    this.pensionEmployer = employerContribution;
+
+    return { employeeContribution, employerContribution };
+  }
+
+  // Function to calculate taxable income
+  calculateTaxableIncome(grossEarnings, employeePension) {
+    this.taxableIncome = grossEarnings - employeePension;
+    return this.taxableIncome;
+  }
+
+  // Function to calculate National Insurance (NI)
+  calculateNI(grossEarnings) {
+    if (grossEarnings <= settings.NI_2024_25_LOWER_THRESHOLD) {
       this.contribNI = 0;
-    }    
-    
-    // Tax @ 20% Allowance 12570
-    if (this.annualIncomeEstimate > settings.TAX_2022_ALLOWANCE) {
-      this.incomeTax = (( this.annualIncomeEstimate - settings.TAX_2022_ALLOWANCE ) * settings.TAX_RATE_2022 ) / 52 * 4;
+    } else if (grossEarnings <= settings.NI_2024_25_UPPER_THRESHOLD) {
+      this.contribNI =
+        (grossEarnings - settings.NI_2024_25_LOWER_THRESHOLD) *
+        settings.NI_RATE_LOWER_2024_25;
     } else {
-      this.incomeTax = 0;
-    }    
-    
-    this.deductions = this.incomeTax + this.contribNI + this.pensionContrib;    
+      this.contribNI =
+        (settings.NI_2024_25_UPPER_THRESHOLD -
+          settings.NI_2024_25_LOWER_THRESHOLD) *
+          NI_RATE_LOWER_2024_25 +
+        (grossEarnings - NI_2024_25_UPPER_THRESHOLD) * NI_RATE_UPPER_2024_25;
+    }
+    return this.contribNI;
+  }
+
+  // Function to calculate income tax - upper tax bracket not implemented
+  // delivery driver on 12.04 would have to work 80hrs a week for 52 weeks to reach £50086
+  // thouroughly illegal and £190 short of the next bracket!
+  // taxable income is gross income -  employee pension
+  calculateIncomeTax(taxableIncome) {
+    const annualIncome = taxableIncome * 13;
+    const taxableAmount =
+      annualIncome > settings.TAX_2024_25_PERSONAL_ALLOWANCE
+        ? annualIncome - settings.TAX_2024_25_PERSONAL_ALLOWANCE
+        : 0;
+    const annualTax = taxableAmount * settings.TAX_RATE_2024_25;
+    this.incomeTax = annualTax / 13;
+    return this.incomeTax;
+  }
+
+  // Function to calculate take-home pay
+  calculateTakeHomePay(grossEarnings, employeePension, ni, incomeTax) {
+    return grossEarnings - employeePension - ni - incomeTax;
+  }
+
+  finalCalculations(hrs = 0, holHrs = 0) {
+    // anual /4 * 52
+    let hoursForCycle = parseFloat(Day.minsToHDecimalReadable(this.cycleTotalMins) );
+    let hoursALForCycle = parseFloat(Day.minsToHDecimalReadable(this.cycleTotalALMins));
+
+    if (hrs != 0 || holHrs != 0) {
+      hoursForCycle = hrs;
+      hoursALForCycle = holHrs;
+    }
+
+    this.gross4wk =
+      hoursForCycle * settings.HOURLY_RATE_2024_25 +
+      hoursALForCycle * settings.HOURLY_RATE_AL_2024_25;
+
+    this.annualIncomeEstimate = (this.gross4wk / 4) * 52;
+
+    this.calculatePension(this.gross4wk);
+
+    this.calculateNI(this.gross4wk);
+
+    this.calculateTaxableIncome(this.gross4wk, this.pensionEmployee);
+
+    this.calculateIncomeTax(this.taxableIncome);
+
+    this.deductions = this.incomeTax + this.contribNI + this.pensionEmployee;
+
     this.netIncomeForCycle = this.gross4wk - this.deductions;
   }
-  
-  persistentSave(){
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this));
+
+  // TODO - add a save to server option
+  // storage - https://neon.tech/?ref=devsidebar-c2&bb=177097
+  //
+  persistentSave(cloud = false) {
+    const jsonData = JSON.stringify(this);
+    localStorage.setItem(this.localStorageKey, jsonData);
+
+    if (cloud) {
+      this.saveToServer(jsonData);
+    }
   }
-  
-  // call on submit & week change  
-  updateModelFromForms(){
+
+  saveToServer(jsonData) {
+    fetch("https://127.0.0.1:50015/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonData,
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Successfully saved to server:", data);
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+  }
+
+  // call on submit & week change
+  updateModelFromForms() {
     // cycle through days parse content into relevant object
     //cl('> - - - processing form data');
     let startDay = this.weekNo * 7;
-    for (let dayNo = startDay; dayNo < startDay+7; dayNo +=1) {
-      let start = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).textContent.trim();
-      
+    for (let dayNo = startDay; dayNo < startDay + 7; dayNo += 1) {
+      let start = document
+        .querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`)
+        .textContent.trim();
+
       // drop down input: value/placeholder
-      let value = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).value.trim();
-      let placeholder = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).placeholder.trim();      
-      let breakStr = (value) ? value : placeholder;
-      
-      let finish = document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`).textContent.trim();
+      let value = document
+        .querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`)
+        .value.trim();
+      let placeholder = document
+        .querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`)
+        .placeholder.trim();
+      let breakStr = value ? value : placeholder;
+
+      let finish = document
+        .querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`)
+        .textContent.trim();
       //cl(`==: ${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].HRdate} :== S`);
       this.daysInCycle[dayNo].setHours(start, breakStr, finish);
       //cl(`==: ${this.daysInCycle[dayNo].HRdate} :== E`);
     }
+    // pension input id='pension_pc'
+    settings.PENSION_EMPLOYEE_PC =
+      document.querySelector("#pension_pc").value / 100;
     this.updateWeekTotalMins();
-    this.finalCalulations();
+    this.finalCalculations();
   }
-  
+
   updateHTML(){
     // TODAYS DATE
     let todayClockElement;
@@ -429,19 +556,26 @@ class PayCycle4wk{
     // MONTHLY TOTAL
     document.querySelector(`#r5_tot_hrs`).textContent = Day.minsToHMReadable(this.cycleTotalMins + this.cycleTotalALMins);
     document.querySelector(`#r5_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.cycleTotalMins + this.cycleTotalALMins);
-    
-    // TOTALS    
-    document.querySelector('#r1_anual_in').textContent = this.annualIncomeEstimate.toFixed(2);
-    document.querySelector('#r2_gross_4wk').textContent = this.gross4wk.toFixed(2);
-    document.querySelector('#r3_pension').textContent = this.pensionContrib.toFixed(2);
-    document.querySelector('#r4_ni').textContent = this.contribNI.toFixed(2);
-    document.querySelector('#r5_tax').textContent = this.incomeTax.toFixed(2);
-    document.querySelector('#r6_tot_dedcts').textContent = this.deductions.toFixed(2);
-    document.querySelector('#r7_net').textContent = this.netIncomeForCycle.toFixed(2);
-    
+
+    // TOTALS
+    document.querySelector("#r1_anual_in").textContent =
+      this.annualIncomeEstimate.toFixed(2);
+    document.querySelector("#r2_gross_4wk").textContent =
+      this.gross4wk.toFixed(2);
+    document.querySelector("#r3_pension_employer").textContent =
+      this.pensionEmployer.toFixed(2);
+    document.querySelector("#r4_pension_employee").textContent =
+      this.pensionEmployee.toFixed(2);
+    document.querySelector("#r5_ni").textContent = this.contribNI.toFixed(2);
+    document.querySelector("#r6_tax").textContent = this.incomeTax.toFixed(2);
+    document.querySelector("#r7_tot_dedcts").textContent =
+      this.deductions.toFixed(2);
+    document.querySelector("#r8_net").textContent =
+      this.netIncomeForCycle.toFixed(2);
+
     PayCycle4wk.highLightTodaysEntry(todayClockElement);
   }
-  
+
   static createLine(t0,p0,t1,p1,t2,p2,t3,p3,t4,p4,t5,p5,t6,p6,t7,p7,t8,p8){
     t0 = (t0) ? t0 : '';    p0 = (p0) ? p0 : 0;
     t1 = (t1) ? t1 : '';    p1 = (p1) ? p1 : 0;
@@ -452,12 +586,19 @@ class PayCycle4wk{
     t6 = (t6) ? t6 : '';    p6 = (p6) ? p6 : 0;
     t7 = (t7) ? t7 : '';    p7 = (p7) ? p7 : 0;
     t8 = (t8) ? t8 : '';    p8 = (p8) ? p8 : 0;
-    return t0.padEnd(p0) + t1.padEnd(p1) +
-           t2.padEnd(p2) + t3.padEnd(p3) +
-           t4.padEnd(p4) + t5.padEnd(p5) +
-           t6.padEnd(p6) + t7.padEnd(p7) + '\n';
+    return (
+      t0.padEnd(p0) +
+      t1.padEnd(p1) +
+      t2.padEnd(p2) +
+      t3.padEnd(p3) +
+      t4.padEnd(p4) +
+      t5.padEnd(p5) +
+      t6.padEnd(p6) +
+      t7.padEnd(p7) +
+      "\n"
+    );
   }
-  
+
   reportDayLine(day, date, start, brk, finish, hrs, dhrs){
     return (
       PayCycle4wk.createLine(day,     PAD_DAY,        // 0
@@ -487,7 +628,7 @@ class PayCycle4wk{
                              'HRS',      PAD_HRS,
                              'DHRS',     PAD_DHRS ) );
   }
-  
+
   reportWeek(title, startDay){
     let weekDays = this.reportColumnHeaders();
     
@@ -507,7 +648,7 @@ class PayCycle4wk{
     
     return `${title}\n${weekDays}`;
   }
-  
+
   emailVersionSummary(emailFormat=FORMAT_EMAIL){ // feels like a rehash of updateHTML - maybe a smarter way to do both?
     // mailto scheme: https://www.rfc-editor.org/rfc/rfc2368#page-3
     // more:          https://www.rfc-editor.org/rfc/rfc1738#page-12
@@ -579,7 +720,6 @@ class PayCycle4wk{
         return textSummary;
     }
   }
-
 }
 
 
@@ -619,14 +759,15 @@ function debugInfo(args) {
   debugText += addDebugLine('-');
   debugText += addDebugLine('AL: Annual Leave');
   debugText += addDebugLine('-');
-  debugText += addDebugLine(`TAX_RATE_2022/3: ${(settings.TAX_RATE_2022 * 100).toFixed(2)}%`);
-  debugText += addDebugLine(`TAX_2022_ALLOWANCE: £${settings.TAX_2022_ALLOWANCE}`);
-  debugText += addDebugLine(`NI_RATE_2022_23: ${(settings.NI_RATE_2022_23 * 100).toFixed(2)}%`);
-  debugText += addDebugLine(`NI_2022_23_ALLOWANCE: £${settings.NI_2022_23_ALLOWANCE}`);
-  debugText += addDebugLine(`HOURLY_RATE_2022: £${(settings.HOURLY_RATE_2022).toFixed(2)}`);
-  debugText += addDebugLine(`HOURLY_RATE_2022_AL: £${settings.HOURLY_RATE_AL_2022}`);
+  debugText += addDebugLine(`TAX_RATE_2024_25/3: ${(settings.TAX_RATE_2024_25 * 100).toFixed(2)}%`);
+  debugText += addDebugLine(`TAX_2024_25_ALLOWANCE: £${settings.TAX_2024_25_ALLOWANCE}`);
+  debugText += addDebugLine(`NI_RATE_LOWER_2024_25: ${(settings.NI_RATE_LOWER_2024_25 * 100).toFixed(2)}%`);
+  debugText += addDebugLine(`NI_2024_25_LOWER_THRESHOLD: £${settings.NI_2024_25_LOWER_THRESHOLD}`);
+  debugText += addDebugLine(`HOURLY_RATE_2024_25: £${(settings.HOURLY_RATE_2024_25).toFixed(2)}`);
+  debugText += addDebugLine(`HOURLY_RATE_2024_25_AL: £${settings.HOURLY_RATE_AL_2024_25}`);
   debugText += addDebugLine('(fixed:TODO update model)');
-  debugText += addDebugLine(`PENSION_PC: ${(settings.PENSION_PC * 100).toFixed(2)}%`);
+  debugText += addDebugLine(`PENSION_EMPLOYEE_PC: ${(settings.PENSION_EMPLOYEE_PC * 100).toFixed(2)}%`);
+  debugText += addDebugLine(`PENSION_EMPLOYER_PC: ${(settings.PENSION_EMPLOYER_PC * 100).toFixed(2)}%`);
   debugText += addDebugLine('(fixed:TODO update model)');
   debugText += addDebugLine('-');
   
@@ -670,7 +811,7 @@ function displayFlash(event, id, classSpecific, classShow, innerHTML='') {
 window.addEventListener('load',function(){
   cl('LOADED - adding event listeners');
   pc.updateWeekTotalMins();
-  pc.finalCalulations();  
+  pc.finalCalculations();  
   pc.updateHTML();
   cl(pc);
   
@@ -709,7 +850,7 @@ window.addEventListener('load',function(){
     localStorage.setItem(KEY_LAST_KNOWN_STATE, pc.localStorageKey);
 
     pc.updateWeekTotalMins();
-    pc.finalCalulations();         
+    pc.finalCalculations();         
     pc.updateHTML();
   });
   
@@ -730,7 +871,7 @@ window.addEventListener('load',function(){
     localStorage.setItem(KEY_LAST_KNOWN_STATE, pc.localStorageKey);
 
     pc.updateWeekTotalMins();
-    pc.finalCalulations();          
+    pc.finalCalculations();          
     pc.updateHTML();
 
   });
@@ -839,7 +980,30 @@ window.addEventListener('load',function(){
       displayFlash(event, 'flash_QR', ['flash-qr'], 'flash-qr-show', img);
     });  
   }
-  
+
+
+  if (document.querySelector('#calc_button')) {
+    document.querySelector('#calc_button').addEventListener('click', function(event){  
+
+      let hrs = document.querySelector('#quick_calc_hrs').value;
+      let holHrs = document.querySelector('#quick_calc_hol_hrs').value;
+
+      // TODO - add any tap on screen to re-run finalCals & screen update to remove quickCalc
+      pc.finalCalculations(hrs, holHrs);
+            
+      // TOTALS    
+      document.querySelector('#r1_anual_in').textContent = pc.annualIncomeEstimate.toFixed(2);
+      document.querySelector('#r2_gross_4wk').textContent = pc.gross4wk.toFixed(2);
+      document.querySelector('#r3_pension_employer').textContent = `(ERS AE PEN S: ${pc.pensionEmployer.toFixed(2)})`;
+      document.querySelector('#r4_pension_employee').textContent = `AE PEN S: ${pc.pensionEmployee.toFixed(2)}`;
+      document.querySelector('#r5_ni').textContent = pc.contribNI.toFixed(2);
+      document.querySelector('#r6_tax').textContent = pc.incomeTax.toFixed(2);
+      document.querySelector('#r7_tot_dedcts').textContent = pc.deductions.toFixed(2);
+      document.querySelector('#r8_net').textContent = pc.netIncomeForCycle.toFixed(2);
+
+      console.log('calc_button clicked');
+    });  
+  }  
   
 });  // load END - - - - <
 
@@ -949,23 +1113,21 @@ if (hasGetUserMedia()) {
 // Mobile display with all data summarised content sharable (eMail)
 // WORKING
 
-// TODO - SINGLE USER
-
 // CRITICAL - - - - - - - - - - - - - - - - - - - -
-// works OFFLINE
+// works OFFLINE - DONE 
+// TODO - needs a Heavier testing & data backups
 
-// RESPONSIVE display
-
+// RESPONSIVE display - DONE
 
 // NICE TO HAVE - - - - - - - - - - - - - - - - - -
-// QR code to share app
+// QR code to share app - DONE
 
 // Take photo of Clock in machine store time & photo in gallery for recall if necessary
 // https://stackoverflow.com/questions/23916566/html5-input-type-file-accept-image-capture-camera-display-as-image-rat
 
-// Print Summary from app
+// LOW Priority - Print Summary from app - only email to self at the mo - FINE!
 
-// add QR code to spread app
+
 
 
 

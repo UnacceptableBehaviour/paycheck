@@ -75,13 +75,20 @@ body {
 }
 
 .title-text {
-  font-size: 3.5vh;
+  font-size: 3.2vh;
   text-align: center;
 }
 
 #tax_code {
   width: 18vw;
 }
+#pension_text {
+  width: 18vw;
+}
+#pension_pc {
+  width: 15vw;
+}
+
 
 #wk_range {
   text-align: right;
@@ -177,6 +184,18 @@ body {
   pointer-events: none;
 }
 
+#calc_button, #export_button {
+  width: 10vw;
+}
+#quick_calc_hrs {
+  width: 10vw;
+}
+#quick_calc_hol_hrs {
+  width: 10vw;
+}
+
+
+
 .flash {
   position: fixed;                
   top: 50vh;
@@ -252,7 +271,7 @@ body {
 .col4,
 .col5 {
   contenteditable: true;
-  virtualkeyboardpolicy="manual";
+  virtualkeyboardpolicy: "manual";
 }
 
 .col1 {
@@ -348,10 +367,10 @@ label.imgSelect input[accept*="image"] {
 /* summary table */
 /* tbc - table column */
 .tbc.name {
-  width: 80vw;  
+  width: 40vw;  
 }
 .tbc.fin_data {
-  width: 15vw;
+  width: 60vw;
   text-align: right;
 }
 
