@@ -1,4 +1,5 @@
 
+
 import {registerGainedFocusCallback, registerLostFocusCallback} from './focus.js';
 
 function cl(args) {
@@ -8,6 +9,7 @@ function cl(args) {
 // where to look in local storage for current state
 const KEY_LAST_KNOWN_STATE = 'state_key';
 const KEY_SW_INFO          = 'sw_info';   // must match in SW!
+var   serviceWorkerVerion  = 0;
 
 // settings & configuration
 const CAMERA_MODE_GALLERY = 0;
@@ -757,8 +759,14 @@ function addDebugLine(text) {
 
 function debugInfo(args) {
   let debugText = "* * * DEBUG INFO (beta release) * * * ";
+  
+  if (KEY_SW_INFO in localStorage) {
+    if (serviceWorkerVerion === 0) serviceWorkerVerion = localStorage.getItem(KEY_SW_INFO);
+    cl(`FOUND SW Version ${serviceWorkerVerion}`);
+  }  
+  
   debugText += addDebugLine('');
-  debugText += addDebugLine(`paycheck.js V00.07 / SW 00.29`); // verion_number_passed_in
+  debugText += addDebugLine(`paycheck.js V00.07 / SW ${serviceWorkerVerion}`); // verion_number_passed_in
   debugText += addDebugLine('');
   
   // based on
@@ -767,26 +775,19 @@ function debugInfo(args) {
   debugText += addDebugLine('-');
   debugText += addDebugLine('AL: Annual Leave');
   debugText += addDebugLine('-');
-  debugText += addDebugLine(`TAX_RATE_2024_25/3: ${(settings.TAX_RATE_2024_25 * 100).toFixed(2)}%`);
-  debugText += addDebugLine(`TAX_2024_25_ALLOWANCE: £${settings.TAX_2024_25_ALLOWANCE}`);
+  debugText += addDebugLine(`TAX_RATE_2024_25: ${(settings.TAX_RATE_2024_25 * 100).toFixed(2)}%`);
+  debugText += addDebugLine(`TAX_2024_25_ALLOWANCE: £${settings.TAX_2024_25_PERSONAL_ALLOWANCE}`);
   debugText += addDebugLine(`NI_RATE_LOWER_2024_25: ${(settings.NI_RATE_LOWER_2024_25 * 100).toFixed(2)}%`);
   debugText += addDebugLine(`NI_2024_25_LOWER_THRESHOLD: £${settings.NI_2024_25_LOWER_THRESHOLD}`);
   debugText += addDebugLine(`HOURLY_RATE_2024_25: £${(settings.HOURLY_RATE_2024_25).toFixed(2)}`);
   debugText += addDebugLine(`HOURLY_RATE_2024_25_AL: £${settings.HOURLY_RATE_AL_2024_25}`);
-  debugText += addDebugLine('(fixed:TODO update model)');
   debugText += addDebugLine(`PENSION_EMPLOYEE_PC: ${(settings.PENSION_EMPLOYEE_PC * 100).toFixed(2)}%`);
   debugText += addDebugLine(`PENSION_EMPLOYER_PC: ${(settings.PENSION_EMPLOYER_PC * 100).toFixed(2)}%`);
-  debugText += addDebugLine('(fixed:TODO update model)');
   debugText += addDebugLine('-');
-  
-  if (KEY_SW_INFO in localStorage) {
-    swInfo = localStorage.getItem(KEY_SW_INFO);
-    
-    debugText += addDebugLine(`SW version: ${swInfo.swVersion}`);
-    debugText += addDebugLine(`cache: ${swInfo.cacheName}`);
-  } else {
+
+  if (serviceWorkerVerion === 0) {
     debugText += addDebugLine('** WARNING **');
-    debugText += addDebugLine(`KEY: ${KEY_SW_INFO} < Not found.`);
+    debugText += addDebugLine(`SW version info NOT FOUND - KEY: ${KEY_SW_INFO} < NOT FOUND.`);
   }
   
   return debugText;
@@ -1012,7 +1013,30 @@ window.addEventListener('load',function(){
       console.log('calc_button clicked');
     });  
   }  
+
+  // SERVICE WORKER i/f
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/paycheck/service_worker.js')
+      .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
   
+        // Send a message to the service worker to get the version number
+        if (navigator.serviceWorker.controller) {
+          const messageChannel = new MessageChannel();
+          messageChannel.port1.onmessage = (event) => {
+            if (event.data && event.data.version) {
+              localStorage.setItem(KEY_SW_INFO, event.data.version);
+              console.log('Service Worker Version:', event.data.version);
+            }
+          };
+          navigator.serviceWorker.controller.postMessage({ type: 'GET_SW_VERSION' }, [messageChannel.port2]);
+        }
+      })
+      .catch(error => {
+        console.error('Service Worker registration failed:', error);
+      });
+  }  
+
 });  // load END - - - - <
 
 

@@ -11,11 +11,10 @@
 // depends if you are using /docs/  or /master/
 // /paycheck/
 
-const KEY_SW_INFO = 'sw_info';    // must match in paycheck.js!
-                                 //
-let verion_number_passed_in = '00.34';  // < - - - - - - - - - - - - - - - - - - - - - - //
+const KEY_SW_INFO = 'sw_info'; // must match in paycheck.js!
+const SERVICE_WORKER_VERSION = '00.38';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
-const CACHE_NAME = `paycheck-gitio-cache_${verion_number_passed_in}`;                     //
+const CACHE_NAME = `paycheck-gitio-cache_${SERVICE_WORKER_VERSION}`;                      //
                                                                                           //
 // * * * * * * * * * * * * * * * * * * * * * * * * * * *                                  //
 // run                                                                                    //
@@ -95,13 +94,15 @@ self.addEventListener('activate', (evt) => {
       }));
     })
   );
-  //localStorage.setItem(KEY_SW_INFO, {
-  //  cacheName: CACHE_NAME,
-  //  swVersion: verion_number_passed_in
-  //});  
   self.clients.claim();
 });
 
+// allow retrieval of SW version from paycheck.js
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'GET_SW_VERSION') {
+    event.ports[0].postMessage({ version: SERVICE_WORKER_VERSION });
+  }
+});
 
 // fetch event - service network requests 
 //self.addEventListener('fetch', function(event) {
@@ -157,11 +158,4 @@ self.addEventListener('fetch', function(event) {
       });
     })
   );
-});
-
-// allow retrieval of SW version from paycheck.js
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'GET_SW_VERSION') {
-    event.ports[0].postMessage({ version: SW_VERSION });
-  }
 });
