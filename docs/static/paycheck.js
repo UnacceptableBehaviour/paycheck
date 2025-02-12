@@ -493,8 +493,7 @@ class PayCycle4wk {
       //cl(`==: ${this.daysInCycle[dayNo].HRdate} :== E`);
     }
     // pension input id='pension_pc'
-    settings.PENSION_EMPLOYEE_PC =
-      document.querySelector("#pension_pc").value / 100;
+    settings.PENSION_EMPLOYEE_PC = document.querySelector("#pension_pc").value / 100;
     this.updateWeekTotalMins();
     this.finalCalculations();
   }
@@ -512,7 +511,9 @@ class PayCycle4wk {
     document.querySelector('#wk_range_js').textContent = ` ${this.getWeekNo(0)} - ${this.getWeekNo(3)}`;
     document.querySelector('#wk_range_dates_js').textContent = `${this.payStart.getDate()} ${Day.numToMonth[this.payStart.getMonth()]} - ${this.cutOff.getDate()} ${Day.numToMonth[this.cutOff.getMonth()]}`;
     document.querySelector('#wk_no_js').textContent = this.getWeekNoDateRange();
-    
+    document.querySelector("#pension_pc").value = settings.PENSION_EMPLOYEE_PC * 100;
+
+
     // HOURS TABLE
     let startDay = this.weekNo * 7;
     let tableRowElements = document.querySelectorAll('.hrs-row');
