@@ -113,9 +113,6 @@ body {
   align-items: center;
 }
 
-.flexrow-button-header-button {
-    /*text-align: center;*/
-}
 
 .flexrow-button-header-text {
     flex-grow: 1;
@@ -212,7 +209,7 @@ body {
 }
 
 
-#calc_button, #export-button-up, #export-button-down {
+#calc_button, #export_button_save, #export_button_get {
   width: 10vw;
 }
 #quick_calc_hrs {
@@ -404,7 +401,7 @@ label.imgSelect input[accept*="image"] {
 
 
 #ct_debug {
-  disply: none;
+  display: none;
 }
 
 

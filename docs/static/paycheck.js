@@ -466,6 +466,28 @@ class PayCycle4wk {
     });
   }
 
+  retrieveFromServer() {
+    fetch("https://127.0.0.1:50015/save", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Successfully retrieved from server:", data);
+      // Process the retrieved data as needed
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+  }
+
   // call on submit & week change
   updateModelFromForms() {
     // cycle through days parse content into relevant object
@@ -1012,6 +1034,22 @@ window.addEventListener('load',function(){
       document.querySelector('#r8_net').textContent = pc.netIncomeForCycle.toFixed(2);
 
       console.log('calc_button clicked');
+    });  
+  }  
+
+  // export_button_save
+  // export_button_get
+  if (document.querySelector('#export_button_save')) {
+    document.querySelector('#export_button_save').addEventListener('click', function(event){  
+      console.log('[ S A V E ] JSON >> clicked');      
+      pc.persistentSave(true); // true - push to cloud
+    });  
+  }
+
+  if (document.querySelector('#export_button_get')) {
+    document.querySelector('#export_button_get').addEventListener('click', function(event){  
+      console.log('[ G E T ] JSON >>  clicked');
+      pc.retrieveFromServer();
     });  
   }  
 
