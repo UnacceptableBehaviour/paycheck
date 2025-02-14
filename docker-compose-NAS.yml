@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  # asset_server:
+  #   container_name: asset_server-n
+  #   build:
+  #     context: ./asset_server
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - /volume1/docker/dtk-swarm-2/asset_server:/asset_server
+  #   networks:
+  #     dtk-network:
+  #       aliases:
+  #         - asset.server
+  #   ports:
+  #     - "8080:8080"
+  #     - "8000:8000"
+
+
+  # postgres:
+  #   container_name: postgres-container-n
+  #   image: postgres:13-alpine
+  #   restart: always
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=snacktime
+  #     - POSTGRES_DB=cs50_recipes
+  #   ports:
+  #     - "7432:5432"
+  #   networks:
+  #     - dtk-network
+  #   volumes: 
+  #     - /volume1/docker/dtk-swarm-2/postgres/data:/var/lib/postgresql/data
+
+     
+  # dtk_health:
+  #   container_name: dtk_health-n
+  #   build:
+  #     context: ./dtk_health/mysql_python
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - /volume1/docker/dtk-swarm-2/asset_server/static/recipe:/mysql_python/static/recipe
+  #     - /volume1/docker/dtk-swarm-2/dtk_health/_docr_support:/mysql_python/scratch/_docr_support
+  #     - /volume1/docker/dtk-swarm-2/dtk_health/archive:/mysql_python/scratch/_docr_support/archive
+  #   networks:
+  #     - dtk-network
+  #   environment:
+  #     - FLASK_ENV=development
+  #     - FLASK_APP=hello.py
+  #     - DB_CONTAINER=postgres-container-n
+  #   ports:
+  #     - "50015:50015"
+  #   depends_on:
+  #     - asset_server
+  #     - postgres
+
+  paycheck_cloud:
+    container_name: paycheck_cloud-n
+    build:
+      context: ./paycheck-cloud/paycheck
+      dockerfile: Dockerfile
+    volumes:
+      - /volume1/docker/paycheck-cloud/paycheck-cloud/_persistent_store:/paycheck/scratch/_save
+      # - /volume1/docker/dtk-swarm-2/dtk_health/_docr_support:/mysql_python/scratch/_docr_support
+      # - /volume1/docker/dtk-swarm-2/dtk_health/archive:/mysql_python/scratch/_docr_support/archive
+    # networks:
+    #   - dtk-network
+    environment:
+      - FLASK_ENV=production
+      - FLASK_APP=backup_server.py
+      # - DB_CONTAINER=postgres-container-n
+    ports:
+      - "50030:50030"
+    # depends_on:
+    #   - asset_server
+    #   - postgres
+
+# networks:
+#   dtk-network:
+#     driver: bridge
+#     name: dtk-network
+
+# volumes:
+#   postgres:
+#     driver: local      
+
+
+# COMMAND BASICS
+
+# docker-compose build        # Build the images
+#                             # look for a docker-compose.yml file in the current directory,
+#                             # & build images for all the services defined based on their build configs.
+
+# docker-compose up -d        # run containers  -d runs in detached/background mode.
+
+# docker-compose down         # Stop the containers
+
+# docker-compose logs -f      # View logs from all containers
+# docker-compose exec app sh  # Shell into a container
+# docker-compose restart      # Restart all containers
