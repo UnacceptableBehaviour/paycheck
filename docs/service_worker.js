@@ -12,7 +12,7 @@
 // /paycheck/
 
 const KEY_SW_INFO = 'sw_info'; // must match in paycheck.js!
-const SERVICE_WORKER_VERSION = '00.42';  // < - - - - - - - - - - - - - - - - - - - - - - //
+const SERVICE_WORKER_VERSION = '00.44';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${SERVICE_WORKER_VERSION}`;                      //
                                                                                           //
@@ -144,18 +144,31 @@ self.addEventListener('fetch', function(event) {
   console.log(`[SW] fetch:${fc}`);
   console.log(event.request.url);
   console.log(event);
-  
-  event.respondWith(
-    caches.match(event.request).then(function(response) {
-      if (response) {
-        return response;
-      }
-      return fetch(event.request).then(function(networkResponse) {
-        return networkResponse;
-      }).catch(function(error) {
+
+  self.addEventListener('fetch', function(event) {
+    console.log(`[SW] fetch URL: ${event.request.url}`);
+    
+    event.respondWith(
+      fetch(event.request).catch(function(error) {
         console.error('Fetching failed:', error);
         throw error;
-      });
-    })
-  );
+      })
+    );
+  });
+
+  // with CACHE falling back to network
+  //
+  // event.respondWith(
+  //   caches.match(event.request).then(function(response) {
+  //     if (response) {
+  //       return response;
+  //     }
+  //     return fetch(event.request).then(function(networkResponse) {
+  //       return networkResponse;
+  //     }).catch(function(error) {
+  //       console.error('Fetching failed:', error);
+  //       throw error;
+  //     });
+  //   })
+  // );
 });
