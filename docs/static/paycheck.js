@@ -471,7 +471,8 @@ class PayCycle4wk {
     this.command = "SAVE";
     const jsonData = JSON.stringify(this);
     
-    fetch("https://127.0.0.1:50015/save", {
+    //fetch("https://127.0.0.1:50015/save", {
+    fetch("http://127.0.0.1:50030/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -498,7 +499,8 @@ class PayCycle4wk {
                       userUUID: this.userUUID,
                       localStorageKey: this.localStorageKey};
 
-    fetch("https://127.0.0.1:50015/save", {
+    //fetch("https://127.0.0.1:50015/save", {
+    fetch("http://127.0.0.1:50030/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -515,7 +517,12 @@ class PayCycle4wk {
       console.log("Successfully retrieved from server:", data);
       // TODO add dialogue 'Overwrite current data?'  YES/NO?
       // TODO add dta integrity / validation checks before overwriting
-      this.initFromJSON(data);
+      this.initFromJSON(data);          // 
+      this.updateHTML();                // - - some of the calculaated data not stored needs to be recalculated & updated
+      this.updateModelFromForms();      //        \ - - check this TODO
+      // TODO update Estimates & Deductions
+      this.finalCalculations();
+      this.updateHTML();
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
