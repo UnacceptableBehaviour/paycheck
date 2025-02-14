@@ -29,7 +29,8 @@ var settings = {
   NI_2024_25_LOWER_THRESHOLD: (242 * 4) - 1,                // for 2024 to 2025 tax year 242/wk
   NI_2024_25_UPPER_THRESHOLD: (967 * 4) - 1,                // for 2024 to 2025 tax year 967/wk
   HOURLY_RATE_2024_25: HOURLY_RATE_2024_25,
-  HOURLY_RATE_AL_2024_25: 20.3062, //HOURLY_RATE_2024_25 * 1.5,// its more complicated than this - find out details TODO
+  //HOURLY_RATE_AL_2024_25: 20.3062, //HOURLY_RATE_2024_25 * 1.5,// its more complicated than this - find out details TODO
+  HOURLY_RATE_AL_2024_25: HOURLY_RATE_2024_25 * 1.5,// its more complicated than this - find out details TODO
   PENSION_EMPLOYEE_PC: 0.15,  // 0.05,
   PENSION_EMPLOYER_PC: 0.03,
   PENSION_EXEMPTION: 480
