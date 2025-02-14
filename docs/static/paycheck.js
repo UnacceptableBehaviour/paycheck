@@ -1,6 +1,8 @@
 
 
 import {registerGainedFocusCallback, registerLostFocusCallback} from './focus.js';
+// import { v5 as uuidv5 } from './uuid/8.3.2/uuid.min.js';
+// TODO use CDN for uuid.js
 
 function cl(args) {
   console.log(args);
@@ -16,6 +18,7 @@ const CAMERA_MODE_GALLERY = 0;
 const CAMERA_MODE_CAPTURE = 1;
 const HOURLY_RATE_2024_25 = 12.04;
 var settings = {
+  NAMESPACE: '388e5ead-9872-4181-aef2-225b7cae61dd',
   cameraMode: CAMERA_MODE_GALLERY,
   showExceptions: true,                             // show hand authorized exception in mail breakdown 
   taxYear: '2024-25',                               // https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2024-to-2025
@@ -31,6 +34,27 @@ var settings = {
   PENSION_EMPLOYER_PC: 0.03,
   PENSION_EXEMPTION: 480
 };
+
+function generateUUID() {
+  // Example unique information from the user's device and configuration
+  // TODO add username & DOB request to use in uuid string
+  const userAgent = navigator.userAgent;
+  const language = navigator.language;
+
+  // Combine the unique information into a single string
+  const uniqueString = `${userAgent}-${language}`;
+
+  // Generate a UUID using the unique string and namespace
+  const uuid = uuidv5(uniqueString, settings.NAMESPACE);
+
+  return uuid;
+}
+
+// Generate & Store the UUID in localStorage
+const userUUID = 'bdd6d91c-f2e2-426a-baaf-3648dab3f3c0'; //generateUUID();
+console.log('User UUID:', userUUID);
+localStorage.setItem('userUUID', userUUID);
+
 
 // +/- Days create a new Date object
 Date.prototype.copyAddDays = function(days) {
@@ -217,6 +241,7 @@ class PayCycle4wk {
 
   constructor(payDay, startWkNo) {
     // let pc = new PayCycle4wk(new Date(2022, 07, 12)); // the month is 0-indexed
+    this.userUUID = userUUID;
     this.payDay = payDay;
     this.cutOff = payDay.copyAddDays(PayCycle4wk.OFFSET_CUTOFF);
     this.payStart = payDay.copyAddDays(PayCycle4wk.OFFSET_START);
@@ -232,12 +257,10 @@ class PayCycle4wk {
     this.cycleTotalMins = 0;
     this.cycleTotalALMins = 0;
 
-    // localstorage key format: 2022_HRS_28-31_12AUG
-    this.localStorageKey = `${this.payDay.getFullYear()}_HRS_${
-      this.weekNos[0]
-    }-${this.weekNos[3]}_${this.payDay.getDate()}${
-      Day.numToMonth[this.payDay.getMonth()]
-    }`.toUpperCase();
+    // localstorage key format: 2022_HRS_28-31_12AUG < WAS TODO REMOVE
+    //                 payday > YYYY MMDD 
+    // localstorage key format: 2022_0812_WKS_28-31  < IS
+    this.localStorageKey = `${this.payDay.getFullYear()}_${(this.payDay.getMonth()+1).toString().padStart(2, '0')}${this.payDay.getDate().toString().padStart(2, '0')}_WKS_${(this.weekNos[0]).toString().padStart(2, '0')}-${(this.weekNos[3]).toString().padStart(2, '0')}`.toUpperCase();  cl(`this.localStorageKey: ${this.localStorageKey} <<`);
     this.daysInCycle = [];
 
     var date = this.payStart;
@@ -440,11 +463,14 @@ class PayCycle4wk {
     localStorage.setItem(this.localStorageKey, jsonData);
 
     if (cloud) {
-      this.saveToServer(jsonData);
+      this.saveToServer();
     }
   }
 
-  saveToServer(jsonData) {
+  saveToServer() {
+    this.command = "SAVE";
+    const jsonData = JSON.stringify(this);
+    
     fetch("https://127.0.0.1:50015/save", {
       method: "POST",
       headers: {
@@ -467,11 +493,17 @@ class PayCycle4wk {
   }
 
   retrieveFromServer() {
+    this.command = "RETRIEVE";
+    const jsonData = {command: this.command,
+                      userUUID: this.userUUID,
+                      localStorageKey: this.localStorageKey};
+
     fetch("https://127.0.0.1:50015/save", {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
-      }
+      },
+      body: JSON.stringify(jsonData),
     })
     .then((response) => {
       if (!response.ok) {
@@ -481,7 +513,9 @@ class PayCycle4wk {
     })
     .then((data) => {
       console.log("Successfully retrieved from server:", data);
-      // Process the retrieved data as needed
+      // TODO add dialogue 'Overwrite current data?'  YES/NO?
+      // TODO add dta integrity / validation checks before overwriting
+      this.initFromJSON(data);
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
@@ -807,6 +841,8 @@ function debugInfo(args) {
   debugText += addDebugLine(`PENSION_EMPLOYEE_PC: ${(settings.PENSION_EMPLOYEE_PC * 100).toFixed(2)}%`);
   debugText += addDebugLine(`PENSION_EMPLOYER_PC: ${(settings.PENSION_EMPLOYER_PC * 100).toFixed(2)}%`);
   debugText += addDebugLine('-');
+  debugText += addDebugLine(userUUID);
+  debugText += addDebugLine('//');
 
   if (serviceWorkerVerion === 0) {
     debugText += addDebugLine('** WARNING **');
