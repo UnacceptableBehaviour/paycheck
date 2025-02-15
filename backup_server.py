@@ -5,6 +5,7 @@
 from flask import Flask, render_template, request, send_from_directory, redirect, jsonify
 from werkzeug import serving
 import ssl
+import os
 
 import re                   # regex
 import json                 # JSON tools
@@ -22,6 +23,7 @@ import random
 # https://flask.palletsprojects.com/en/0.12.x/patterns/favicon/
 @app.route('/favicon.ico')
 def favicon():
+    print(f"favicon path: {os.path.join(app.root_path, 'static')}")
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
@@ -35,7 +37,7 @@ NAMESPACE = '388e5ead-9872-4181-aef2-225b7cae61dd'
 # payCheck route to test saving to server 
 @app.route('/save', methods=['POST', 'GET'])
 def save():
-    data_dir = Path('./scratch/_save')    
+    data_dir = Path('./scratch/_save')
     
     if request.method == 'POST':
         print("PC data - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - S")
@@ -85,7 +87,9 @@ def save():
         
     elif request.method == 'GET':
         file_path = data_dir.joinpath('default_GET_file.json')
-        print(f"[GET] SHOUL NEVER HAPPEN from: {file_path}")
+        print(f"[GET] SHOULD NEVER HAPPEN from: {file_path}")
+        print(f"PWD: {os.getcwd()}")
+        
         try:
             with open(file_path, 'r') as json_file:
                 data = json.load(json_file)
