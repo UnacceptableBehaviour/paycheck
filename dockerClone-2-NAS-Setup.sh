@@ -14,6 +14,8 @@ rm -rf paycheck
 # clone new one in place
 git clone https://github.com/UnacceptableBehaviour/paycheck
 
+# cp default_GET_file.json to _persistent_store - debugging  TODO remove when done!
+
 cd paycheck
 
 
