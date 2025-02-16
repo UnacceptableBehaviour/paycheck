@@ -4,8 +4,7 @@
 
 from flask import Flask, render_template, request, send_from_directory, redirect, jsonify
 from werkzeug import serving
-import ssl
-import os
+
 
 import re                   # regex
 import json                 # JSON tools
@@ -16,15 +15,14 @@ app = Flask(__name__, template_folder='templates')
 CORS(app)
 # giza a look - debug
 from pprint import pprint
-import random
 # debug - delete
 
 
 # https://flask.palletsprojects.com/en/0.12.x/patterns/favicon/
 @app.route('/favicon.ico')
 def favicon():
-    print(f"favicon path: {os.path.join(app.root_path, 'static')}")
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    print(f"favicon path: {Path(app.root_path).joinpath('static/favicon.ico')}")
+    return send_from_directory(Path(app.root_path).joinpath('static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 # import uuid
@@ -88,7 +86,7 @@ def save():
     elif request.method == 'GET':
         file_path = data_dir.joinpath('default_GET_file.json')
         print(f"[GET] SHOULD NEVER HAPPEN from: {file_path}")
-        print(f"PWD: {os.getcwd()}")
+        print(f"PWD: {Path.cwd()}")
         
         try:
             with open(file_path, 'r') as json_file:
