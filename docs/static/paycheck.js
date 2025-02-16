@@ -473,7 +473,8 @@ class PayCycle4wk {
     const jsonData = JSON.stringify(this);
     
     //fetch("https://127.0.0.1:50015/save", {
-    fetch("http://127.0.0.1:50030/save", {
+    //fetch("http://127.0.0.1:50030/save", {
+    fetch("https://paycheckcloud.creativemateriel.synology.me/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -501,7 +502,8 @@ class PayCycle4wk {
                       localStorageKey: this.localStorageKey};
 
     //fetch("https://127.0.0.1:50015/save", {
-    fetch("http://127.0.0.1:50030/save", {
+    //fetch("http://127.0.0.1:50030/save", {
+    fetch("https://paycheckcloud.creativemateriel.synology.me/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
