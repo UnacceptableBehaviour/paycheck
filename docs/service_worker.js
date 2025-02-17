@@ -12,7 +12,7 @@
 // /paycheck/
 
 const KEY_SW_INFO = 'sw_info'; // must match in paycheck.js!
-const SERVICE_WORKER_VERSION = '00.46';  // < - - - - - - - - - - - - - - - - - - - - - - //
+const SERVICE_WORKER_VERSION = '00.47';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${SERVICE_WORKER_VERSION}`;                      //
                                                                                           //
