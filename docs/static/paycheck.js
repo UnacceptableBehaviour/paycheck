@@ -459,22 +459,18 @@ class PayCycle4wk {
   // TODO - add a save to server option
   // storage - https://neon.tech/?ref=devsidebar-c2&bb=177097
   //
-  persistentSave(cloud = false) {
+  persistentSave() {
     const jsonData = JSON.stringify(this);
     localStorage.setItem(this.localStorageKey, jsonData);
 
-    if (cloud) {
-      this.saveToServer();
-    }
   }
 
   saveToServer() {
     this.command = "SAVE";
     const jsonData = JSON.stringify(this);
     
-    //fetch("https://127.0.0.1:50015/save", {
-    //fetch("http://127.0.0.1:50030/save", {
-    fetch("https://paycheckcloud.creativemateriel.synology.me/save", {
+    //return fetch("http://127.0.0.1:50030/save", {
+    return fetch("https://paycheckcloud.creativemateriel.synology.me/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -490,9 +486,6 @@ class PayCycle4wk {
     .then((data) => {
       console.log("Successfully saved to server:", data);
     })
-    .catch((error) => {
-      console.error("There was a problem with the fetch operation:", error);
-    });
   }
 
   retrieveFromServer() {
@@ -501,9 +494,8 @@ class PayCycle4wk {
                       userUUID: this.userUUID,
                       localStorageKey: this.localStorageKey};
 
-    //fetch("https://127.0.0.1:50015/save", {
-    //fetch("http://127.0.0.1:50030/save", {
-    fetch("https://paycheckcloud.creativemateriel.synology.me/save", {
+    //return fetch("http://127.0.0.1:50030/save", {
+      return fetch("https://paycheckcloud.creativemateriel.synology.me/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -526,9 +518,8 @@ class PayCycle4wk {
       // TODO update Estimates & Deductions
       this.finalCalculations();
       this.updateHTML();
-    })
-    .catch((error) => {
-      console.error("There was a problem with the fetch operation:", error);
+      // TODO REDO ALL CALCS DIRECTLY FROM HOURS
+      // An extra days anual leave appeared !??
     });
   }
 
@@ -1088,16 +1079,55 @@ window.addEventListener('load',function(){
   if (document.querySelector('#export_button_save')) {
     document.querySelector('#export_button_save').addEventListener('click', function(event){  
       console.log('[ S A V E ] JSON >> clicked');      
-      pc.persistentSave(true); // true - push to cloud
+      pc.persistentSave();
+
+      const button = event.target;            
+      button.classList.remove('button-transition');
+
+      pc.saveToServer()
+        .then(() => {
+          button.style.backgroundColor = 'green'; // Set background to green on success
+          setTimeout(() => {
+            button.classList.add('button-transition');
+            button.style.backgroundColor = ''; // Reset to original color
+          }, 1000); // 2 seconds
+        })
+        .catch((error) => {
+          button.style.backgroundColor = 'red'; // Set background to red on failure
+          setTimeout(() => {
+            button.classList.add('button-transition');
+            button.style.backgroundColor = ''; // Reset to original color
+          }, 1000); // 2 seconds
+          console.error("There was a problem with the save operation:", error);
+        });      
     });  
   }
+
 
   if (document.querySelector('#export_button_get')) {
     document.querySelector('#export_button_get').addEventListener('click', function(event){  
       console.log('[ G E T ] JSON >>  clicked');
-      pc.retrieveFromServer();
+      const button = event.target;            
+      button.classList.remove('button-transition');
+
+      pc.retrieveFromServer()
+        .then(() => {
+          button.style.backgroundColor = 'green'; // Set background to green on success
+          setTimeout(() => {
+            button.classList.add('button-transition');
+            button.style.backgroundColor = ''; // Reset to original color
+          }, 1000); // 2 seconds
+        })
+        .catch((error) => {
+          button.style.backgroundColor = 'red'; // Set background to red on failure
+          setTimeout(() => {
+            button.classList.add('button-transition');
+            button.style.backgroundColor = ''; // Reset to original color
+          }, 1000); // 2 seconds
+          console.error("There was a problem with the retrieve operation:", error);
+        });
     });  
-  }  
+  } 
 
   // SERVICE WORKER i/f
   if ('serviceWorker' in navigator) {

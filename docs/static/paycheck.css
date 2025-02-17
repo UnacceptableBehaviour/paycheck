@@ -153,6 +153,17 @@ body {
   flex-direction: column; */
 }
 
+#export_button_get {
+  border-radius: 6px;
+}
+#export_button_save {
+  border-radius: 6px;
+}
+
+.button-transition {
+  transition: background-color 2s ease;
+}
+
 .time-font {
   font-size: 3vh;
   padding: 0.5vh 1vw;
