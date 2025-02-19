@@ -4,9 +4,9 @@ import {registerGainedFocusCallback, registerLostFocusCallback} from './focus.js
 // import { v5 as uuidv5 } from './uuid/8.3.2/uuid.min.js';
 // TODO use CDN for uuid.js
 
-function console.log(args) {
-  console.log(args);
-};
+// function cl(args) {     // all console occur at line 8
+//   console.log(args); // < - - - - - - - - - - - /
+// };
 
 // where to look in local storage for current state
 const KEY_LAST_KNOWN_STATE = 'state_key';
