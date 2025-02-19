@@ -4,7 +4,7 @@ import {registerGainedFocusCallback, registerLostFocusCallback} from './focus.js
 // import { v5 as uuidv5 } from './uuid/8.3.2/uuid.min.js';
 // TODO use CDN for uuid.js
 
-function cl(args) {
+function console.log(args) {
   console.log(args);
 };
 
@@ -99,7 +99,7 @@ class Day{
   }
   
   initFromJSON(jsonObj){
-    //cl('initFromJSON-DAY() - - - - - - - - S');
+    //console.log('initFromJSON-DAY() - - - - - - - - S');
     this.day =  jsonObj.day;
     this.HRdate = jsonObj.HRdate;
     this.inTime = jsonObj.inTime;
@@ -110,15 +110,15 @@ class Day{
     if (this.totalALMins === undefined) this.totalALMins = 0;
     this.totalMinsReadableHM  = jsonObj.totalMinsReadableHM;
     this.totalMinsDecimalHM = jsonObj.totalMinsDecimalHM;
-    //cl(`initJSON-DAY(): ${this.day}-${this.HRdate}:${this.inTime}-${this.breakTime}-${this.outTime}`);
-    //cl('initFromJSON-DAY() - - - - - - - - E');
+    //console.log(`initJSON-DAY(): ${this.day}-${this.HRdate}:${this.inTime}-${this.breakTime}-${this.outTime}`);
+    //console.log('initFromJSON-DAY() - - - - - - - - E');
   }
   
   setHours(start, breakStr, finish){
     this.inTime = start;        // 0728
     this.breakTime = breakStr;  // 30     break time in mins / or  AL anual leave
     this.outTime = finish;      // 1553
-    //cl(`in: ${start} break: ${breakStr} out: ${finish}`);
+    //console.log(`in: ${start} break: ${breakStr} out: ${finish}`);
     if (this.breakTime === 'AL') { // Anual Leave - 7hr day
       this.inTime = '0700';
       this.outTime = '1400';
@@ -137,7 +137,7 @@ class Day{
       let hrsF = parseInt(finish.substr(0,2));
       let minF = parseInt(finish.substr(2,4));
       let toEnd = hrsF*60 + parseInt(minF);
-      //cl(`finish: ${finish} -: ${toEnd} - hrs: ${hrsF} - mins:${minF} - hrs ${finish.slice(0,2)}`);
+      //console.log(`finish: ${finish} -: ${toEnd} - hrs: ${hrsF} - mins:${minF} - hrs ${finish.slice(0,2)}`);
       
       // start time to mins inc 15m roundup
       let hrsS = parseInt(start.substr(0,2));
@@ -147,7 +147,7 @@ class Day{
       let roundupMins = minS? (minS-1) + (15 - ((minS-1) % 15)) : 0;  // round to nearest 15m  0=0, 1-15=15, 16-30=30, 31-45=45, 46-59=60
       let fromStart = hrsS*60 + roundupMins;
       
-      //cl(`start: ${start} -: ${fromStart} - hrs: ${hrsS} - mins:${minS} - rnd:${roundupMins} - hrs ${start.slice(0,2)}`);
+      //console.log(`start: ${start} -: ${fromStart} - hrs: ${hrsS} - mins:${minS} - rnd:${roundupMins} - hrs ${start.slice(0,2)}`);
       
       // mins to hhHmm 7H53
       // mins to decimal HRS 7.88Hrs
@@ -218,7 +218,7 @@ class PayCycle4wk {
       refDate.addDays(28);
       refWeekNo += 4;
       if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
-      //cl(`nextPD: ${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
+      //console.log(`nextPD: ${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
     }
 
     // catch
@@ -261,7 +261,7 @@ class PayCycle4wk {
     // localstorage key format: 2022_HRS_28-31_12AUG < WAS TODO REMOVE
     //                 payday > YYYY MMDD 
     // localstorage key format: 2022_0812_WKS_28-31  < IS
-    this.localStorageKey = `${this.payDay.getFullYear()}_${(this.payDay.getMonth()+1).toString().padStart(2, '0')}${this.payDay.getDate().toString().padStart(2, '0')}_WKS_${(this.weekNos[0]).toString().padStart(2, '0')}-${(this.weekNos[3]).toString().padStart(2, '0')}`.toUpperCase();  cl(`this.localStorageKey: ${this.localStorageKey} <<`);
+    this.localStorageKey = `${this.payDay.getFullYear()}_${(this.payDay.getMonth()+1).toString().padStart(2, '0')}${this.payDay.getDate().toString().padStart(2, '0')}_WKS_${(this.weekNos[0]).toString().padStart(2, '0')}-${(this.weekNos[3]).toString().padStart(2, '0')}`.toUpperCase();  console.log(`this.localStorageKey: ${this.localStorageKey} <<`);
     this.daysInCycle = [];
 
     var date = this.payStart;
@@ -282,18 +282,18 @@ class PayCycle4wk {
   }
 
   initFromJSON(jsonObj){ // let dt = new Date("2022-08-06T03:00:00.000Z")
-    //cl('initFromJSON() - - - - - - - - S');
-    this.payDay           = new Date(jsonObj.payDay);   //cl(jsonObj.payDay']);  
-    this.cutOff           = new Date(jsonObj.cutOff);   //cl(jsonObj.cutOff']);
-    this.payStart         = new Date(jsonObj.payStart); //cl(jsonObj.payStart']);
-    this.weekNo           = jsonObj.weekNo;             //cl(jsonObj.weekNo']);
-    this.weekNos          = jsonObj.weekNos;            //cl(jsonObj.weekNos']);
-    this.localStorageKey  = jsonObj.localStorageKey;    //cl(jsonObj.localStorageKey']);    
+    //console.log('initFromJSON() - - - - - - - - S');
+    this.payDay           = new Date(jsonObj.payDay);   //console.log(jsonObj.payDay']);  
+    this.cutOff           = new Date(jsonObj.cutOff);   //console.log(jsonObj.cutOff']);
+    this.payStart         = new Date(jsonObj.payStart); //console.log(jsonObj.payStart']);
+    this.weekNo           = jsonObj.weekNo;             //console.log(jsonObj.weekNo']);
+    this.weekNos          = jsonObj.weekNos;            //console.log(jsonObj.weekNos']);
+    this.localStorageKey  = jsonObj.localStorageKey;    //console.log(jsonObj.localStorageKey']);    
     for (let dayNo = 0; dayNo < PayCycle4wk.DAYS_IN_CYCLE; dayNo +=1) {
       this.daysInCycle[dayNo].initFromJSON(jsonObj.daysInCycle[dayNo]);
     }
-    //cl(`initFromJSON-4WK(): ${this.payDay}-${this.localStorageKey}:${this.weekNos}`);
-    //cl('initFromJSON() - - - - - - - - E');
+    //console.log(`initFromJSON-4WK(): ${this.payDay}-${this.localStorageKey}:${this.weekNos}`);
+    //console.log('initFromJSON() - - - - - - - - E');
   }
 
   clearHours(dayNo) {
@@ -301,7 +301,7 @@ class PayCycle4wk {
       this.daysInCycle[dayNo].clearHours();
     } else {
       // TODO raise
-      //cl(`clearHours FAILED - dayNo:${dayNo} - OUT OF RANGE Should be 0-${PayCycle4wk.DAYS_IN_CYCLE}`);
+      //console.log(`clearHours FAILED - dayNo:${dayNo} - OUT OF RANGE Should be 0-${PayCycle4wk.DAYS_IN_CYCLE}`);
     }
   }
 
@@ -322,8 +322,8 @@ class PayCycle4wk {
   }
 
   getWeekNoDateRange() {
-    let start = this.daysInCycle[this.weekNo * 7]; // cl(start);
-    let end = this.daysInCycle[this.weekNo * 7 + 6]; // cl(end);
+    let start = this.daysInCycle[this.weekNo * 7]; // console.log(start);
+    let end = this.daysInCycle[this.weekNo * 7 + 6]; // console.log(end);
     return `${this.weekNo+1} / ${this.weekNos[this.weekNo]} ~  ${start.HRdate} - ${end.HRdate}`;
   }
 
@@ -526,7 +526,7 @@ class PayCycle4wk {
   // call on submit & week change
   updateModelFromForms() {
     // cycle through days parse content into relevant object
-    //cl('> - - - processing form data');
+    //console.log('> - - - processing form data');
     let startDay = this.weekNo * 7;
     for (let dayNo = startDay; dayNo < startDay + 7; dayNo += 1) {
       let start = document
@@ -545,9 +545,9 @@ class PayCycle4wk {
       let finish = document
         .querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`)
         .textContent.trim();
-      //cl(`==: ${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].HRdate} :== S`);
+      //console.log(`==: ${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].HRdate} :== S`);
       this.daysInCycle[dayNo].setHours(start, breakStr, finish);
-      //cl(`==: ${this.daysInCycle[dayNo].HRdate} :== E`);
+      //console.log(`==: ${this.daysInCycle[dayNo].HRdate} :== E`);
     }
     // pension input id='pension_pc'
     settings.PENSION_EMPLOYEE_PC = document.querySelector("#pension_pc").value / 100;
@@ -575,7 +575,7 @@ class PayCycle4wk {
     let startDay = this.weekNo * 7;
     let tableRowElements = document.querySelectorAll('.hrs-row');
     for (let dayNo = startDay; dayNo < startDay+7; dayNo +=1) {
-      //cl(`${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].day} - ${this.daysInCycle[dayNo].HRdate}`);
+      //console.log(`${startDay} - ${dayNo} - ${this.daysInCycle[dayNo].day} - ${this.daysInCycle[dayNo].HRdate}`);
       tableRowElements[dayNo % 7].id = `${dayNo}`; // make date easy to fine when roww dblClicked
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_date_js`).textContent = this.daysInCycle[dayNo].HRdate;
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).textContent = this.daysInCycle[dayNo].inTime;
@@ -597,7 +597,7 @@ class PayCycle4wk {
     
     // WEEKLY TOTALS
     for (let weekNo = 0; weekNo<4; weekNo +=1) {
-      //cl(`wkNo:${weekNo} - hrs:${Day.minsToHMReadable(this.weekTotalMins[weekNo])} - Dhrs:${Day.minsToHDecimalReadable(this.weekTotalMins[weekNo])}`);
+      //console.log(`wkNo:${weekNo} - hrs:${Day.minsToHMReadable(this.weekTotalMins[weekNo])} - Dhrs:${Day.minsToHDecimalReadable(this.weekTotalMins[weekNo])}`);
       document.querySelector(`#r${weekNo+1}_wk_no`).textContent = `${weekNo+1} / ${this.weekNos[weekNo]}`;
       document.querySelector(`#r${weekNo+1}_tot_hrs`).textContent = Day.minsToHMReadable(this.weekTotalMins[weekNo]);
       document.querySelector(`#r${weekNo+1}_tot_dhrs`).textContent =  Day.minsToHDecimalReadable(this.weekTotalMins[weekNo]);
@@ -777,7 +777,7 @@ class PayCycle4wk {
     textSummary += '\n\n';
     textSummary += `Sent on ${new Date()} by payCheck - MIT Lisence \nhttps://unacceptablebehaviour.github.io/paycheck/ \n\n`;
     
-    cl(textSummary);
+    console.log(textSummary);
 
     switch(emailFormat) {
       case FORMAT_EMAIL:
@@ -797,14 +797,14 @@ class PayCycle4wk {
 
 var pc = new PayCycle4wk(...PayCycle4wk.nextPayDayAfterToday());
 var stateKey = '';
-//cl(pc);
+//console.log(pc);
 
 if (KEY_LAST_KNOWN_STATE in localStorage) {  // retrieve current statekey, and 4wk cycle object
   stateKey = localStorage.getItem(KEY_LAST_KNOWN_STATE);
   if (stateKey in localStorage) {
     let jsonObj = JSON.parse(localStorage.getItem(stateKey));
     pc.initFromJSON(jsonObj);
-    cl(`LOADED PayCycle4wk object key: ${stateKey} < from localStrorage\n- KEYS Match: ${stateKey === pc.localStorageKey}`);  
+    console.log(`LOADED PayCycle4wk object key: ${stateKey} < from localStrorage\n- KEYS Match: ${stateKey === pc.localStorageKey}`);  
   }
 } else {
   // save a new state key
@@ -820,7 +820,7 @@ function debugInfo(args) {
   
   if (KEY_SW_INFO in localStorage) {
     if (serviceWorkerVerion === 0) serviceWorkerVerion = localStorage.getItem(KEY_SW_INFO);
-    cl(`FOUND SW Version ${serviceWorkerVerion}`);
+    console.log(`FOUND SW Version ${serviceWorkerVerion}`);
   }  
   
   debugText += addDebugLine('');
@@ -854,7 +854,7 @@ function debugInfo(args) {
 }
 
 function displayFlash(event, id, classSpecific, classShow, innerHTML='') {
-  cl(`> = = = POP FLASH ${id} = = = <`);
+  console.log(`> = = = POP FLASH ${id} = = = <`);
   let targetBtn = event.target;
   let debugDiv = document.createElement('div');
   debugDiv.id = id;
@@ -864,25 +864,25 @@ function displayFlash(event, id, classSpecific, classShow, innerHTML='') {
   document.body.appendChild(debugDiv);
   targetBtn.classList.add('btn-disable');
   
-  setTimeout(()=>{debugDiv.classList.add(classShow); cl('-SHOW-');}, 5);  
+  setTimeout(()=>{debugDiv.classList.add(classShow); console.log('-SHOW-');}, 5);  
   
   document.getElementById(id).addEventListener('click', function(event){
-    cl(`> = = = HIDE FLASH ${id} = = = <`);
+    console.log(`> = = = HIDE FLASH ${id} = = = <`);
     debugDiv.addEventListener('transitionend', (event)=>{ // NOT animationend
       debugDiv.remove();
       targetBtn.classList.remove('btn-disable');
-      //cl('-transitionEnd-');
+      //console.log('-transitionEnd-');
     });    
     debugDiv.classList.remove(classShow);  // NOT animate! TRANSITION!
   });  
 }
 
 window.addEventListener('load',function(){
-  cl('LOADED - adding event listeners');
+  console.log('LOADED - adding event listeners');
   pc.updateWeekTotalMins();
   pc.finalCalculations();  
   pc.updateHTML();
-  cl(pc);
+  console.log(pc);
   
   // FORWARD & BACK BUTTONS WEEK & MONTH
   // << WEEK
@@ -905,7 +905,7 @@ window.addEventListener('load',function(){
   
   // << 4WK
   document.querySelector('#but_4wk_bak').addEventListener('click', function(event){
-    // cl('MOVE TO LAST 4WK CYCLE');
+    // console.log('MOVE TO LAST 4WK CYCLE');
     
     pc.persistentSave();
         
@@ -914,7 +914,7 @@ window.addEventListener('load',function(){
     if (pc.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
       let jsonObj = JSON.parse(localStorage.getItem(pc.localStorageKey));
       pc.initFromJSON(jsonObj);
-      cl(pc);          
+      console.log(pc);          
     }    
     localStorage.setItem(KEY_LAST_KNOWN_STATE, pc.localStorageKey);
 
@@ -925,7 +925,7 @@ window.addEventListener('load',function(){
   
   // 4WK >>
   document.querySelector('#but_4wk_fwd').addEventListener('click', function(event){
-    //cl('MOVE TO NEXT 4WK CYCLE');  
+    //console.log('MOVE TO NEXT 4WK CYCLE');  
 
     pc.persistentSave();
         
@@ -934,7 +934,7 @@ window.addEventListener('load',function(){
     if (pc.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
       let jsonObj = JSON.parse(localStorage.getItem(pc.localStorageKey));
       pc.initFromJSON(jsonObj);
-      cl(pc);          
+      console.log(pc);          
     }
     
     localStorage.setItem(KEY_LAST_KNOWN_STATE, pc.localStorageKey);
@@ -947,42 +947,42 @@ window.addEventListener('load',function(){
 
   // store data on lost focus
   registerLostFocusCallback(function(){
-    //cl(`LostFocus, storing:${pc.localStorageKey} - - - - - - S`);
+    //console.log(`LostFocus, storing:${pc.localStorageKey} - - - - - - S`);
     pc.updateModelFromForms();
     pc.persistentSave();
-    //cl(`LostFocus, stored:${pc.localStorageKey} - - - - - - E`);
+    //console.log(`LostFocus, stored:${pc.localStorageKey} - - - - - - E`);
   });
   registerGainedFocusCallback(function(){
     pc.updateHTML();
-    //cl('GainedFocus.');
+    //console.log('GainedFocus.');
   });
 
   document.querySelectorAll('label.imgSelect input[accept*="image"]').forEach(item => {
     item.addEventListener('change', event => {
-      cl('TimeBox change - - - - - S');
+      console.log('TimeBox change - - - - - S');
       let fourDigitTime;
       
       //CAMERA_MODE_CAPTURE = 1; - requires HTML edit - not implemented
       if (settings.cameraMode) {
-        cl('cameraMode: CAMERA_MODE_CAPTURE');
-        //cl(event.srcElement.files[0].lastModified);
+        console.log('cameraMode: CAMERA_MODE_CAPTURE');
+        //console.log(event.srcElement.files[0].lastModified);
         let d = new Date(event.srcElement.files[0].lastModified);
         fourDigitTime = `${d.getHours()}${d.getMinutes()}`;
         //let timeFromLastModified = `timeFromLastModified: <${fourDigitTime}>`;
-        //cl(timeFromLastModified);
+        //console.log(timeFromLastModified);
         
       } else {
-        cl('cameraMode: CAMERA_MODE_GALLERY');
+        console.log('cameraMode: CAMERA_MODE_GALLERY');
         let filename = event.srcElement.files[0].name;
-        cl(filename);
+        console.log(filename);
   
         let hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/); // 202216181_142855.jpg
         if (hrsMins) {
-          //cl(hrsMins);      
+          //console.log(hrsMins);      
           fourDigitTime = `${hrsMins[1]}${hrsMins[2]}`;
-          cl(`Time match: <${fourDigitTime}>`);
+          console.log(`Time match: <${fourDigitTime}>`);
         } else {
-          cl(`No match in: ${filename} <`);
+          console.log(`No match in: ${filename} <`);
         }        
       }
       
@@ -990,13 +990,13 @@ window.addEventListener('load',function(){
       pc.updateModelFromForms();
       pc.persistentSave();
       pc.updateHTML();
-      cl('TimeBox change - - - - - E');
+      console.log('TimeBox change - - - - - E');
     });
   });
 
   document.querySelectorAll('.break').forEach(item => {
-    //cl('Add event listener for');
-    //cl(item);
+    //console.log('Add event listener for');
+    //console.log(item);
     item.addEventListener('change', event => {
       pc.updateModelFromForms();
       pc.persistentSave();
@@ -1005,13 +1005,13 @@ window.addEventListener('load',function(){
   });  
   
   document.querySelectorAll('.hrs-row').forEach(item => {
-    cl(item);
+    console.log(item);
     item.addEventListener('dblclick', event => {
-      cl('DB-CLICK');
-      cl(event);
-      cl(event.target);
-      cl(event.target.parentElement);
-      cl(event.target.parentElement.id);
+      console.log('DB-CLICK');
+      console.log(event);
+      console.log(event.target);
+      console.log(event.target.parentElement);
+      console.log(event.target.parentElement.id);
       
       let dayNo = parseInt(event.target.parentElement.id);      
       pc.clearHours(dayNo);
@@ -1022,7 +1022,7 @@ window.addEventListener('load',function(){
 
   // Mailing summary
   document.querySelector('#mail_img').addEventListener('click', function(event){
-    //cl('> = = = MAIL SUMMARY= = = <');
+    //console.log('> = = = MAIL SUMMARY= = = <');
     let address = 'a.b@g.com';
     let subject = 'payCheck Summary';  
     window.location = `mailto:${address}?subject=${subject}&body=${pc.emailVersionSummary()}`;
@@ -1164,9 +1164,9 @@ function hasGetUserMedia() {
 
 if (hasGetUserMedia()) {
   // Good to go!
-  cl('hasGetUserMedia() - SUCCEEDED');
+  console.log('hasGetUserMedia() - SUCCEEDED');
 } else {
-  cl('hasGetUserMedia() - FAILED');
+  console.log('hasGetUserMedia() - FAILED');
   // alert('getUserMedia() is not supported by your browser');
 }
 
@@ -1219,31 +1219,31 @@ if (hasGetUserMedia()) {
 //// <td><input id="mon_in" type="file" name="video" accept="image/*" capture="capture" value="0728"></td>
 //// take image using camera - CORRECT TIME from LASTMODIFIED ONLY image name is '32ish decimal digits'.jpg 
 //document.querySelector('#sun_in').addEventListener('change', function(event){
-//  cl('#sun_in EvntList change - - - - - S');
-//  cl(event);
-//  cl(event.srcElement.files[0]);
+//  console.log('#sun_in EvntList change - - - - - S');
+//  console.log(event);
+//  console.log(event.srcElement.files[0]);
 //  let filename = event.srcElement.files[0].name;
-//  cl(filename);
-//  cl(event.srcElement.files[0].lastModified);
+//  console.log(filename);
+//  console.log(event.srcElement.files[0].lastModified);
 //  let d = new Date(event.srcElement.files[0].lastModified);
 //  let timeFromLastModified = `timeFromLastModified: ${d.getHours()} ${d.getMinutes()}`;
-//  cl(timeFromLastModified);
+//  console.log(timeFromLastModified);
 //  let hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
 //  let timeMatch;
 //  if (hrsMins) {
-//    cl(hrsMins);      
+//    console.log(hrsMins);      
 //    timeMatch = `${hrsMins[1]}${hrsMins[2]}`;
-//    cl(timeMatch);
+//    console.log(timeMatch);
 //  } else {
 //    timeMatch = `No match in: ${filename} <`
-//    cl(timeMatch);
+//    console.log(timeMatch);
 //  }
 //  filename = '202216181_142855.jpg';
 //  hrsMins = filename.match(/\b\d{8}_(\d\d)(\d\d)\d\d\b/);
-//  cl(hrsMins);
+//  console.log(hrsMins);
 //  document.querySelector('#dgb_03').textContent = timeFromLastModified;
 //  document.querySelector('#dgb_04').textContent = timeMatch;
-//  cl('#sun_in EvntList change - - - - - E');
+//  console.log('#sun_in EvntList change - - - - - E');
 //});
 
 // turning the Choose file look of the input into a box with the time in it
