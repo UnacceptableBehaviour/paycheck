@@ -329,14 +329,14 @@ class PayCycle4wk {
 
   getNextPayDay() {
     var returnDate = this.payDay.copyAddDays(PayCycle4wk.DAYS_IN_CYCLE);
-    var weekNo = (this.weekNos[0] += 4);
+    var weekNo = this.weekNos[0] + 4;
     if (weekNo > 52) weekNo = weekNo - 52;
     return [returnDate, weekNo];
   }
 
   getLastPayDay() {
     var returnDate = this.payDay.copyAddDays(PayCycle4wk.DAYS_IN_CYCLE * -1);
-    var weekNo = (this.weekNos[0] -= 4);
+    var weekNo = this.weekNos[0] - 4;
     if (weekNo < 1) weekNo = weekNo + 52;
     return [returnDate, weekNo];
   }
