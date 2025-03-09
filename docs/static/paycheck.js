@@ -28,6 +28,8 @@ var settings = {
   NI_RATE_UPPER_2024_25: 0.02,
   NI_2024_25_LOWER_THRESHOLD: (242 * 4) - 1,                // for 2024 to 2025 tax year 242/wk
   NI_2024_25_UPPER_THRESHOLD: (967 * 4) - 1,                // for 2024 to 2025 tax year 967/wk
+  CONTRACTED_HOURS_AC: 19.5,     // SB 21
+  CONTRACTED_HOURS_SB: 21,
   HOURLY_RATE_2024_25: HOURLY_RATE_2024_25,
   //HOURLY_RATE_AL_2024_25: 20.3062, //HOURLY_RATE_2024_25 * 1.5,// its more complicated than this - find out details TODO
   HOURLY_RATE_AL_2024_25: HOURLY_RATE_2024_25 * 1.5,// its more complicated than this - find out details TODO
@@ -801,7 +803,7 @@ var stateKey = '';
 
 if (KEY_LAST_KNOWN_STATE in localStorage) {  // retrieve current statekey, and 4wk cycle object
   stateKey = localStorage.getItem(KEY_LAST_KNOWN_STATE);
-  if (stateKey in localStorage) {
+  if ((stateKey !== "undefined") && (stateKey) && (stateKey in localStorage)) {
     let jsonObj = JSON.parse(localStorage.getItem(stateKey));
     pc.initFromJSON(jsonObj);
     console.log(`LOADED PayCycle4wk object key: ${stateKey} < from localStrorage\n- KEYS Match: ${stateKey === pc.localStorageKey}`);  
@@ -1128,6 +1130,82 @@ window.addEventListener('load',function(){
         });
     });  
   } 
+
+  // Settings panel functionality
+  if (document.querySelector('#settings_button')) {
+    // First, create the settings panel
+    const settingsPanel = document.createElement('div');
+    settingsPanel.id = 'user_settings';
+    settingsPanel.innerHTML = `
+      <div class="settings-header">
+        <h3>settings</h3>
+        <button class="settings-close">&times;</button>
+      </div>
+      <div class="settings-form">
+        <div class="settings-form-group">
+          <label for="username">username</label>
+          <input type="text" id="settings_username" placeholder="enter username - letters & numbers and - or _" pattern="[a-zA-Z0-9\-_]+" required>
+        </div>
+        <div class="settings-form-group">
+          <label for="password">password</label>
+          <input type="password" id="settings_password" placeholder="enter password" required>
+        </div>
+        <div class="settings-form-group">
+          <label for="contract_hours">contract hours / wk:</label>
+          <input type="number" id="settings_contract_hours" step="0.5" min="0" placeholder="enter contract hours per week" required>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(settingsPanel);
+
+    // Load existing settings values if they exist
+    if (settings.username) document.getElementById('settings_username').value = settings.username;
+    if (settings.contractHours) document.getElementById('settings_contract_hours').value = settings.contractHours;
+    
+    // Toggle settings panel when button is clicked
+    document.querySelector('#settings_button').addEventListener('click', function() {
+      settingsPanel.classList.add('show');
+    });
+    
+    // Close panel and save settings when X is clicked
+    document.querySelector('.settings-close').addEventListener('click', function() {
+      // Save settings
+      settings.username = document.getElementById('settings_username').value;
+      settings.password = document.getElementById('settings_password').value;
+      settings.contractHours = parseFloat(document.getElementById('settings_contract_hours').value);
+      
+      // Save the contract hours in both contracted hours fields
+      if (settings.contractHours) {
+        settings.CONTRACTED_HOURS_AC = settings.contractHours;
+        //settings.CONTRACTED_HOURS_SB = settings.contractHours;
+      }
+      
+      // Hide panel
+      settingsPanel.classList.remove('show');
+      
+      // // Save to localStorage
+      // localStorage.setItem('user_settings', JSON.stringify({
+      //   username: settings.username,
+      //   contractHours: settings.contractHours
+      // }));
+      // Save to localStorage
+      localStorage.setItem('user_settings', JSON.stringify(settings));
+      
+      console.log('Settings saved:', settings);
+    });
+    
+    // Load settings from localStorage on page load
+    const savedSettings = localStorage.getItem('user_settings');
+    if (savedSettings) {
+      const parsedSettings = JSON.parse(savedSettings);
+      if (parsedSettings.username) settings.username = parsedSettings.username;
+      if (parsedSettings.contractHours) {
+        settings.contractHours = parsedSettings.contractHours;
+        // settings.CONTRACTED_HOURS_AC = parsedSettings.contractHours;
+        // settings.CONTRACTED_HOURS_SB = parsedSettings.contractHours;
+      }
+    }
+  }
 
   // SERVICE WORKER i/f
   if ('serviceWorker' in navigator) {
