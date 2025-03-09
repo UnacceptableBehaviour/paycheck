@@ -17,8 +17,11 @@ var   serviceWorkerVerion  = 0;
 const CAMERA_MODE_GALLERY = 0;
 const CAMERA_MODE_CAPTURE = 1;
 const HOURLY_RATE_2024_25 = 12.04;
+
 var settings = {
-  NAMESPACE: '388e5ead-9872-4181-aef2-225b7cae61dd',
+  NAMESPACE: '388e5ead-9872-4181-aef2-225b7cae61dd',  // TODO SB BLANK - calc from username
+  username: '',
+  password: '',
   cameraMode: CAMERA_MODE_GALLERY,
   showExceptions: true,                             // show hand authorized exception in mail breakdown 
   taxYear: '2024-25',                               // https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2024-to-2025
@@ -881,6 +884,12 @@ function displayFlash(event, id, classSpecific, classShow, innerHTML='') {
 
 window.addEventListener('load',function(){
   console.log('LOADED - adding event listeners');
+
+  // Load settings from localStorage if they're present
+  if ('user_settings' in localStorage) {
+    settings = JSON.parse(localStorage.getItem('user_settings'));
+  }
+
   pc.updateWeekTotalMins();
   pc.finalCalculations();  
   pc.updateHTML();
@@ -1197,17 +1206,6 @@ window.addEventListener('load',function(){
       console.log('Settings saved:', settings);
     });
     
-    // Load settings from localStorage on page load
-    const savedSettings = localStorage.getItem('user_settings');
-    if (savedSettings) {
-      const parsedSettings = JSON.parse(savedSettings);
-      if (parsedSettings.username) settings.username = parsedSettings.username;
-      if (parsedSettings.contractHours) {
-        settings.contractHours = parsedSettings.contractHours;
-        // settings.CONTRACTED_HOURS_AC = parsedSettings.contractHours;
-        // settings.CONTRACTED_HOURS_SB = parsedSettings.contractHours;
-      }
-    }
   }
 
   // SERVICE WORKER i/f
