@@ -1144,7 +1144,7 @@ window.addEventListener('load',function(){
       <div class="settings-form">
         <div class="settings-form-group">
           <label for="username">username</label>
-          <input type="text" id="settings_username" placeholder="enter username - letters & numbers and - or _" pattern="[a-zA-Z0-9\-_]+" required>
+          <input type="text" id="settings_username" placeholder="enter username - letters & numbers and - or _" pattern="[a-zA-Z0-9-_]+" required>
         </div>
         <div class="settings-form-group">
           <label for="password">password</label>
@@ -1173,6 +1173,9 @@ window.addEventListener('load',function(){
       settings.username = document.getElementById('settings_username').value;
       settings.password = document.getElementById('settings_password').value;
       settings.contractHours = parseFloat(document.getElementById('settings_contract_hours').value);
+
+      document.querySelector('#quick_calc_hrs').value = settings.contractHours *4;
+      document.querySelector('#quick_calc_hol_hrs').value = 0;      
       
       // Save the contract hours in both contracted hours fields
       if (settings.contractHours) {
