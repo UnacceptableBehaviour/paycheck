@@ -12,7 +12,7 @@
 // /paycheck/
 
 const KEY_SW_INFO = 'sw_info'; // must match in paycheck.js!
-const SERVICE_WORKER_VERSION = '00.47';  // < - - - - - - - - - - - - - - - - - - - - - - //
+const SERVICE_WORKER_VERSION = '00.48';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${SERVICE_WORKER_VERSION}`;                      //
                                                                                           //
@@ -59,6 +59,21 @@ const FILES_TO_CACHE = [
 
 console.log(`service_worker.js V:${CACHE_NAME}`);
 
+
+
+// TODO comment in after test below - RE-TEST
+// self.addEventListener('install', (evt) => {
+//   console.log(`[ServiceWorker] Install V:${CACHE_NAME}`);
+//   evt.waitUntil(
+//     caches.open(CACHE_NAME).then((cache) => {
+//       console.log('[ServiceWorker] Pre-caching offline page');
+//       console.log(`[ServiceWorker] No of FILES_TO_CACHE:${FILES_TO_CACHE.length}`);
+//       return cache.addAll(FILES_TO_CACHE);
+//     })    
+//   );
+
+//   self.skipWaiting();
+// });
 self.addEventListener('install', (evt) => {
   console.log(`[ServiceWorker] Install V:${CACHE_NAME}`);
   evt.waitUntil(
@@ -70,7 +85,7 @@ self.addEventListener('install', (evt) => {
           try {
             cache.add(file);
           } catch(e) {
-            consoel.log(`FAILED TO CACHE: ${file} ERR:${e}`);
+            console.log(`FAILED TO CACHE: ${file} ERR:${e}`);
           }          
         }
       );
@@ -104,40 +119,8 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// fetch event - service network requests 
-//self.addEventListener('fetch', function(event) {
-//  event.respondWith(fetch(event.request));          // pass request to network
-//});
-
-// fetch event - network only w/ OFFLINE page
-//self.addEventListener('fetch', (evt) => {
-//  if (evt.request.mode !== 'navigate') {
-//    return;
-//  }
-//  evt.respondWith(fetch(evt.request).catch(() => {
-//      return caches.open(CACHE_NAME).then((cache) => {
-//        return cache.match('static/offline.html');
-//      });
-//    })
-//  );
-//});
-
 // fetch event - Cache falling back to network
 var fc = 0;
-
-// self.addEventListener('fetch', function(event) {
-//   fc += 1;
-//   console.log(`[SW] fetch:${fc}`);
-//   console.log(event.request.url);
-//   console.log(event);
-  
-//   event.respondWith(
-//     caches.match(event.request).then(function(response) {
-//       return response || fetch(event.request);
-//     })
-//   );
-  
-// });
 
 self.addEventListener('fetch', function(event) {
   fc += 1;
@@ -145,30 +128,33 @@ self.addEventListener('fetch', function(event) {
   console.log(event.request.url);
   console.log(event);
 
-  self.addEventListener('fetch', function(event) {
-    console.log(`[SW] fetch URL: ${event.request.url}`);
-    
-    event.respondWith(
-      fetch(event.request).catch(function(error) {
-        console.error('Fetching failed:', error);
-        throw error;
-      })
-    );
-  });
-
-  // with CACHE falling back to network
-  //
-  // event.respondWith(
-  //   caches.match(event.request).then(function(response) {
-  //     if (response) {
-  //       return response;
-  //     }
-  //     return fetch(event.request).then(function(networkResponse) {
-  //       return networkResponse;
-  //     }).catch(function(error) {
-  //       console.error('Fetching failed:', error);
-  //       throw error;
-  //     });
-  //   })
-  // );
+  event.respondWith(
+    caches.match(event.request).then(function(response) {
+      // Return cached response if available
+      if (response) {
+        return response;
+      }
+      
+      // Otherwise fetch from network
+      return fetch(event.request)
+        .then(function(networkResponse) {
+          // Optional: Cache new responses for future offline use
+          // if (networkResponse.status === 200) {
+          //   let responseClone = networkResponse.clone();
+          //   caches.open(CACHE_NAME).then(function(cache) {
+          //     cache.put(event.request, responseClone);
+          //   });
+          // }
+          return networkResponse;
+        })
+        .catch(function(error) {
+          console.error('Fetching failed:', error);
+          // Return a fallback or offline page if you have one
+          // return caches.match('/paycheck/offline.html');
+          throw error;
+        });
+    })
+  );
 });
+
+
