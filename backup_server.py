@@ -11,7 +11,7 @@ import json                 # JSON tools
 from pathlib import Path    # Path tools
 
 from flask_cors import CORS
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, template_folder='templates', static_folder='docs')
 CORS(app)
 # giza a look - debug
 from pprint import pprint
@@ -24,6 +24,73 @@ def favicon():
     print(f"favicon path: {Path(app.root_path).joinpath('static/favicon.ico')}")
     return send_from_directory(Path(app.root_path).joinpath('static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+
+@app.route('/')
+def home():
+    return """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>payCheck</title>
+        <style>
+            body {
+                background-color: #008100;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                font-family: Arial, sans-serif;
+            }
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                max-width: 100vw;
+            }
+            .qr-container {
+                width: 60%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .qr-container img {
+                width: 100%;
+                height: auto;
+            }
+            .app-name {
+                color: white;
+                font-size: 2.2rem;
+                text-align: center;
+                margin-top: 20px;
+                width: 80%;
+            }
+            a {
+                text-decoration: none;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <a href="https://unacceptablebehaviour.github.io/paycheck/">
+                <div class="qr-container">
+                    <img src="docs/static/assets/images/QR-code-w-icon-noShort.png" alt="payCheck QR Code">
+                </div>
+                <h1 class="app-name">payCheck</h1>
+            </a>
+        </div>
+    </body>
+    </html>
+    """
 
 # import uuid
 # NAMESPACE = str(uuid.uuid4())
