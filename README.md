@@ -5,7 +5,7 @@ See app here: https://unacceptablebehaviour.github.io/paycheck/
 ## Contents  
 1. [Contents](#contents)  
 2. [AIM:](#aim)  
-3. [Directory structure & main files](#directory-structure--main-files)  
+3. [Directory structure & main files (PWA)](#directory-structure--main-files-pwa)  
 4. [Create Icon](#create-icon)  
 5. [Process ICON file into platform images & manifest file:](#process-icon-file-into-platform-images--manifest-file)  
 	1. [Upload SVG (create png assets)](#upload-svg-create-png-assets)  
@@ -19,14 +19,18 @@ See app here: https://unacceptablebehaviour.github.io/paycheck/
 		6. [HTML - Icon/Manifest support](#html---iconmanifest-support)  
 7. [Service Worker](#service-worker)  
 	1. [SCOPE](#scope)  
-8. [QUESTIONS / TODO](#questions--todo)  
+8. [Directory structure & main files (Cloud Server - data backup)](#directory-structure--main-files-cloud-server---data-backup)  
+	1. [Rebuild & deploy server container](#rebuild--deploy-server-container)  
+9. [QUESTIONS / TODO](#questions--todo)  
+10. [How To's](#how-tos)  
+		1. [How to update README.md & TOC from README.rtf](#how-to-update-readmemd--toc-from-readmertf)  
 
 
 ## AIM:  
 
 PWA appshell  
   
-## Directory structure & main files  
+## Directory structure & main files (PWA)  
 ```
 docs (dir)
     index.html                # entry point
@@ -146,7 +150,7 @@ Getting rid of annoying little white fleck on the edge, combination of setting b
 HTML points to wrong manifest file!  
 ```
 IS
-<link rel="manifest" href="static/app_icons/site.webmanifest">
+<link rel="manifest" href="static/assets/app_icons/site.webmanifest">
 SB
 <link rel="manifest" href="static/manifest.webmanifest">
 ```
@@ -402,11 +406,38 @@ Console:
 SW Registered   https://unacceptablebehaviour.github.io/paycheck/
 ```
 
-
 REF: [Getting around the place in root restriction - SO](https://stackoverflow.com/questions/35780397/understanding-service-worker-scope/48068714#48068714)  
 REF: [W3 Spec - Service worker](https://w3c.github.io/ServiceWorker/#dom-serviceworkerglobalscope-serviceworker)  
     
+
+## Directory structure & main files (Cloud Server - data backup)  
+```
+backup_server.py            // Flask server to backup files to Cloud / serv link to app from home page
+
+docker-compose-NAS.yml      // build the container swarm - only 1 in theis case
+Dockerfile                  // how to build the container 
+docker-entrypoint.sh        // select correct venv, pass args to python server script
+
+dockerClone-2-NAS-Setup.sh  // deploy server app to Cloud / NAS system
+```
   
+### Rebuild & deploy server container  
+```
+% cd /Volumes/docker/paycheck-cloud		// cd into network mount
+	
+% ./dockerClone-2-NAS-Setup.sh			// remove old repo & replace w/ paycheck fresh clone
+
+Log into NAS
+
+Container Manager > Project > paycheck-cloud
+	Delete Container:	paycheck_cloud-n
+	Delete Image:	paycheck-cloud-paycheck_cloud
+
+Container Manager > Project > paycheck-cloud
+	Build			runs automatically
+```
+
+
 ## QUESTIONS / TODO
 In manifest file try "display": "fullscreen"  
 Check favicon with the [favicon checker](https://realfavicongenerator.net/favicon_checker)  
@@ -414,3 +445,12 @@ Check favicon with the [favicon checker](https://realfavicongenerator.net/favico
 **Run lighthouse:**
 Manifest has NO maskable icon.
 
+## How To's
+#### How to update README.md & TOC from README.rtf
+```
+> .pe				# alias .pe='. venv/bin/activate'
+> pip install striprtf			# for rtf processing
+> ./create_TOC_for_md.py -p	# takes README.rtf repo notes and add TOC > README.md
+				# also add README.md to git, commits, and pushes
+				# -p = commit & push
+```
