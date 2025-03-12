@@ -12,7 +12,7 @@
 // /paycheck/
 
 const KEY_SW_INFO = 'sw_info'; // must match in paycheck.js!
-const SERVICE_WORKER_VERSION = '00.49';  // < - - - - - - - - - - - - - - - - - - - - - - //
+const SERVICE_WORKER_VERSION = '00.50';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `paycheck-gitio-cache_${SERVICE_WORKER_VERSION}`;                      //
                                                                                           //
@@ -33,6 +33,7 @@ const FILES_TO_CACHE = [
   '/paycheck/static/paycheck.js',
   '/paycheck/static/focus.js',
   '/paycheck/static/manifest.webmanifest',
+  '/paycheck/static/libs/11.1.0/uuid.min.js',
   '/paycheck/static/assets/images/QR-code-w-icon-noShort.png',
   '/paycheck/static/assets/images/screenshot.png',
   '/paycheck/static/assets/app_icons/favicon.ico',
@@ -45,11 +46,13 @@ const FILES_TO_CACHE = [
   '/paycheck/static/assets/app_icons/browserconfig.xml',
   '/paycheck/static/assets/icons/hol-right.png',
   '/paycheck/static/assets/icons/debug.svg',
+  '/paycheck/static/assets/icons/cog.svg',
   '/paycheck/static/assets/icons/email-svgrepo-com.png',
   '/paycheck/static/assets/icons/butn-UP.svg',
   '/paycheck/static/assets/icons/hol-left.svg',
   '/paycheck/static/assets/icons/hol-left.png',
   '/paycheck/static/assets/icons/email-svgrepo-com.svg',
+  '/paycheck/static/assets/icons/cog.png',
   '/paycheck/static/assets/icons/debug.png',
   '/paycheck/static/assets/icons/hol-right.svg',
   '/paycheck/static/assets/icons/calculator.png',

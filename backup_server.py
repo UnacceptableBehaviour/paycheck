@@ -4,7 +4,7 @@
 
 from flask import Flask, render_template, request, send_from_directory, redirect, jsonify
 from werkzeug import serving
-
+import bcrypt
 
 import re                   # regex
 import json                 # JSON tools
@@ -98,8 +98,82 @@ def home():
 # print(NAMESPACE)
 # print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ")
 NAMESPACE = '388e5ead-9872-4181-aef2-225b7cae61dd'
-# TODO break out into own repo / paycheck * dockerise > deploy . . .
-# payCheck route to test saving to server 
+# UUID:{
+#     'user_name': 'John Doe',
+#     'user_email': 'a@a.com',        # for PWD reset
+#     'user_password': 'SHA3-512',
+# }
+
+userDB_PATH = Path('./scratch/_save/user_DB.json')
+userDB = json.load(userDB_PATH.open('r'))
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    global userDB
+    
+    if request.method == 'POST':
+        print("Login / NEW USER - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - S")
+        data = request.get_json()
+        command = data.get('command')        
+        user_uuid = data.get('userUUID')
+        user_name = data.get('username')
+        password = data.get('password')
+        user_email = data.get('email')
+        print(f"U: {user_name}\nUUID: {user_uuid}\nCMD: {command}")
+        print(' - ^ - ')
+        pprint(data)
+        print(' - o - ')
+        if user_uuid in userDB:
+            pprint(userDB[user_uuid])
+        else:
+            print(f"NOT FOUND {user_uuid}")
+        print(' - _ - ')
+        # verify user inputs are valid - see /save route
+        print("Login / NEW USER - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - E")
+
+        if not user_uuid or user_uuid == "null" or user_uuid == "undefined":
+            return jsonify({'message': 'Invalid UUID provided'}), 400
+
+        if command == 'NEW_USER':
+            print(f"[POST] CREATING ACCOUNT")
+            
+            # Hash the password with bcrypt (automatically includes salt)
+            password_bytes = password.encode('utf-8')
+            hashed_password = bcrypt.hashpw(password_bytes, bcrypt.gensalt(rounds=12))
+            
+            # Store the hashed password (it's a bytes object, so convert to string)
+            userDB[user_uuid] = {
+                'user_name': user_name,
+                'user_email': user_email,
+                'user_password': hashed_password.decode('utf-8'),  # Store as string
+            }
+            
+            # Save the updated userDB to file
+            try:
+                with open(userDB_PATH, 'w') as json_file:
+                    json.dump(userDB, json_file, indent=2)
+                return jsonify({'message': 'Account successfully created'}), 200
+            except Exception as e:
+                print(f'Error writing user database: {e}')
+                return jsonify({'message': 'Internal Server Error - PROBLEM SAVING USER'}), 500
+
+        elif command == 'LOGIN':    # move this code to save route - no real concept of logging in
+            if user_uuid in userDB:
+                stored_user = userDB[user_uuid]
+                stored_hash = stored_user['user_password'].encode('utf-8')
+                
+                # Check if the provided password matches the stored hash
+                if bcrypt.checkpw(password.encode('utf-8'), stored_hash):
+                    return jsonify({'message': 'Login successful', 'status': 'success'}), 200
+                else:
+                    return jsonify({'message': 'Invalid credentials'}), 401
+            else:
+                return jsonify({'message': 'User not found'}), 404
+
+        else: # unknown command
+            return jsonify({'message': 'Internal Server Error - UKNOWN COMMAND'}), 500
+
+
 @app.route('/save', methods=['POST', 'GET'])
 def save():
     data_dir = Path('./scratch/_save')
@@ -150,18 +224,18 @@ def save():
         else: # unknown command
             return jsonify({'message': 'Internal Server Error - UKNOWN COMMAND'}), 500
         
-    elif request.method == 'GET':
-        file_path = data_dir.joinpath('default_GET_file.json')
-        print(f"[GET] SHOULD NEVER HAPPEN from: {file_path}")
-        print(f"PWD: {Path.cwd()}")
+    # elif request.method == 'GET':
+    #     file_path = data_dir.joinpath('default_GET_file.json')
+    #     print(f"[GET] SHOULD NEVER HAPPEN from: {file_path}")
+    #     print(f"PWD: {Path.cwd()}")
         
-        try:
-            with open(file_path, 'r') as json_file:
-                data = json.load(json_file)
-            return jsonify(data), 200
-        except Exception as e:
-            print(f'Error reading file: {e}')
-            return jsonify({'message': 'Internal Server Error - PROBLEM LOADING FILE'}), 500
+    #     try:
+    #         with open(file_path, 'r') as json_file:
+    #             data = json.load(json_file)
+    #         return jsonify(data), 200
+    #     except Exception as e:
+    #         print(f'Error reading file: {e}')
+    #         return jsonify({'message': 'Internal Server Error - PROBLEM LOADING FILE'}), 500
 
 
 if __name__ == '__main__':
