@@ -119,6 +119,10 @@ def login():
         user_name = data.get('username')
         password = data.get('password')
         user_email = data.get('email')
+        time_stamp = data.get('unixTimestamp')
+        contract_hours = data.get('contractHours')
+        tax_year = data.get('taxYear')
+        hrs_anual_leave_allocation = data.get('hrs_anual_leave_allocation')
         print(f"U: {user_name}\nUUID: {user_uuid}\nCMD: {command}")
         print(' - ^ - ')
         pprint(data)
@@ -146,6 +150,10 @@ def login():
                 'user_name': user_name,
                 'user_email': user_email,
                 'user_password': hashed_password.decode('utf-8'),  # Store as string
+                'time_stamp': time_stamp,
+                'contract_hours': contract_hours,
+                'tax_year': tax_year,
+                'hrs_anual_leave_allocation': hrs_anual_leave_allocation
             }
             
             # Save the updated userDB to file

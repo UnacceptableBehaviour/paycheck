@@ -29,6 +29,7 @@ const ST_PWD_ACCEPTED = 1;
 const ST_ALL_CREDS_VALID = 2;
 
 var specialWd = '';
+// TODO encapsulate setting & setting Panel in a class
 var settings = {  
   NAMESPACE: 'bdd6d91c-f2e2-426a-baaf-3648dab3f3c0',
   unixTimestamp: 0,
@@ -36,8 +37,9 @@ var settings = {
   userUUID: '',
   password: '',
   password_2: '',
-  app_state: ST_UN_INIT_USR,
   email: '',
+  app_state: ST_UN_INIT_USR,
+  invalid_fields: [], // ["settings_username","settings_password","settings_email","settings_contract_hours","settings_hours_AL"]
   cameraMode: CAMERA_MODE_GALLERY,
   showExceptions: true,                             // show hand authorized exception in mail breakdown 
   taxYear: '2024-25',                               // https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2024-to-2025
@@ -51,12 +53,239 @@ var settings = {
   CONTRACTED_HOURS_SB: 21,
   HOURLY_RATE_2024_25: HOURLY_RATE_2024_25,
   HOURLY_RATE_AL_2024_25: HOURLY_RATE_2024_25 * 1.5,// its more complicated than this - find out details TODO
-  HRS_ANUAL_LEAVE_ALLOCATION: 7*15,   // 7hr / day
-  HRS_ANUAL_LEAVE_REMAINING: 7*15,  
+  hrs_anual_leave_allocation: 7*15,       // 7hr / day
+  hrs_anual_leave_remaining: 7*15,        // TODO - calculate remaining leave WHERE to DISPLAY?
   PENSION_EMPLOYEE_PC: 0.15,  // 0.05,
   PENSION_EMPLOYER_PC: 0.03,
   PENSION_EXEMPTION: 480
 };
+
+function displayFlash(event, id, classSpecific, classShow, innerHTML='') {
+  console.log(`> = = = POP FLASH ${id} = = = <`);
+  let targetBtn = event.target;
+  let debugDiv = document.createElement('div');
+  debugDiv.id = id;
+  debugDiv.classList.add("flash", ...classSpecific); // add remove toggle
+  //debugDiv.innerHTML = debugInfo();
+  debugDiv.innerHTML = innerHTML;
+  document.body.appendChild(debugDiv);
+  targetBtn.classList.add('btn-disable');
+  
+  setTimeout(()=>{debugDiv.classList.add(classShow); console.log('-SHOW-');}, 5);  
+  
+  document.getElementById(id).addEventListener('click', function(event){
+    console.log(`> = = = HIDE FLASH ${id} = = = <`);
+    debugDiv.addEventListener('transitionend', (event)=>{ // NOT animationend
+      debugDiv.remove();
+      targetBtn.classList.remove('btn-disable');
+      //console.log('-transitionEnd-');
+    });    
+    debugDiv.classList.remove(classShow);  // NOT animate! TRANSITION!
+  });  
+}
+
+function renderSettingsPanel() {
+  // Initilise settings panel
+  let settingsPanel = document.getElementById(USR_PREF_PANEL_ID);
+
+  if (settingsPanel) {
+    // Remove all children from existing settings panel
+    while (settingsPanel.firstChild) {
+      settingsPanel.removeChild(settingsPanel.firstChild);
+    }
+    
+  } else {
+    // Create a new settings panel
+    settingsPanel = document.createElement('div');
+    settingsPanel.id = USR_PREF_PANEL_ID;
+
+    document.body.appendChild(settingsPanel);
+  }
+
+  // Determine password input fields based on app_state
+  let passwordFields = '';
+  if (settings.app_state === ST_UN_INIT_USR) {
+    passwordFields = `
+      <div class="settings-form-group">
+        <label for="settings_password">password</label>
+        <input type="password" id="settings_password" placeholder="enter password" required>
+      </div>
+      <div class="settings-form-group">
+        <label for="settings_password_2">verify password</label>
+        <input type="password" id="settings_password_2" placeholder="verify password" required>
+      </div>
+    `;
+   } else if (settings.app_state >= ST_PWD_ACCEPTED) {  passwordFields = `
+      <div class="settings-form-group">
+        <label for="settings_password">password</label>
+        <input type="password" id="settings_password" placeholder="enter password" required>
+      </div>
+    `;
+  }
+
+  // Construct the settings panel HTML
+  settingsPanel.innerHTML = `
+    <div class="settings-header">
+      <h3>settings</h3>
+      <button class="settings-close">&times;</button>
+    </div>
+    <div class="settings-form">
+      <div class="settings-form-group">
+        <label for="username">username</label>
+        <input type="text" id="settings_username" placeholder="enter username - letters & numbers and - or _" pattern="[a-zA-Z0-9\\-_]+" required>
+      </div>
+      ${passwordFields}
+      <div class="settings-form-group">
+        <label for="settings_email">email</label>
+        <input type="email" id="settings_email" placeholder="optional - required if hours to be emailed">
+      </div>
+      <div class="settings-form-group">
+        <label for="contract_hours">contract hours / wk:</label>
+        <input type="number" id="settings_contract_hours" step="1" min="0" placeholder="enter contract hours per week" required>
+      </div>
+      <div class="settings-form-group">
+        <label for="hours_AL">hours anual leave:</label>
+        <input type="number" id="settings_hours_AL" step="1" min="0" placeholder="enter hours anual leave per year" required>
+      </div>
+    </div>
+  `;
+    
+  // Load existing settings values if they exist
+  if (settings.username) document.getElementById('settings_username').value = settings.username;
+  if (settings.app_state >= ST_PWD_ACCEPTED) {
+    document.getElementById('settings_password').value = specialWd;
+  } else {
+    document.getElementById('settings_password').value = '';
+    document.getElementById('settings_password_2').value = '';
+  }      
+  if (settings.email) document.getElementById('settings_email').value = settings.email;
+  if (settings.contractHours) document.getElementById('settings_contract_hours').value = settings.contractHours;
+  if (settings.hrs_anual_leave_allocation) document.getElementById('settings_hours_AL').value = settings.hrs_anual_leave_allocation;
+
+  // TODO - remove if delgate works
+  // document.querySelector('.settings-close').addEventListener('click', function() {
+  //   settingsPanel.classList.remove('show');
+    
+  //   let backUpToServer = false;
+  //   if (settings.app_state === ST_UN_INIT_USR) backUpToServer = true;
+
+  //   saveSettingsPanelFields(backUpToServer);
+
+  //   console.log('Settings panel CLOSED');
+  // });  
+
+  return settingsPanel;
+}
+
+function openSettingsPanel(render=true, invalid_fields) {
+
+  if (render) renderSettingsPanel();
+
+  // TODO think through - fade to pink better use CSS
+  // flash div background with following Id'd red & fade to pink
+  // ["settings_username","settings_password","settings_email","settings_contract_hours","settings_hours_AL"].
+  if (invalid_fields.length > 0){
+    invalid_fields.
+      forEach((id) => {
+        if (document.getElementById(id)) document.getElementById(id).style.backgroundColor = 'red'; // Set background to red on failure
+        setTimeout(() => {
+          if (document.getElementById(id)) document.getElementById(id).style.backgroundColor = 'pink'; // Reset to original color
+        }, 1000); // 2 seconds
+      });
+  }
+}
+
+function saveSettingsPanelFields(backupToServer=false) {
+  let settingsPanel = document.getElementById(USR_PREF_PANEL_ID);
+  
+  // Save settings
+  settings.username = document.getElementById('settings_username').value;
+  settings.password = document.getElementById('settings_password').value;
+  // if exists document.getElementById('settings_password_2')
+  if (document.getElementById('settings_password_2')){
+    settings.password_2 = document.getElementById('settings_password_2').value;
+  }        
+  settings.email = document.getElementById('settings_email').value;
+  settings.contractHours = parseFloat(document.getElementById('settings_contract_hours').value);
+  settings.hrs_anual_leave_allocation = parseFloat(document.getElementById('settings_hours_AL').value);
+
+  let invalid_fields = validateSettingsPanelFields();   // updates state on PWD match
+
+  if (invalid_fields.length === 0) {
+    if (settings.userUUID === '') {
+      console.log(`GENRATING settings.userUUID: ${settings.userUUID} < 0`);
+      generateUUID();
+      console.log(`GENRATING settings.userUUID: ${settings.userUUID} < 1`);
+    } else {
+      console.log(`UUID ALREADY PRESENT:\nsettings.userUUID: ${settings.userUUID} <`);
+    }
+
+    document.querySelector('#quick_calc_hrs').value = settings.contractHours *4;
+    document.querySelector('#quick_calc_hol_hrs').value = 0;      
+    
+    // Save the contract hours in both contracted hours fields
+    // TODO remove CONTRACTED_HOURS_AC use settings.contractHours
+    if (settings.contractHours) {
+      settings.CONTRACTED_HOURS_AC = settings.contractHours;
+      //settings.CONTRACTED_HOURS_SB = settings.contractHours;
+    }
+    
+    // TODO add some error handling incase of failure
+    // TODO add some feedback to the user
+    // Possible errors
+    // ERR_PWD_NOT_SET = -1;    
+    // ERR_UUID_NOT_SET = -2;
+    createNewAccount();
+
+    // Hide panel
+    settingsPanel.classList.remove('show');
+    
+    // Save to localStorage
+    localStorage.setItem(USR_PREF_LOCAL_STORAGE_KEY, JSON.stringify(settings));
+    
+    console.log('Settings saved:', settings);
+  } else {
+
+    let render = false;
+    openSettingsPanel(render, invalid_fields);
+       
+  }
+
+  // // TODO needed?
+  // if (settings.app_state === ST_UN_INIT_USR) {
+
+  // } else if (settings.app_state >= ST_PWD_ACCEPTED) {
+
+  // }
+}
+
+// func renderSettingsPanel- - - - - - - - - - - - - - - - - - - - DONE
+// 1. createSettingsPanel div if not present
+// 2. render input fields based on settings.app_state
+// 3. load settings from localStorage
+// 4. add event listener to close button
+
+// func openSettingsPanel flash errors - - - - - - - - - - - - - - DONE
+// [call when try to backup to cloud w/o user account]
+// 1. set settings.invalid_fields ["settings_username","settings_password","settings_email","settings_contract_hours","settings_hours_AL"].
+// 2. settingsPanel.classList.toggle('show');
+// 3. console.log('Settings panel opened');
+
+// func validateSettingsPanelFields  - - - - - - - - - - - - - - - FLESH OUT CHECKS
+// 1. check if all fields are valid
+// 2. return true if all fields are valid
+// 3. set settings.invalid_fields ["settings_username","settings_password","settings_email","settings_contract_hours","settings_hours_AL"].
+// 3. return array
+
+// func saveSettingsPanelFields(backupToServer=false)- - - - - - - DONE
+// 1. save all fields to localStorage
+// 2. if backupToServer is true, save to server
+
+// func createNewAccount - - - - - - - - - - - - - - - - - - - - - DONE
+// 1. create account on server
+// 2. return data if successful
+// 3. return error code if unsuccessful
+
 
 function generateUUID() {
   const unixTimestamp = new Date().getTime();
@@ -86,9 +315,9 @@ function generateUUID() {
 }
 
 // TODO - add verification code - just password bits at the mo.
-function verifyInputsValid() {
+function validateSettingsPanelFields() {
   let failedFields = [];
-  // return ids of unverified fields
+  // return ids of invalid fields
   // ["settings_username","settings_password","settings_email","settings_contract_hours","settings_hours_AL"]
 
 
@@ -109,14 +338,14 @@ function verifyInputsValid() {
       settings.password = '';
       settings.password_2 = '';
       settings.app_state = ST_PWD_ACCEPTED;      
-      localStorage.setItem(USR_PREF_KEY, JSON.stringify(settings));
+      localStorage.setItem(USR_PREF_LOCAL_STORAGE_KEY, JSON.stringify(settings));
     } else{
       failedFields.push("settings_password");
       failedFields.push("settings_password_2");
     }
   }
 
-  // check settings.HRS_ANUAL_LEAVE_ALLOCATION is number
+  // check settings.hrs_anual_leave_allocation is number
   // id="settings_hours_AL"
 
   // check settings.CONTRACTED_HOURS_AC is number
@@ -125,14 +354,20 @@ function verifyInputsValid() {
   return failedFields;
 }
 
+const ERR_PWD_NOT_SET = -1;
+const ERR_UUID_NOT_SET = -2;
+
 function createNewAccount() {
   settings.command = "NEW_USER";
   settings.password = specialWd;
 
+  if (specialWd === '') return ERR_PWD_NOT_SET;
+  if (settings.userUUID === '') return ERR_UUID_NOT_SET;
+
   const jsonData = JSON.stringify(settings);
   
-  return fetch("http://127.0.0.1:50030/login", {
-  //return fetch("https://paycheckcloud.creativemateriel.synology.me/login", {
+  //return fetch("http://127.0.0.1:50030/login", {
+  return fetch("https://paycheckcloud.creativemateriel.synology.me/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -590,7 +825,7 @@ class PayCycle4wk {
                       localStorageKey: this.localStorageKey};
 
     //return fetch("http://127.0.0.1:50030/save", {
-      return fetch("https://paycheckcloud.creativemateriel.synology.me/save", {
+    return fetch("https://paycheckcloud.creativemateriel.synology.me/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -894,17 +1129,17 @@ if ('specialWd' in localStorage)
 else 
   specialWd = '';
 
-const USR_PREF_KEY = 'user_settings';
+const USR_PREF_LOCAL_STORAGE_KEY = 'user_settings';
 const USR_PREF_PANEL_ID = 'user_settings_id';
 
-if (USR_PREF_KEY in localStorage) {  // retrieve current statekey, and 4wk cycle object
-  settings = JSON.parse(localStorage.getItem(USR_PREF_KEY));
+if (USR_PREF_LOCAL_STORAGE_KEY in localStorage) {  // retrieve current statekey, and 4wk cycle object
+  settings = JSON.parse(localStorage.getItem(USR_PREF_LOCAL_STORAGE_KEY));
   console.log(`LOADED settings \nU:${settings.username}\nUUID: ${settings.userUUID}`);
   console.log(settings);
   console.log(`specialWd: ${specialWd}`);
 } else {
   // save a default user settings
-  localStorage.setItem(USR_PREF_KEY, settings);
+  localStorage.setItem(USR_PREF_LOCAL_STORAGE_KEY, JSON.stringify(settings));
 }
 
 
@@ -958,7 +1193,7 @@ function debugInfo(args) {
   debugText += addDebugLine(`PENSION_EMPLOYEE_PC: ${(settings.PENSION_EMPLOYEE_PC * 100).toFixed(2)}%`);
   debugText += addDebugLine(`PENSION_EMPLOYER_PC: ${(settings.PENSION_EMPLOYER_PC * 100).toFixed(2)}%`);
   debugText += addDebugLine('-');
-  debugText += addDebugLine(userUUID);
+  debugText += addDebugLine(settings.userUUID);
   debugText += addDebugLine('//');
 
   if (serviceWorkerVerion === 0) {
@@ -967,95 +1202,6 @@ function debugInfo(args) {
   }
   
   return debugText;
-}
-
-function displayFlash(event, id, classSpecific, classShow, innerHTML='') {
-  console.log(`> = = = POP FLASH ${id} = = = <`);
-  let targetBtn = event.target;
-  let debugDiv = document.createElement('div');
-  debugDiv.id = id;
-  debugDiv.classList.add("flash", ...classSpecific); // add remove toggle
-  //debugDiv.innerHTML = debugInfo();
-  debugDiv.innerHTML = innerHTML;
-  document.body.appendChild(debugDiv);
-  targetBtn.classList.add('btn-disable');
-  
-  setTimeout(()=>{debugDiv.classList.add(classShow); console.log('-SHOW-');}, 5);  
-  
-  document.getElementById(id).addEventListener('click', function(event){
-    console.log(`> = = = HIDE FLASH ${id} = = = <`);
-    debugDiv.addEventListener('transitionend', (event)=>{ // NOT animationend
-      debugDiv.remove();
-      targetBtn.classList.remove('btn-disable');
-      //console.log('-transitionEnd-');
-    });    
-    debugDiv.classList.remove(classShow);  // NOT animate! TRANSITION!
-  });  
-}
-
-function createSettingsPanel() {
-  const settingsPanelId = USR_PREF_PANEL_ID;
-  let settingsPanel = document.getElementById(settingsPanelId);
-
-  // Remove existing settings panel if it exists
-  if (settingsPanel) {
-    settingsPanel.remove();
-  }
-
-  // Create a new settings panel
-  settingsPanel = document.createElement('div');
-  settingsPanel.id = settingsPanelId;
-
-  // Determine password input fields based on app_state
-  let passwordFields = '';
-  if (settings.app_state === ST_UN_INIT_USR) {
-    passwordFields = `
-      <div class="settings-form-group">
-        <label for="settings_password">password</label>
-        <input type="password" id="settings_password" placeholder="enter password" required>
-      </div>
-      <div class="settings-form-group">
-        <label for="settings_password_2">verify password</label>
-        <input type="password" id="settings_password_2" placeholder="verify password" required>
-      </div>
-    `;
-   } else if (settings.app_state >= ST_PWD_ACCEPTED) {  passwordFields = `
-      <div class="settings-form-group">
-        <label for="settings_password">password</label>
-        <input type="password" id="settings_password" placeholder="enter password" required>
-      </div>
-    `;
-  }
-
-  // Construct the settings panel HTML
-  settingsPanel.innerHTML = `
-    <div class="settings-header">
-      <h3>settings</h3>
-      <button class="settings-close">&times;</button>
-    </div>
-    <div class="settings-form">
-      <div class="settings-form-group">
-        <label for="username">username</label>
-        <input type="text" id="settings_username" placeholder="enter username - letters & numbers and - or _" pattern="[a-zA-Z0-9\\-_]+" required>
-      </div>
-      ${passwordFields}
-      <div class="settings-form-group">
-        <label for="settings_email">email</label>
-        <input type="email" id="settings_email" placeholder="optional - required if hours to be emailed">
-      </div>
-      <div class="settings-form-group">
-        <label for="contract_hours">contract hours / wk:</label>
-        <input type="number" id="settings_contract_hours" step="1" min="0" placeholder="enter contract hours per week" required>
-      </div>
-      <div class="settings-form-group">
-        <label for="hours_AL">hours anual leave:</label>
-        <input type="number" id="settings_hours_AL" step="1" min="0" placeholder="enter hours anual leave per year" required>
-      </div>
-    </div>
-  `;
-
-  document.body.appendChild(settingsPanel);
-  return settingsPanel;
 }
 
 window.addEventListener('load',function(){
@@ -1311,162 +1457,31 @@ window.addEventListener('load',function(){
     });  
   } 
 
-  // // NEW
-  // if (document.querySelector('#settings_button')) {
-  //   // Create the settings panel
-  //   let settingsPanel = createSettingsPanel();
-
-  //   // Load existing settings values if they exist
-  //   if (settings.username) document.getElementById('settings_username').value = settings.username;
-  //   if (settings.email) document.getElementById('settings_email').value = settings.email;
-  //   if (settings.contractHours) document.getElementById('settings_contract_hours').value = settings.contractHours;
-  //   if (settings.HRS_ANUAL_LEAVE_ALLOCATION) document.getElementById('settings_hours_AL').value = settings.HRS_ANUAL_LEAVE_ALLOCATION;
-
-  //   // Toggle settings panel when button is clicked
-  //   document.querySelector('#settings_button').addEventListener('click', function() {
-  //     settingsPanel = createSettingsPanel(); // Re-create panel on each click
-  //     settingsPanel.classList.add('show');
-  //   });
-
-  //   // Close panel and save settings when X is clicked
-  //   settingsPanel.addEventListener('click', function(event) {
-  //     if (event.target.classList.contains('settings-close')) {
-  //       // Save settings
-  //       settings.username = document.getElementById('settings_username').value;
-  //       settings.email = document.getElementById('settings_email').value;
-  //       settings.contractHours = parseFloat(document.getElementById('settings_contract_hours').value);
-  //       settings.HRS_ANUAL_LEAVE_ALLOCATION = parseFloat(document.getElementById('settings_hours_AL').value);
-
-  //       // Save the contract hours in both contracted hours fields
-  //       if (settings.contractHours) {
-  //         settings.CONTRACTED_HOURS_AC = settings.contractHours;
-  //         //settings.CONTRACTED_HOURS_SB = settings.contractHours;
-  //       }
-
-  //       // Hide panel
-  //       settingsPanel.classList.remove('show');
-
-  //       // Save to localStorage
-  //       localStorage.setItem(USR_PREF_KEY, JSON.stringify(settings));
-
-  //       console.log('Settings saved:', settings);
-  //     }
-  //   });
-  // }
-
-
-  // Settings panel functionality
   if (document.querySelector('#settings_button')) {
-    // First, create the settings panel
-    const settingsPanel = document.createElement('div');
-    settingsPanel.id = 'user_settings';
-    settingsPanel.innerHTML = `
-      <div class="settings-header">
-        <h3>settings</h3>
-        <button class="settings-close">&times;</button>
-      </div>
-      <div class="settings-form">
-        <div class="settings-form-group">
-          <label for="username">username</label>
-          <input type="text" id="settings_username" placeholder="enter username - letters & numbers and - or _" pattern="[a-zA-Z0-9-_]+" required>
-        </div>
-        <div class="settings-form-group">
-          <label for="password">password</label>
-          <input type="password" id="settings_password" placeholder="enter password" required>
-        </div>
-        <div class="settings-form-group">
-          <label for="settings_email">email</label>
-          <input type="email" id="settings_email" placeholder="optional - required if hours to be emailed">
-        </div>        
-        <div class="settings-form-group">
-          <label for="contract_hours">contract hours / wk:</label>
-          <input type="number" id="settings_contract_hours" step="0.5" min="0" placeholder="enter contract hours per week" required>
-        </div>
-        <div class="settings-form-group">
-          <label for="hours_AL">hours anual leave:</label>
-          <input type="number" id="settings_hours_AL" step="1" min="0" placeholder="enter hours anual leave per year" required>
-        </div>        
-      </div>
-    `;
-    document.body.appendChild(settingsPanel);
 
-    // Load existing settings values if they exist
-    if (settings.username) document.getElementById('settings_username').value = settings.username;
-    if (settings.app_state) {
-      if (settings.password) document.getElementById('settings_password').value = specialWd;
-    } else {
-      document.getElementById('settings_password').value = '';
-      if (document.getElementById('settings_password_2')) document.getElementById('settings_password_2').value = '';
-    }      
-    if (settings.email) document.getElementById('settings_email').value = settings.email;
-    if (settings.contractHours) document.getElementById('settings_contract_hours').value = settings.contractHours;
-    if (settings.HRS_ANUAL_LEAVE_ALLOCATION) document.getElementById('settings_hours_AL').value = settings.HRS_ANUAL_LEAVE_ALLOCATION;
-    
-    // Toggle settings panel when button is clicked
+    // add eventlisteners
     document.querySelector('#settings_button').addEventListener('click', function() {
+      let settingsPanel = renderSettingsPanel(); 
       settingsPanel.classList.add('show');
-    });
-    
-    // Close panel and save settings when X is clicked
-    document.querySelector('.settings-close').addEventListener('click', function() {
-      // Save settings
-      settings.username = document.getElementById('settings_username').value;
-      settings.password = document.getElementById('settings_password').value;
-      // if exists document.getElementById('settings_password_2')
-      if (document.getElementById('settings_password_2')){
-        settings.password_2 = document.getElementById('settings_password_2').value;
-      }        
-      settings.email = document.getElementById('settings_email').value;
-      settings.contractHours = parseFloat(document.getElementById('settings_contract_hours').value);
-      settings.HRS_ANUAL_LEAVE_ALLOCATION = parseFloat(document.getElementById('settings_hours_AL').value);
-      
-      let invalid_fields = verifyInputsValid(); 
-      if (invalid_fields.length === 0) {
-        if (settings.userUUID === '') {
-          console.log(`GENRATING settings.userUUID: ${settings.userUUID} < 0`);
-          generateUUID();
-          console.log(`GENRATING settings.userUUID: ${settings.userUUID} < 1`);
-        } else {
-          console.log(`UUID NOT genrated settings.userUUID: ${settings.userUUID} <`);
-        }
+      console.log('Settings panel opened');
+    });    
 
-        document.querySelector('#quick_calc_hrs').value = settings.contractHours *4;
-        document.querySelector('#quick_calc_hol_hrs').value = 0;      
-        
-        // Save the contract hours in both contracted hours fields
-        // TODO remove CONTRACTED_HOURS_AC use settings.contractHours
-        if (settings.contractHours) {
-          settings.CONTRACTED_HOURS_AC = settings.contractHours;
-          //settings.CONTRACTED_HOURS_SB = settings.contractHours;
-        }
-        
-        // TODO add some error handling incase of failure
-        // TODO add some feedback to the user
-        createNewAccount();
-
-        // Hide panel
+    // Add event listener to the settings panel for delegated events
+    document.body.addEventListener('click', function(event) {
+      if (event.target.classList.contains('settings-close')) {
+        let settingsPanel = document.getElementById(USR_PREF_PANEL_ID);
         settingsPanel.classList.remove('show');
-        
-        // Save to localStorage
-        localStorage.setItem(USR_PREF_KEY, JSON.stringify(settings));
-        
-        console.log('Settings saved:', settings);
-      } else {
-        // TODO think through - fade to pink better use CSS
-        // flash div background with following Id'd red & fade to pink
-        // ["settings_username","settings_password","settings_email","settings_contract_hours","settings_hours_AL"].
-        invalid_fields.
-          forEach((id) => {
-            if (document.getElementById(id)) document.getElementById(id).style.backgroundColor = 'red'; // Set background to red on failure
-            setTimeout(() => {
-              if (document.getElementById(id)) document.getElementById(id).style.backgroundColor = 'pink'; // Reset to original color
-            }, 1000); // 2 seconds
-          });          
+
+        let backUpToServer = false;
+        if (settings.app_state === ST_UN_INIT_USR) backUpToServer = true;
+
+        saveSettingsPanelFields(backUpToServer);
+
+        console.log('Settings panel CLOSED');
       }
-
-
-    });
-    
+    });    
+    // close event listener added in renderSettingsPanel
+ 
   }
 
   // SERVICE WORKER i/f
@@ -1494,8 +1509,7 @@ window.addEventListener('load',function(){
 
   // check username & pwd are configured
   if (settings.username === '' || settings.password === '') {
-    settingsPanel = createSettingsPanel(); // Re-create panel on each click
-    settingsPanel.classList.add('show');
+    console.warn('* * Username or password NOT set * *');
   }
     
 

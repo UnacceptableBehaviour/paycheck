@@ -418,7 +418,7 @@ label.imgSelect input[accept*="image"] {
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* added for setting button on pop div */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-#user_settings {
+#user_settings_id {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -431,10 +431,12 @@ label.imgSelect input[accept*="image"] {
   transition: transform 0.3s ease;
   transform: translateY(100%);
   box-sizing: border-box;
+  display: none; /* Hide the panel by default */
 }
 
-#user_settings.show {
+#user_settings_id.show {
   transform: translateY(0);
+  display: block; /* Show the panel when the 'show' class is added */
 }
 
 .settings-header {
