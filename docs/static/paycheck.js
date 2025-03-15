@@ -1411,6 +1411,7 @@ window.addEventListener('load',function(){
 
       const button = event.target;            
       button.classList.remove('button-transition');
+      button.style.backgroundColor = 'yellow';
 
       pc.saveToServer()
         .then(() => {
@@ -1437,6 +1438,7 @@ window.addEventListener('load',function(){
       console.log('[ G E T ] JSON >>  clicked');
       const button = event.target;            
       button.classList.remove('button-transition');
+      button.style.backgroundColor = 'yellow';
 
       pc.retrieveFromServer()
         .then(() => {
