@@ -160,6 +160,11 @@ def login():
             try:
                 with open(userDB_PATH, 'w') as json_file:
                     json.dump(userDB, json_file, indent=2)
+
+                print(' - new user - ')
+                pprint(userDB[user_uuid])
+                print(' - x - ')
+                
                 return jsonify({'message': 'Account successfully created'}), 200
             except Exception as e:
                 print(f'Error writing user database: {e}')

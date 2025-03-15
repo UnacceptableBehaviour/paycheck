@@ -162,24 +162,17 @@ function renderSettingsPanel() {
   if (settings.contractHours) document.getElementById('settings_contract_hours').value = settings.contractHours;
   if (settings.hrs_anual_leave_allocation) document.getElementById('settings_hours_AL').value = settings.hrs_anual_leave_allocation;
 
-  // TODO - remove if delgate works
-  // document.querySelector('.settings-close').addEventListener('click', function() {
-  //   settingsPanel.classList.remove('show');
-    
-  //   let backUpToServer = false;
-  //   if (settings.app_state === ST_UN_INIT_USR) backUpToServer = true;
-
-  //   saveSettingsPanelFields(backUpToServer);
-
-  //   console.log('Settings panel CLOSED');
-  // });  
-
   return settingsPanel;
 }
 
-function openSettingsPanel(render=true, invalid_fields) {
-
-  if (render) renderSettingsPanel();
+function openSettingsPanel(invalid_fields, render=true) {
+  console.log(`> openSettingsPanel r:${render} - IFs:${invalid_fields}<`);
+  if (render) {
+    renderSettingsPanel();
+    let settingsPanel = document.getElementById(USR_PREF_PANEL_ID);
+    settingsPanel.classList.add('show');
+  }
+  
 
   // TODO think through - fade to pink better use CSS
   // flash div background with following Id'd red & fade to pink
@@ -247,7 +240,7 @@ function saveSettingsPanelFields(backupToServer=false) {
   } else {
 
     let render = false;
-    openSettingsPanel(render, invalid_fields);
+    openSettingsPanel(invalid_fields, render);
        
   }
 
@@ -1098,11 +1091,12 @@ class PayCycle4wk {
     textSummary += document.querySelector('#r0_final_tots_title').textContent+'\n';
     textSummary += document.querySelector('#r1_anual_in_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)    +this.annualIncomeEstimate.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
     textSummary += document.querySelector('#r2_gross_4wk_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)   +this.gross4wk.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
-    textSummary += document.querySelector('#r3_pension_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)     +this.pensionContrib.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
-    textSummary += document.querySelector('#r4_ni_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)          +this.contribNI.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
-    textSummary += document.querySelector('#r5_tax_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)         +this.incomeTax.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
-    textSummary += document.querySelector('#r6_tot_dedcts_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)  +this.deductions.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
-    textSummary += document.querySelector('#r7_net_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)         +this.netIncomeForCycle.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
+    textSummary += document.querySelector('#r3_pension_employer_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)     +this.pensionEmployer.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
+    textSummary += document.querySelector('#r4_pension_employee_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)     +this.pensionEmployee.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
+    textSummary += document.querySelector('#r5_ni_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)          +this.contribNI.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
+    textSummary += document.querySelector('#r6_tax_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)         +this.incomeTax.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
+    textSummary += document.querySelector('#r7_tot_dedcts_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)  +this.deductions.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
+    textSummary += document.querySelector('#r8_net_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)         +this.netIncomeForCycle.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
     
     textSummary += '\n\n';
     textSummary += `Sent on ${new Date()} by payCheck - MIT Lisence \nhttps://unacceptablebehaviour.github.io/paycheck/ \n\n`;
@@ -1347,13 +1341,62 @@ window.addEventListener('load',function(){
       pc.updateHTML();            
     });
   });
+  
 
   // Mailing summary
-  document.querySelector('#mail_img').addEventListener('click', function(event){
-    //console.log('> = = = MAIL SUMMARY= = = <');
-    let address = 'a.b@g.com';
-    let subject = 'payCheck Summary';  
-    window.location = `mailto:${address}?subject=${subject}&body=${pc.emailVersionSummary()}`;
+  document.querySelector('#mail_img').addEventListener('click', function(event) {
+    console.log('> = = = MAIL SUMMARY= = = <');
+
+    // Function to wait for the settings panel to close
+    function waitForSettingsPanel() {
+      return new Promise((resolve) => {
+        // Check if the email is already set
+        if (settings.email !== '') {
+          resolve();
+          return;
+        }
+
+        // Open the settings panel and highlight the email field
+        openSettingsPanel(["settings_email"]);
+
+        // Add a one-time event listener to the document body to detect when the settings panel is closed
+        document.body.addEventListener('click', function closeListener(event) {
+          if (event.target.classList.contains('settings-close')) {
+            // Remove the event listener
+            document.body.removeEventListener('click', closeListener);
+
+            // Resolve the promise
+            resolve();
+          }
+        });
+      });
+    }
+
+    // Wait for the settings panel to close
+    waitForSettingsPanel().then(() => {
+      // Check if the email is set
+      if (settings.email === '') {
+        console.warn('Email address not provided. Cannot send email.');
+        return;
+      }
+
+      // Proceed with sending the email
+      let address = settings.email;
+      let subject = 'payCheck Summary';
+
+      let emailBody = '';
+      let html_supported = false;
+
+      if (html_supported) {
+        // Wrap the email body in <pre> tags to preserve formatting and use a monospaced font
+        emailBody = `<pre style="font-family: monospace;">${pc.emailVersionSummary(FORMAT_HTML)}</pre>`;
+      } else {
+        // manually set to menlo or other monospace in email editor.
+        emailBody = pc.emailVersionSummary();
+      }
+
+      window.location = `mailto:${address}?subject=${subject}&body=${emailBody}`;
+    });
   });
   
   // Debug / HELP button
