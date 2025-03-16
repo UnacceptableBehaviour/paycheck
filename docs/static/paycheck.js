@@ -450,6 +450,15 @@ class Day{
       this.totalMinsReadableHM = '7H00';
       this.totalMinsDecimalHM = '7.00';
 
+    } else if (this.breakTime === 'CL') { // reset the entries
+      this.inTime = '';
+      this.outTime = '';
+      this.totalMins = 0;
+      this.totalALMins = 0;
+      this.totalMinsReadableHM = '';
+      this.totalMinsDecimalHM = '';
+      this.breakTime === '30';
+
     } else {
       if ((start === '') || (finish === '')) {
         this.totalMins = 0;
@@ -902,6 +911,9 @@ class PayCycle4wk {
       tableRowElements[dayNo % 7].id = `${dayNo}`; // make date easy to fine when roww dblClicked
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_date_js`).textContent = this.daysInCycle[dayNo].HRdate;
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_in`).textContent = this.daysInCycle[dayNo].inTime;
+      if (document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).value === 'CL'){
+        this.daysInCycle[dayNo].breakTime = 30;   // remove CL and put default 30min break in blanks entry
+      }
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).placeholder = this.daysInCycle[dayNo].breakTime;
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_break`).value = null;
       document.querySelector(`#${PayCycle4wk.prefixes[dayNo % 7]}_out`).textContent = this.daysInCycle[dayNo].outTime;
@@ -1288,6 +1300,7 @@ window.addEventListener('load',function(){
       if (settings.cameraMode) {
         console.log('cameraMode: CAMERA_MODE_CAPTURE');
         //console.log(event.srcElement.files[0].lastModified);
+        // TODO fix event.srcElement deprecated
         let d = new Date(event.srcElement.files[0].lastModified);
         fourDigitTime = `${d.getHours()}${d.getMinutes()}`;
         //let timeFromLastModified = `timeFromLastModified: <${fourDigitTime}>`;
@@ -1295,6 +1308,7 @@ window.addEventListener('load',function(){
         
       } else {
         console.log('cameraMode: CAMERA_MODE_GALLERY');
+        // TODO fix event.srcElement deprecated
         let filename = event.srcElement.files[0].name;
         console.log(filename);
   
