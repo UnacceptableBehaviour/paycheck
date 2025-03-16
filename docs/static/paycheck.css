@@ -79,20 +79,6 @@ body {
   text-align: center;
 }
 
-#tax_code {
-  width: 21vw;
-  height: 2.2vh;
-  font-size: 2.1vh;
-}
-#pension_text {
-  width: 18vw;
-}
-#pension_pc {
-  width: 17vw;
-  height: 2.2vh;
-  font-size: 2.1vh;  
-}
-
 
 #wk_range {
   text-align: right;
@@ -328,9 +314,7 @@ body {
 .col3 {
   text-align: center;
 }
-.col3 label {
-  
-}
+
 .col4 { /* BRK? */
   text-align: left;
 }

@@ -147,6 +147,39 @@ function renderSettingsPanel() {
         <label for="hours_AL">hours anual leave:</label>
         <input type="number" id="settings_hours_AL" step="1" min="0" placeholder="enter hours anual leave per year" required>
       </div>
+
+      <div class="settings-form-group">
+        <label for="pension_pc">pension %:</label>
+        <input list="pension_pcs" name="pension_pc" id="settings_pension_pc" placeholder="5">
+        <datalist id="pension_pcs">
+          <option value="0"></option>
+          <option value="5"></option>
+          <option value="10"></option>
+          <option value="15"></option>
+          <option value="20"></option>
+          <option value="25"></option>
+          <option value="30"></option>
+          <option value="35"></option>
+          <option value="40"></option>
+          <option value="45"></option>
+          <option value="50"></option>
+          <option value="55"></option>
+          <option value="60"></option>
+          <option value="65"></option>
+          <option value="70"></option>
+          <option value="75"></option>
+          <option value="80"></option>
+          <option value="85"></option>
+          <option value="90"></option>
+          <option value="95"></option>
+          <option value="100"></option>
+        </datalist>
+      </div>
+
+      <div class="settings-form-group">
+        <label for="tax_code">tax code:</label>
+        <input type="text" id="settings_tax_code" placeholder="1257L" required>
+      </div>
     </div>
   `;
     
@@ -161,6 +194,8 @@ function renderSettingsPanel() {
   if (settings.email) document.getElementById('settings_email').value = settings.email;
   if (settings.contractHours) document.getElementById('settings_contract_hours').value = settings.contractHours;
   if (settings.hrs_anual_leave_allocation) document.getElementById('settings_hours_AL').value = settings.hrs_anual_leave_allocation;
+  if (settings.PENSION_EMPLOYEE_PC) document.getElementById('settings_pension_pc').value = settings.PENSION_EMPLOYEE_PC * 100;
+  
 
   return settingsPanel;
 }
@@ -201,6 +236,7 @@ function saveSettingsPanelFields(backupToServer=false) {
   settings.email = document.getElementById('settings_email').value;
   settings.contractHours = parseFloat(document.getElementById('settings_contract_hours').value);
   settings.hrs_anual_leave_allocation = parseFloat(document.getElementById('settings_hours_AL').value);
+  settings.PENSION_EMPLOYEE_PC = parseFloat(document.getElementById('settings_pension_pc').value) / 100;
 
   let invalid_fields = validateSettingsPanelFields();   // updates state on PWD match
 
@@ -343,6 +379,9 @@ function validateSettingsPanelFields() {
 
   // check settings.CONTRACTED_HOURS_AC is number
   // id="settings_contract_hours"
+
+  // check settings.PENSION_EMPLOYEE_PC is number between 0-100
+  // id="settings_pension_pc"
   
   return failedFields;
 }
@@ -881,8 +920,7 @@ class PayCycle4wk {
       this.daysInCycle[dayNo].setHours(start, breakStr, finish);
       //console.log(`==: ${this.daysInCycle[dayNo].HRdate} :== E`);
     }
-    // pension input id='pension_pc'
-    settings.PENSION_EMPLOYEE_PC = document.querySelector("#pension_pc").value / 100;
+
     this.updateWeekTotalMins();
     this.finalCalculations();
   }
@@ -900,8 +938,7 @@ class PayCycle4wk {
     document.querySelector('#wk_range_js').textContent = ` ${this.getWeekNo(0)} - ${this.getWeekNo(3)}`;
     document.querySelector('#wk_range_dates_js').textContent = `${this.payStart.getDate()} ${Day.numToMonth[this.payStart.getMonth()]} - ${this.cutOff.getDate()} ${Day.numToMonth[this.cutOff.getMonth()]}`;
     document.querySelector('#wk_no_js').textContent = this.getWeekNoDateRange();
-    document.querySelector("#pension_pc").value = settings.PENSION_EMPLOYEE_PC * 100;
-
+    document.querySelector('#remaining_AL').textContent = settings.hrs_anual_leave_remaining;
 
     // HOURS TABLE
     let startDay = this.weekNo * 7;
