@@ -44,6 +44,7 @@
 <body style="font-family:'Arial';">
   <div class="paycheck-container font-portrait">
     <div id="ct_paycycle_summary" class="item summary">
+
       <div class="flexrow-button-header" id="pay_day">
         <span class="flexrow-button-header-text title-text" id="pay_day_js">js_calc</span>
         <button id="but_4wk_bak" class="lr-button lrbl flexrow-button-header-button"><img
@@ -58,22 +59,21 @@
           <span class="flexrow-item" id="remaining_AL">js_calc</span>
         </div>
         <span class="flexrow-middle-space space-box"></span>
-        <span class="flexrow-item" id="wk_range_dates_js">js_calc</span>
+        <div class="flexrow-item">
+          <button id="settings_button" class="settings-button">
+            <img src="static/assets/icons/cog.svg" alt="Settings">
+          </button>             
+        </div>
+        <span class="flexrow-middle-space space-box"></span>
+        <div class="flexrow-item">
+          <span class="flexrow-item" id="wk_range_dates_js">js_calc</span>
+          <div id="wk_range">            
+            <span>Week Nos: </span>
+            <span id="wk_range_js">js_calc</span>
+          </div>
+        </div>
       </div>
 
-      <div class="wk-info flexrow-container">
-        <div class="flexrow-item">
-          
-        </div>
-        <button id="settings_button" class="settings-button">
-          <img src="static/assets/icons/cog.svg" alt="Settings">
-        </button>        
-        <span class="flexrow-middle-space space-box"></span>
-        <div id="wk_range">
-          <span>Week Nos: </span>
-          <span id="wk_range_js">js_calc</span>
-        </div>
-      </div>
 
     </div>
 
